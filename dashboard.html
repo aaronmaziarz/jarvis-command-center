@@ -2775,9 +2775,11 @@ html, body {
     // Initialize with default actions
     if (futureActions.length === 0) {
       futureActions = [
-    { text: 'Refine daily brief template - adjust topics and research focus', completed: false },
+        { text: 'Refine daily brief template - adjust topics and research focus', completed: false },
         { text: 'Complete web browser setup (Chrome extension relay)', completed: false },
-        { text: 'Set up cloudflare tunnel for remote dashboard access', completed: false }
+        { text: 'Set up Cloudflare tunnel for remote dashboard access', completed: false },
+        { text: 'Set up X.com/Twitter access (Grok API)', completed: false },
+        { text: 'Set up credentials management', completed: false }
       ];
       localStorage.setItem('futureActions', JSON.stringify(futureActions));
     }

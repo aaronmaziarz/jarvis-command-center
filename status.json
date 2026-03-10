@@ -1,7 +1,7 @@
 {
-  "kpi_updated": "2026-03-10T16:15:00Z",
+  "kpi_updated": "2026-03-10T16:46:48Z",
   "total_tasks": 5,
-  "tasks_today": 5,
+  "tasks_today": 0,
   "active_agents": 0,
   "pending_tasks": 0,
   "agents": {
@@ -10,5 +10,12 @@
     "writer": "idle",
     "analyst": "idle",
     "scheduler": "idle"
+  },
+  "agent_details": {
+    "researcher": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0 },
+    "coder": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0 },
+    "writer": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0 },
+    "analyst": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0 },
+    "scheduler": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0 }
   }
 }
