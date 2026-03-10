@@ -1066,6 +1066,23 @@
       outline: none;
     }
     
+    /* Tools Section */
+    .modal-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .modal-tool-tag {
+      padding: 6px 12px;
+      background: rgba(191, 90, 242, 0.1);
+      border: 1px solid rgba(191, 90, 242, 0.2);
+      border-radius: 8px;
+      font-size: 12px;
+      color: #bf5af2;
+      font-family: "JetBrains Mono", monospace;
+    }
+    
     .modal-suggestions {
       display: flex;
       flex-wrap: wrap;
@@ -1456,6 +1473,14 @@
         
         <div class="modal-section">
           <div class="modal-section-title">Suggested Tasks</div>
+          <div class="modal-section">
+          <div class="modal-section-title">Tools &amp; Permissions</div>
+          <div class="modal-tools" id="modal-tools">
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <div class="modal-section-title">Suggested Tasks</div>
           <div class="modal-suggestions" id="modal-suggestions">
           </div>
         </div>
@@ -1642,13 +1667,13 @@
     
     // Agent Modal Data
     const agentData = {
-      researcher: { name: "Researcher", icon: "🤡", model: "DeepSeek R1", role: "Web search", tasksCompleted: 2, totalSpend: "$0.14", uptime: "2h 15m", definition: "You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning.", suggestions: ["Research AI tools", "Find best APIs", "Competitive analysis"] },
-      coder: { name: "Coder", icon: "💻", model: "Qwen2.5 Coder", role: "Python, SQL", tasksCompleted: 1, totalSpend: "$0.20", uptime: "1h 45m", definition: "You are the Coder agent for Jarvis.", suggestions: ["Write script", "Debug code", "Create query"] },
-      frontend: { name: "Frontend", icon: "🎨", model: "Claude Sonnet 4.6", role: "UI/UX", tasksCompleted: 1, totalSpend: "$3.00", uptime: "45m", definition: "You are the Frontend Dev agent.", suggestions: ["Overhaul UI", "Add components"] },
-      security: { name: "Security", icon: "🛡️", model: "DeepSeek R1", role: "Audits", tasksCompleted: 1, totalSpend: "$0.07", uptime: "30m", definition: "You are the Security Agent.", suggestions: ["Run audit", "Check firewall"] },
-      writer: { name: "Writer", icon: "✍️", model: "MiniMax M2.5", role: "Copy", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Writer agent.", suggestions: ["Write copy", "Draft proposal"] },
-      analyst: { name: "Analyst", icon: "📊", model: "Qwen Plus", role: "Data", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Analyst agent.", suggestions: ["Analyze data", "Build report"] },
-      scheduler: { name: "Scheduler", icon: "⏰", model: "MiniMax M2.5", role: "Calendar", tasksCompleted: 1, totalSpend: "$0.05", uptime: "6h 20m", definition: "You are the Scheduler agent.", suggestions: ["Set reminder", "Schedule cron"] }
+      researcher: { name: "Researcher", icon: "🤡", model: "DeepSeek R1", role: "Web search & analysis", tasksCompleted: 2, totalSpend: "$0.14", uptime: "2h 15m", definition: "You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning.", suggestions: ["Research AI tools", "Find best APIs", "Competitive analysis"], tools: ["web_search", "web_fetch", "browser", "memory_search"] },
+      coder: { name: "Coder", icon: "💻", model: "Qwen2.5 Coder", role: "Python, SQL & automation", tasksCompleted: 1, totalSpend: "$0.20", uptime: "1h 45m", definition: "You are the Coder agent for Jarvis.", suggestions: ["Write Python script", "Debug code", "Create SQL query"], tools: ["exec", "read", "write", "edit", "sessions_spawn"] },
+      frontend: { name: "Frontend Dev", icon: "🎨", model: "Claude Sonnet 4.6", role: "UI/UX & dashboard", tasksCompleted: 1, totalSpend: "$3.00", uptime: "45m", definition: "You are the Frontend Dev agent.", suggestions: ["Overhaul dashboard", "Add components"], tools: ["read", "write", "edit", "exec", "browser", "canvas"] },
+      security: { name: "Security", icon: "🛡️", model: "DeepSeek R1", role: "Audits & hardening", tasksCompleted: 1, totalSpend: "$0.07", uptime: "30m", definition: "You are the Security Agent.", suggestions: ["Run security audit", "Check firewall"], tools: ["exec", "healthcheck", "memory_search", "read"] },
+      writer: { name: "Writer", icon: "✍️", model: "MiniMax M2.5", role: "Copy & documentation", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Writer agent.", suggestions: ["Write copy", "Draft proposal"], tools: ["read", "write", "edit", "memory_search"] },
+      analyst: { name: "Analyst", icon: "📊", model: "Qwen Plus", role: "Data & reporting", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Analyst agent.", suggestions: ["Analyze data", "Build report"], tools: ["exec", "read", "write", "web_fetch"] },
+      scheduler: { name: "Scheduler", icon: "⏰", model: "MiniMax M2.5", role: "Calendar & reminders", tasksCompleted: 1, totalSpend: "$0.05", uptime: "6h 20m", definition: "You are the Scheduler agent.", suggestions: ["Set reminder", "Schedule cron"], tools: ["exec", "cron", "read", "write"] }
     };
     let currentAgent = null;
     function openAgentModal(a){const ag=agentData[a];if(!ag)return;currentAgent=a;document.getElementById("modal-icon").textContent=ag.icon;document.getElementById("modal-name").textContent=ag.name;document.getElementById("modal-model").textContent=ag.model;document.getElementById("modal-tasks").textContent=ag.tasksCompleted;document.getElementById("modal-spend").textContent=ag.totalSpend;document.getElementById("modal-uptime").textContent=ag.uptime;document.getElementById("modal-definition").value=ag.definition;document.getElementById("modal-suggestions").innerHTML=ag.suggestions.map(s=>`<span class="modal-suggestion-tag">${s}</span>`).join("");document.getElementById("agent-modal").classList.add("active");document.body.style.overflow="hidden"}
