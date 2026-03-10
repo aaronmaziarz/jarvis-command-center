@@ -10,21 +10,26 @@
 Based on workspace files, here's what matters to Aaron:
 
 ### Core Interests (Research These Regularly)
-1. **AI & Machine Learning** - New models, capabilities, tools
-   - OpenAI, Anthropic, Google, open-source developments
-   - Worthwhile: GPT-5, Claude 4, Gemini advances
+1. **AI & Machine Learning** - HIGH PRIORITY
+   - OpenAI, Anthropic, Google, DeepSeek, open-source
+   - Worthwhile: Model releases (GPT-5, Claude 4, Gemini 2), research papers
+   - Focus: Capabilities, pricing changes, new use cases
 
-2. **Automation & No-Code** - Make.com, Monday CRM, n8n
-   - New integrations, features, tips
-   - Worthwhile: Major feature releases
+2. **Coding & Dev Tools** - HIGH PRIORITY  
+   - Python, SQL, APIs, new frameworks
+   - Worthwhile: Code optimization, new libraries, AI coding assistants
+   - Focus: Codex CLI, Claude Code, Cursor, new VS Code features
 
-3. **Product Development** - MazTech LLC
+3. **OpenClaw & Agent Tools**
+   - New skills, features, capabilities
+   - Worthwhile: Platform updates, new integrations
+
+4. **Product Development** - MazTech LLC
    - Business strategy, marketing, product ideas
    - Worthwhile: Actionable business insights
 
-4. **Coding & Dev Tools** - Python, SQL, APIs
-   - New libraries, frameworks, best practices
-   - Worthwhile: Things that save time/money
+### DO NOT Include
+- Monday.com updates (not relevant)
 
 ### Secondary Interests (Check Weekly)
 5. **Wedding Planning** - Trends, tips, ideas
@@ -58,8 +63,8 @@ Based on workspace files, here's what matters to Aaron:
 - [Only if something significant happened]
 - No news = skip this section
 
-## ⚡ Automation
-- [Only if Make/Monday/new tools have updates]
+## 🛠️ Dev Tools
+- [Only if significant coding/AI tool updates]
 - No news = skip this section
 
 ## 💼 MazTech

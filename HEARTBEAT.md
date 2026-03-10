@@ -32,7 +32,7 @@ The morning brief runs automatically via cron job. Each morning, check:
 - [New features/fixes]
 - Keep it to 3-4 bullet points max
 
-⚡ Automation: [Skip if no news]
+🛠️ Dev Tools: [AI coding tools, new libraries - skip if no news]
 🤖 AI: [Skip if no news]
 💼 MazTech: [One actionable thing]
 
