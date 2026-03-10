@@ -173,14 +173,12 @@ Transform Jarvis into an AI operations hub that:
 
 ## Current Future Actions
 
-1. [ ] Set up Codex CLI (OpenAI)
-   - Run: `npm install -g @openai/codex` 
-   - Then run: `codex auth login`
-   - Use Aaron's OpenAI account
+1. [ ] Set up Codex CLI (on PC with sudo/permissions)
+   - Run: npm install -g @openai/codex
+   - Then: codex auth login
+   - Added to dashboard as option
 
-2. [ ] Get new OpenRouter API key
-   - Go to https://openrouter.ai/keys
-   - Replace key in ~/.openclaw/agents/main/agent/models.json
+2. [x] OpenRouter API - works for AI calls, usage endpoint needs different scope (may need new key)
 
 ## Current Future Actions
 

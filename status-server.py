@@ -32,7 +32,7 @@ def get_openrouter_usage():
             headers={"Authorization": f"Bearer {api_key}"},
             timeout=5
         )
-        if resp.status_code == 200:
+        if resp.status_code == 200 and "total_spend" in str(resp.text):
             data = resp.json()
             return {
                 "total_spend": data.get("total_spend", 0),
@@ -108,7 +108,7 @@ def get_openrouter_usage():
             headers={"Authorization": f"Bearer {api_key}"},
             timeout=5
         )
-        if resp.status_code == 200:
+        if resp.status_code == 200 and "total_spend" in str(resp.text):
             data = resp.json()
             return {
                 "total_spend": data.get("total_spend", 0),
@@ -174,7 +174,7 @@ def get_openrouter_usage():
             headers={"Authorization": f"Bearer {api_key}"},
             timeout=5
         )
-        if resp.status_code == 200:
+        if resp.status_code == 200 and "total_spend" in str(resp.text):
             data = resp.json()
             return {
                 "total_spend": data.get("total_spend", 0),

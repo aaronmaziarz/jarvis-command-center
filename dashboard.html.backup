@@ -1,0 +1,3253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Jarvis Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════
+       APPLE 2080 AESTHETIC - Ultra Premium Dashboard
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    :root {
+      /* Refined Color Palette - Apple meets Cyberpunk */
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a0f;
+      --bg-tertiary: #12121a;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --bg-card-active: rgba(255, 255, 255, 0.08);
+      
+      /* Glass Effects */
+      --glass-light: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-hover: rgba(255, 255, 255, 0.14);
+      --glass-blur: 40px;
+      
+      /* Accent Colors - Softer Apple palette */
+      --accent-primary: #2997ff;
+      --accent-primary-dim: rgba(41, 151, 255, 0.15);
+      --accent-secondary: #bf5af2;
+      --accent-tertiary: #30d158;
+      --accent-warning: #ff9f0a;
+      --accent-danger: #ff453a;
+      
+      /* Text */
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(245, 245, 247, 0.6);
+      --text-tertiary: rgba(245, 245, 247, 0.35);
+      
+      /* Ambient Glows - Reduced intensity */
+      --glow-blue: rgba(41, 151, 255, 0.12);
+      --glow-purple: rgba(191, 90, 242, 0.08);
+      --glow-green: rgba(48, 209, 88, 0.08);
+      
+      /* Spacing - Increased rounded corners (Apple style) */
+      --radius-sm: 16px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+      --radius-full: 9999px;
+      
+      /* Spring Physics */
+      --spring-smooth: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --spring-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    html, 
+    /* Force no horizontal scroll */
+    * {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+    
+    /* Container fixes */
+    .container {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    /* Grid mobile fix */
+    @media (max-width: 768px) {
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      
+      .card {
+        width: 100%;
+        margin: 0;
+      }
+      
+      .agent-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      
+      .action-btn {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+    }
+
+
+html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    
+    body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+    
+    
+    /* Force no horizontal scroll */
+    * {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+    
+    /* Container fixes */
+    .container {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    /* Grid mobile fix */
+    @media (max-width: 768px) {
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      
+      .card {
+        width: 100%;
+        margin: 0;
+      }
+      
+      .agent-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      
+      .action-btn {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+    }
+
+
+html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Dynamic Ambient Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(41, 151, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(191, 90, 242, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse 50% 30% at 10% 90%, rgba(48, 209, 88, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* Noise Texture Overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 9998;
+    }
+    
+    .container { 
+      max-width: 1280px; 
+      margin: 0 auto; 
+      padding: 20px;
+      padding-bottom: 120px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       HERO STATUS BANNER
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .hero {
+      margin-bottom: 32px;
+      padding: 28px 32px;
+      background: linear-gradient(135deg, rgba(41, 151, 255, 0.06) 0%, rgba(191, 90, 242, 0.03) 100%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(41, 151, 255, 0.3), transparent);
+    }
+    
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .hero-avatar {
+      width: 72px; height: 72px;
+      background: linear-gradient(145deg, #1a1a24, #0d0d12);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      transition: transform 0.4s var(--spring-smooth);
+    }
+    
+    .hero:hover .hero-avatar {
+      transform: scale(1.05) translateY(-2px);
+    }
+    
+    .hero-avatar::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 28px;
+      border: 1px solid rgba(41, 151, 255, 0.2);
+      opacity: 0;
+      transition: all 0.4s var(--spring-smooth);
+    }
+    
+    .hero:hover .hero-avatar::after {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    
+    .hero-text h1 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes titleGlow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(41, 151, 255, 0.3)); }
+      50% { filter: drop-shadow(0 0 16px rgba(41, 151, 255, 0.5)); }
+    }
+    
+    .hero-text .tagline {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+      font-weight: 400;
+    }
+    
+    .model-select-wrap {
+      position: relative;
+    }
+    
+    .model-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+      min-width: 180px;
+    }
+    
+    .model-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 10px rgba(41, 151, 255, 0.3);
+    }
+    
+    .hero-stats {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 22px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
+      cursor: pointer;
+    }
+    
+    .hero-stat:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--glass-border-hover);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(41, 151, 255, 0.1);
+    }
+    
+    .hero-stat:active {
+      transform: translateY(-2px) scale(0.98);
+      transition: all 0.15s ease;
+    }
+    
+    .hero-stat-icon {
+      width: 36px; height: 36px;
+      background: var(--accent-primary-dim);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    
+    .hero-stat-value {
+      font-size: 18px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .hero-stat-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       GRID LAYOUT
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px; 
+    }
+    
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    }
+    
+    .card:hover { 
+      background: var(--bg-card-hover);
+      border-color: var(--glass-border-hover);
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 8px 24px rgba(41, 151, 255, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card.span-3 { grid-column: span 3; }
+    .card.span-4 { grid-column: span 4; }
+    .card.span-5 { grid-column: span 5; }
+    .card.span-6 { grid-column: span 6; }
+    .card.span-7 { grid-column: span 7; }
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    
+    .repo-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all 0.4s var(--spring-smooth);
+      cursor: pointer;
+    }
+    
+    .repo-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(41, 151, 255, 0.3);
+      box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.3),
+        0 8px 20px rgba(41, 151, 255, 0.1);
+    }
+    
+    .repo-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    
+    .repo-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    
+    .repo-desc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 12px;
+    }
+    
+    .repo-link {
+      font-size: 12px;
+      color: var(--primary-blue);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 900px) {
+      .repo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .repo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .card.span-8 { grid-column: span 8; }
+    .card.span-12 { grid-column: span 12; }
+    
+    .card-header { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      margin-bottom: 20px; 
+    }
+    
+    .card-title { 
+      font-size: 13px; 
+      font-weight: 500; 
+      color: var(--text-tertiary); 
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
+    }
+    
+    .card-icon { 
+      width: 40px; height: 40px;
+      background: var(--glass-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .card:hover .card-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       SYSTEM HEALTH METERS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    
+    .health-item {
+      text-align: center;
+      padding: 18px 14px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
+      cursor: pointer;
+    }
+    
+    .health-item:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    
+    .health-value {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--accent-primary);
+      text-shadow: 0 0 20px var(--glow-blue);
+      transition: all 0.3s ease;
+      animation: healthPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes healthPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+    
+    .health-value.green {
+      color: var(--accent-tertiary);
+      text-shadow: 0 0 20px var(--glow-green);
+    }
+    
+    .health-value.purple {
+      color: var(--accent-secondary);
+      text-shadow: 0 0 20px var(--glow-purple);
+    }
+    
+    .health-label {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       QUICK ACTIONS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    
+    .action-btn {
+      padding: 16px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.4s var(--spring-smooth);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .action-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .action-btn:hover { 
+      background: var(--bg-card-hover);
+      border-color: rgba(41, 151, 255, 0.4);
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 
+        0 16px 32px rgba(0, 0, 0, 0.25),
+        0 6px 16px rgba(41, 151, 255, 0.12);
+    }
+    
+    .action-btn:active {
+      transform: translateY(-2px) scale(0.96);
+      transition: all 0.15s ease;
+    }
+    
+    .action-btn span.icon {
+      font-size: 20px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       AGENT COMMAND CENTER - Futuristic Office/Command Center
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    /* Zone Header Styles */
+    .zone-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    
+    .zone-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px currentColor;
+      animation: zonePulse 2.5s ease-in-out infinite;
+    }
+    
+    .zone-indicator.research { background: #bf5af2; color: #bf5af2; }
+    .zone-indicator.development { background: #2997ff; color: #2997ff; }
+    .zone-indicator.operations { background: #30d158; color: #30d158; }
+    
+    @keyframes zonePulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+    
+    .zone-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-tertiary);
+    }
+    
+    .zone-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+    }
+    
+    /* Workstation Grid */
+    .workstation-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    
+    .workstation-row:last-child { margin-bottom: 0; }
+    
+    /* Workstation Card */
+    .workstation {
+      background: linear-gradient(160deg, rgba(25, 25, 38, 0.95), rgba(15, 15, 24, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .workstation::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent-primary);
+      opacity: 0.25;
+      transition: all 0.4s ease;
+    }
+    
+    .workstation:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(41, 151, 255, 0.35);
+      box-shadow: 
+        0 28px 56px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(41, 151, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    
+    .workstation:hover::before { opacity: 1; height: 4px; }
+    
+    .workstation.active {
+      border-color: var(--accent-primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 30px rgba(41, 151, 255, 0.12);
+    }
+    
+    .workstation.active::before {
+      background: linear-gradient(90deg, var(--accent-primary), #5aaaff);
+      opacity: 1;
+    }
+    
+    .workstation.working {
+      border-color: var(--accent-warning);
+    }
+    
+    .workstation.working::before {
+      background: var(--accent-warning);
+      opacity: 1;
+      animation: workingPulse 1.2s ease-in-out infinite;
+    }
+    
+    @keyframes workingPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    .workstation.error { border-color: var(--accent-danger); }
+    .workstation.error::before { background: var(--accent-danger); opacity: 1; }
+    .workstation.ready { opacity: 0.8; }
+    
+    /* Monitor Section */
+    .ws-monitor {
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 16px 18px;
+      position: relative;
+    }
+    
+    .ws-monitor::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    
+    .ws-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .ws-agent-info {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    
+    .ws-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, rgba(41, 151, 255, 0.12), rgba(191, 90, 242, 0.08));
+      border: 1px solid rgba(41, 151, 255, 0.15);
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.4s var(--spring-smooth);
+    }
+    
+    .workstation:hover .ws-avatar {
+      transform: scale(1.12) rotate(5deg);
+      border-color: rgba(41, 151, 255, 0.35);
+    }
+    
+    .ws-name-role { display: flex; flex-direction: column; }
+    .ws-name { font-size: 14px; font-weight: 600; color: #fff; letter-spacing: 0.3px; }
+    .ws-role { font-size: 10px; color: var(--text-tertiary); }
+    
+    /* Status Light */
+    .ws-status-light {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 11px;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 18px;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    
+    .ws-led {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+      transition: all 0.3s ease;
+    }
+    
+    .workstation.active .ws-led {
+      background: var(--accent-primary);
+      box-shadow: 0 0 10px var(--accent-primary);
+    }
+    
+    .workstation.working .ws-led {
+      background: var(--accent-warning);
+      box-shadow: 0 0 10px var(--accent-warning);
+      animation: ledBlink 1s ease-in-out infinite;
+    }
+    
+    .workstation.error .ws-led {
+      background: var(--accent-danger);
+      box-shadow: 0 0 10px var(--accent-danger);
+    }
+    
+    @keyframes ledBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    
+    /* Desk Section */
+    .ws-desk {
+      padding: 14px 18px;
+      background: linear-gradient(180deg, rgba(30, 30, 45, 0.4) 0%, rgba(20, 20, 32, 0.6) 100%);
+    }
+    
+    .ws-task {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 10px;
+    }
+    
+    .ws-stats {
+      display: flex;
+      gap: 14px;
+      font-size: 10px;
+      color: var(--text-tertiary);
+    }
+    
+    .ws-stat {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    /* Desk Items - Subtle decorative elements */
+    .ws-desk-items {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    
+    .desk-item {
+      width: 24px; height: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      opacity: 0.5;
+    }
+
+    /* Legacy agent-grid for compatibility */
+    .agent-grid { display: none; }
+      color: var(--accent-danger);
+    }
+    
+    .agent-status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    
+    .agent-card.working .agent-status-dot {
+      animation: blink 1s ease-in-out infinite;
+    }
+    
+    @keyframes blink { 
+      0%, 100% { opacity: 1; } 
+      50% { opacity: 0.3; } 
+    }
+    
+    .agent-task {
+      font-size: 13px; 
+      color: var(--text-secondary);
+      margin-top: 14px;
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .agent-stats { 
+      display: flex; 
+      gap: 16px; 
+      margin-top: 12px; 
+      font-size: 11px; 
+      color: var(--text-tertiary); 
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       MISSION LOG
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .task-list { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px; 
+      max-height: 300px; 
+      overflow-y: auto; 
+    }
+    
+    .task-list::-webkit-scrollbar { width: 4px; }
+    .task-list::-webkit-scrollbar-track { background: transparent; }
+    .task-list::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 2px; opacity: 0.3; }
+    
+    .task-item {
+      display: flex; 
+      align-items: center; 
+      gap: 14px;
+      padding: 16px 18px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
+    }
+    
+    .task-item:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--glass-border-hover);
+      transform: translateX(4px);
+    }
+    
+    .task-status { 
+      width: 8px; height: 8px; 
+      border-radius: 50%; 
+      flex-shrink: 0;
+    }
+    
+    .task-status.pending { 
+      background: var(--text-tertiary); 
+    }
+    
+    .task-status.working { 
+      background: var(--accent-warning); 
+      box-shadow: 0 0 10px rgba(255, 159, 10, 0.5);
+      animation: taskPulse 1s ease-in-out infinite;
+    }
+    
+    @keyframes taskPulse { 
+      0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 159, 10, 0.5); } 
+      50% { transform: scale(1.3); box-shadow: 0 0 15px rgba(255, 159, 10, 0.8); } 
+    }
+    
+    .task-status.done { 
+      background: var(--accent-tertiary); 
+      box-shadow: 0 0 10px rgba(48, 209, 88, 0.5);
+    }
+    
+    .task-status.error { 
+      background: var(--accent-danger); 
+      box-shadow: 0 0 10px rgba(255, 69, 58, 0.5);
+    }
+    
+    .task-content { flex: 1; }
+    
+    .task-name { 
+      font-size: 14px; 
+      font-weight: 500;
+    }
+    
+    .task-meta { 
+      font-size: 11px; 
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       FUTURE ACTIONS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .future-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .action-input-wrap {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .action-input {
+      flex: 1;
+      padding: 18px 24px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.4s var(--spring-smooth);
+    }
+    
+    .action-input:focus {
+      border-color: rgba(41, 151, 255, 0.5);
+      box-shadow: 0 0 30px rgba(41, 151, 255, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    .action-input::placeholder {
+      color: var(--text-tertiary);
+    }
+    
+    .action-add-btn {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--accent-primary), #0a7aff);
+      border: none;
+      border-radius: var(--radius-lg);
+      color: white;
+      font-size: 28px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.4s var(--spring-smooth);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(41, 151, 255, 0.3);
+    }
+    
+    .action-add-btn:hover {
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: 0 12px 36px rgba(41, 151, 255, 0.4);
+    }
+    
+    .action-add-btn:active {
+      transform: scale(0.95);
+      transition: all 0.15s ease;
+    }
+    
+    .future-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    
+    .future-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
+    }
+    
+    .future-item:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(191, 90, 242, 0.4);
+      transform: translateX(4px);
+    }
+    
+    .future-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--accent-secondary);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s var(--spring-smooth);
+      flex-shrink: 0;
+    }
+    
+    .future-checkbox:hover {
+      background: rgba(191, 90, 242, 0.2);
+      transform: scale(1.1);
+    }
+    
+    .future-checkbox.checked {
+      background: var(--accent-secondary);
+      transform: scale(1.1);
+    }
+    
+    .future-checkbox.checked::after {
+      content: '✓';
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .future-text {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    
+    .future-item.completed .future-text {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+    
+    .future-delete {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      border: 1px solid var(--accent-danger);
+      border-radius: 10px;
+      color: var(--accent-danger);
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s var(--spring-smooth);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .future-item:hover .future-delete {
+      opacity: 1;
+    }
+    
+    .future-delete:hover {
+      background: var(--accent-danger);
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-tertiary);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    
+    .footer span {
+      color: var(--accent-primary);
+    }
+    
+    /* Loading */
+    .loading { 
+      display: inline-block; 
+      width: 10px; height: 10px; 
+      border: 2px solid var(--text-tertiary); 
+      border-top-color: var(--accent-primary); 
+      border-radius: 50%; 
+      animation: spin 0.8s linear infinite; 
+    }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       RESPONSIVE DESIGN
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    @media (max-width: 1024px) {
+      .card.span-3, .card.span-4 { grid-column: span 6; }
+      .card.span-5, .card.span-7 { grid-column: span 12; }
+      .card.span-6, .card.span-8 { grid-column: span 12; }
+      
+      .hero { flex-direction: column; text-align: center; }
+      .hero-content { flex-direction: column; }
+      .model-select-wrap {
+      position: relative;
+    }
+    
+    .model-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+      min-width: 180px;
+    }
+    
+    .model-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 10px rgba(41, 151, 255, 0.3);
+    }
+    
+    .hero-stats { width: 100%; justify-content: center; }
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 16px; }
+      
+      .hero { padding: 20px; margin-bottom: 24px; }
+      .hero-text h1 { font-size: 26px; }
+      .hero-stat { padding: 10px 14px; }
+      
+      .card.span-3, .card.span-4, .card.span-5, .card.span-6, .card.span-7, .card.span-8 { grid-column: span 12; }
+      
+      .agent-grid { grid-template-columns: 1fr; }
+      
+      .actions-grid { grid-template-columns: repeat(2, 1fr); }
+      
+      .health-grid { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 480px) {
+      .actions-grid { grid-template-columns: 1fr; }
+      
+      .model-select-wrap {
+      position: relative;
+    }
+    
+    .model-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+      min-width: 180px;
+    }
+    
+    .model-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 10px rgba(41, 151, 255, 0.3);
+    }
+    
+    .hero-stats { flex-direction: column; }
+      .hero-stat { width: 100%; justify-content: center; }
+    }
+    
+    /* iOS specific */
+    @supports (-webkit-touch-callout: none) {
+      
+    /* Force no horizontal scroll */
+    * {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+    
+    /* Container fixes */
+    .container {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    /* Grid mobile fix */
+    @media (max-width: 768px) {
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      
+      .card {
+        width: 100%;
+        margin: 0;
+      }
+      
+      .agent-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      
+      .action-btn {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+    }
+
+
+html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    
+    body { min-height: -webkit-fill-available; }
+    }
+    
+    /* Animations on load - Apple smooth entrance */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .card {
+      animation: fadeInUp 0.7s var(--spring-smooth) backwards;
+    }
+    
+    .card:nth-child(1) { animation-delay: 0.08s; }
+    .card:nth-child(2) { animation-delay: 0.12s; }
+    .card:nth-child(3) { animation-delay: 0.16s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+    .card:nth-child(5) { animation-delay: 0.24s; }
+    .card:nth-child(6) { animation-delay: 0.28s; }
+    .card:nth-child(7) { animation-delay: 0.32s; }
+    .card:nth-child(8) { animation-delay: 0.36s; }
+    .card:nth-child(9) { animation-delay: 0.4s; }
+    /* Agent Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s var(--spring-smooth);
+      padding: 20px;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-container {
+      background: linear-gradient(145deg, rgba(30, 30, 45, 0.98), rgba(15, 15, 25, 0.99));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow: hidden;
+      transform: scale(0.85) translateY(30px) rotateX(-5deg);
+      transition: transform 0.5s var(--spring-smooth), opacity 0.3s ease;
+      opacity: 0;
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.5),
+        0 0 120px rgba(41, 151, 255, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0) rotateX(0);
+      opacity: 1;
+    }
+    
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(41, 151, 255, 0.05), transparent);
+    }
+    
+    .modal-agent-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .modal-agent-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 8px 24px rgba(41, 151, 255, 0.3);
+    }
+    
+    .modal-agent-title h3 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    
+    .modal-agent-title .model-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(41, 151, 255, 0.15);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--primary-blue);
+    }
+    
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      transform: rotate(90deg) scale(1.1);
+    }
+    
+    .modal-
+    /* Force no horizontal scroll */
+    * {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+    
+    /* Container fixes */
+    .container {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    /* Grid mobile fix */
+    @media (max-width: 768px) {
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      
+      .card {
+        width: 100%;
+        margin: 0;
+      }
+      
+      .agent-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      
+      .action-btn {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+    }
+
+
+html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    
+    body {
+      padding: 24px 28px;
+      max-height: calc(90vh - 140px);
+      overflow-y: auto;
+    }
+    
+    .modal-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .modal-stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      text-align: center;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .modal-stat-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+    }
+    
+    .modal-stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 4px;
+    }
+    
+    .modal-stat-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .modal-section {
+      margin-bottom: 24px;
+    }
+    
+    .modal-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    
+    .modal-definition {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-definition:focus-within {
+      border-color: rgba(41, 151, 255, 0.3);
+      box-shadow: 0 0 20px rgba(41, 151, 255, 0.1);
+    }
+    
+    .modal-definition textarea {
+      width: 100%;
+      min-height: 150px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      resize: vertical;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    /* Tools Section */
+    .modal-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .modal-tool-tag {
+      padding: 8px 14px;
+      background: rgba(191, 90, 242, 0.1);
+      border: 1px solid rgba(191, 90, 242, 0.2);
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      color: #bf5af2;
+      font-family: "JetBrains Mono", monospace;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .modal-tool-tag:hover {
+      background: rgba(191, 90, 242, 0.2);
+      transform: scale(1.05);
+    }
+    
+    .modal-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .modal-suggestion-tag {
+      padding: 10px 18px;
+      background: rgba(48, 209, 88, 0.1);
+      border: 1px solid rgba(48, 209, 88, 0.2);
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      color: var(--accent-tertiary);
+      cursor: pointer;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .modal-suggestion-tag:hover {
+      background: rgba(48, 209, 88, 0.2);
+      transform: translateY(-2px) scale(1.05);
+    }
+    
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      padding: 20px 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-btn {
+      flex: 1;
+      padding: 16px 24px;
+      border-radius: var(--radius-lg);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s var(--spring-smooth);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .modal-btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .modal-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .modal-btn-primary {
+      background: linear-gradient(135deg, var(--accent-primary), #5aaaff);
+      border: none;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(41, 151, 255, 0.3);
+    }
+    
+    .modal-btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 36px rgba(41, 151, 255, 0.4);
+    }
+    
+    .modal-btn:active {
+      transform: scale(0.97);
+      transition: all 0.15s ease;
+    }
+    
+    @media (max-width: 600px) {
+      .modal-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Ripple Effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: ripple-anim 0.6s var(--spring-smooth);
+      pointer-events: none;
+    }
+    
+    @keyframes ripple-anim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* Smooth scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(41, 151, 255, 0.3);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(41, 151, 255, 0.5);
+    }
+    
+    /* Smooth Selection */
+    ::selection {
+      background: rgba(41, 151, 255, 0.3);
+      color: #fff;
+    }
+    
+    /* Progress bar animation */
+    .progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: 2px;
+      transition: width 1s var(--spring-smooth);
+    }
+    
+    /* Smooth state transitions */
+    .smooth-transition {
+      transition: all 0.4s var(--spring-smooth);
+    }
+
+    /* Mobile Optimization */
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      .hero { padding: 16px; flex-direction: column; gap: 16px; }
+      .hero-content { flex-direction: column; text-align: center; }
+      .hero-avatar { width: 60px; height: 60px; font-size: 28px; }
+      .hero-text h1 { font-size: 28px; }
+      .hero-stats { flex-wrap: wrap; justify-content: center; gap: 12px; }
+      .hero-stat { padding: 8px 12px; }
+      .grid { gap: 12px; }
+      .card { padding: 14px; }
+      .card.span-3, .card.span-4, .card.span-6, .card.span-8, .card.span-12 { grid-column: span 12; }
+      .agent-grid { grid-template-columns: 1fr; }
+      .repo-grid { grid-template-columns: 1fr; }
+      .modal-container { max-width: 95%; margin: 10px; }
+      .modal-header { padding: 16px; }
+      .modal-
+    /* Force no horizontal scroll */
+    * {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+    
+    /* Container fixes */
+    .container {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    /* Grid mobile fix */
+    @media (max-width: 768px) {
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      
+      .card {
+        width: 100%;
+        margin: 0;
+      }
+      
+      .agent-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      
+      .action-btn {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+    }
+
+
+html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    
+    body { padding: 16px; }
+      .modal-stats-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stat-icon { display: none; }
+      .model-select { min-width: 100px; font-size: 11px; }
+      .tagline { font-size: 12px; }
+      footer { padding: 16px; font-size: 11px; }
+    }
+    
+    /* Reduce background effects on mobile for performance */
+    @media (max-width: 480px) {
+      body::before { display: none; }
+      
+    /* Force no horizontal scroll */
+    * {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+    
+    /* Container fixes */
+    .container {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    /* Grid mobile fix */
+    @media (max-width: 768px) {
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      
+      .card {
+        width: 100%;
+        margin: 0;
+      }
+      
+      .agent-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      
+      .action-btn {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+    }
+
+
+html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    
+    body { background-image: none; }
+    }
+
+
+    .modal-verbose textarea {
+      width: 100%;
+      min-height: 100px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-verbose textarea:focus {
+      border-color: rgba(41, 151, 255, 0.3);
+      box-shadow: 0 0 20px rgba(41, 151, 255, 0.1);
+    }
+
+
+    .modal-model-select {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .modal-model-select label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .modal-model-select .model-select {
+      flex: 1;
+      max-width: 200px;
+    }
+
+
+    .task-item.clickable {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .task-item.clickable:hover {
+      background: rgba(41, 151, 255, 0.1);
+      border-color: rgba(41, 151, 255, 0.3);
+    }
+    
+    .task-status-detail {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 4px;
+    }
+
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .kpi-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+    
+    .kpi-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+
+    .agent-card.ready {
+      opacity: 0.85;
+    }
+    
+    .agent-card.ready .agent-status {
+      background: rgba(41, 151, 255, 0.1);
+      color: var(--primary-blue);
+    }
+    
+    .agent-card.ready .agent-status-dot {
+      background: var(--primary-blue);
+      box-shadow: 0 0 8px var(--primary-blue);
+    }
+
+
+    .cron-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .cron-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+    }
+    
+    .cron-icon {
+      font-size: 24px;
+    }
+    
+    .cron-info {
+      flex: 1;
+    }
+    
+    .cron-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    
+    .cron-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .cron-select {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    @media (max-width: 768px) {
+      .cron-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         HERO STATUS BANNER
+    ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-avatar">🤖</div>
+        <div class="hero-text">
+          <h1>JARVIS</h1>
+          <div class="tagline">Command Center v2.0 — Online & Ready</div>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-icon">💰</div>
+          <div>
+            <div class="hero-stat-value"><span id="budget">$20.00</span><span id="budget-spent" style="font-size:10px;opacity:0.5;margin-left:4px"></span></div>
+            <div class="hero-stat-label">Budget</div>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-icon">🧠</div>
+          <div>
+            <div class="hero-stat-value"><select id="model-select" class="model-select" onchange="changeModel(this.value)">
+            <optgroup label="Fast & Efficient">
+              <option value="openrouter/minimax/minimax-m2.5" selected>MiniMax M2.5</option>
+              <option value="openrouter/google/gemini-2.0-flash-exp">Gemini 2.0 Flash</option>
+              <option value="openrouter/qwen/qwen2.5-7b-instruct">Qwen 2.5 7B</option>
+            </optgroup>
+            <optgroup label="Reasoning & Research">
+              <option value="openrouter/deepseek/deepseek-r1">DeepSeek R1</option>
+              <option value="openrouter/deepseek/deepseek-chat">DeepSeek Chat</option>
+              <option value="openrouter/qwen/qwen-plus">Qwen Plus</option>
+            </optgroup>
+            <optgroup label="Coding">
+              <option value="openrouter/qwen/qwen2.5-coder-32b-instruct">Qwen Coder 32B</option>
+              <option value="openrouter/anthropic/claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
+              <option value="openrouter/anthropic/claude-opus-4-20251114">Claude Opus 4.6</option>
+            </optgroup>
+            <optgroup label="GPT Models">
+              <option value="openrouter/openai/gpt-4o">GPT-4o</option>
+              <option value="openrouter/openai/gpt-4o-mini">GPT-4o Mini</option>
+              <option value="openrouter/openai/o1">OpenAI o1</option>
+              <option value="openrouter/openai/o1-mini">OpenAI o1 Mini</option>
+            </optgroup>
+            <optgroup label="Gemini">
+              <option value="openrouter/google/gemini-2.0-pro-exp-0520">Gemini 2.0 Pro</option>
+              <option value="openrouter/google/gemini-1.5-pro">Gemini 1.5 Pro</option>
+              <option value="openrouter/google/gemini-1.5-flash-8b">Gemini 1.5 Flash</option>
+            </optgroup>
+            <optgroup label="Premium">
+              <option value="openrouter/openai/gpt-4-turbo">GPT-4 Turbo</option>
+              <option value="openrouter/anthropic/claude-3.5-sonnet-20241022">Claude 3.5 Sonnet</option>
+              <option value="openrouter/meta-llama/llama-3.3-70b-instruct">Llama 3.3 70B</option>
+            </optgroup>
+          </select></div>
+            <div class="hero-stat-label">Model</div>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-icon">⏱️</div>
+          <div>
+            <div class="hero-stat-value" id="uptime">00:00:00</div>
+            <div class="hero-stat-label">Uptime</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-icon">💭</div>
+            <div>
+              <div class="hero-stat-value">
+                <select id="thinking-level" class="model-select" style="min-width:80px" onchange="changeThinking(this.value)">
+                  <option value="0">Off</option>
+                  <option value="1">Low</option>
+                  <option value="2" selected>Med</option>
+                  <option value="3">High</option>
+                  <option value="4">Max</option>
+                </select>
+              </div>
+              <div class="hero-stat-label">Think</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="grid">
+      <!-- ═══════════════════════════════════════════════════════════════════
+           SYSTEM HEALTH
+      ═══════════════════════════════════════════════════════════════════════ -->
+      <div class="card span-3">
+        <div class="card-header">
+          <span class="card-title">Neural Core</span>
+          <span class="card-icon">🧠</span>
+        </div>
+        <div class="health-grid" style="grid-template-columns: 1fr;">
+          <div class="health-item">
+            <div class="health-value green">98%</div>
+            <div class="health-label">Ready</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Memory -->
+      <div class="card span-3">
+        <div class="card-header">
+          <span class="card-title">Capacity</span>
+          <span class="card-icon">💾</span>
+        </div>
+        <div class="health-grid" style="grid-template-columns: 1fr;">
+          <div class="health-item">
+            <div class="health-value purple">∞</div>
+            <div class="health-label">Unlimited</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Active Agents -->
+      <div class="card span-3">
+        <div class="card-header">
+          <span class="card-title">Active</span>
+          <span class="card-icon">⚡</span>
+        </div>
+        <div class="health-grid" style="grid-template-columns: 1fr;">
+          <div class="health-item">
+            <div class="health-value" id="active-count">2</div>
+            <div class="health-label">Agents</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Actions -->
+      <div class="card span-3">
+        <div class="card-header">
+          <span class="card-title">Quick Actions</span>
+          <span class="card-icon">⚡</span>
+        </div>
+        <div class="actions-grid" style="grid-template-columns: repeat(2, 1fr); gap: 8px;">
+          <button class="action-btn" onclick="triggerAction('spawn-researcher')">
+            <span class="icon">🤡</span> Research
+          </button>
+          <button class="action-btn" onclick="triggerAction('spawn-coder')">
+            <span class="icon">💻</span> Code
+          </button>
+          <button class="action-btn" onclick="triggerAction('spawn-frontend')">
+            <span class="icon">🎨</span> Frontend
+          </button>
+          <button class="action-btn" onclick="triggerAction('health')">
+            <span class="icon">💓</span> Health
+          </button>
+        </div>
+      </div>
+      
+      <!-- ═══════════════════════════════════════════════════════════════════
+           AGENT SWARM
+      ═══════════════════════════════════════════════════════════════════════ -->
+      <div class="card span-8">
+        <div class="card-header">
+          <span class="card-title">Agent Swarm</span>
+          <span class="card-icon">👥</span>
+        </div>
+        <div class="agent-grid" id="agent-grid">
+          <div class="agent-card ready" data-agent="researcher">
+            <div class="agent-header">
+              <div class="agent-icon">🤡</div>
+              <div>
+                <div class="agent-name">Researcher</div>
+                <div class="agent-role">Web search & analysis</div>
+              </div>
+            </div>
+            <div class="agent-status ready">
+              <span class="agent-status-dot"></span>
+              Ready
+            </div>
+            <div class="agent-task">— DeepSeek R1 —</div>
+            <div class="agent-stats">
+              <span>✓ 2 completed</span>
+            </div>
+          </div>
+          
+          <div class="agent-card ready" data-agent="coder">
+            <div class="agent-header">
+              <div class="agent-icon">💻</div>
+              <div>
+                <div class="agent-name">Coder</div>
+                <div class="agent-role">Python, SQL & automation</div>
+              </div>
+            </div>
+            <div class="agent-status ready">
+              <span class="agent-status-dot"></span>
+              Ready
+            </div>
+            <div class="agent-task">— Qwen2.5 Coder —</div>
+            <div class="agent-stats">
+              <span>✓ 1 completed</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="frontend">
+            <div class="agent-header">
+              <div class="agent-icon">🎨</div>
+              <div>
+                <div class="agent-name">Frontend</div>
+                <div class="agent-role">UI/UX & dashboard</div>
+              </div>
+            </div>
+            <div class="agent-status">Ready</div>
+            <div class="agent-task">— Claude Sonnet 4 —</div>
+            <div class="agent-stats">
+              <span>Ready for overhaul</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="security">
+            <div class="agent-header">
+              <div class="agent-icon">🛡️</div>
+              <div>
+                <div class="agent-name">Security</div>
+                <div class="agent-role">Audits & hardening</div>
+              </div>
+            </div>
+            <div class="agent-status">Ready</div>
+            <div class="agent-task">— DeepSeek R1 —</div>
+            <div class="agent-stats">
+              <span>2 warnings found</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="writer">
+            <div class="agent-header">
+              <div class="agent-icon">✍️</div>
+              <div>
+                <div class="agent-name">Writer</div>
+                <div class="agent-role">Copy & documentation</div>
+              </div>
+            </div>
+            <div class="agent-status">Ready</div>
+            <div class="agent-task">— MiniMax M2.5 —</div>
+            <div class="agent-stats">
+              <span>Available</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="analyst">
+            <div class="agent-header">
+              <div class="agent-icon">📊</div>
+              <div>
+                <div class="agent-name">Analyst</div>
+                <div class="agent-role">Data & reporting</div>
+              </div>
+            </div>
+            <div class="agent-status">Ready</div>
+            <div class="agent-task">— Qwen Plus —</div>
+            <div class="agent-stats">
+              <span>Available</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="scheduler">
+            <div class="agent-header">
+              <div class="agent-icon">⏰</div>
+              <div>
+                <div class="agent-name">Scheduler</div>
+                <div class="agent-role">Calendar & reminders</div>
+              </div>
+            </div>
+            <div class="agent-status">Ready</div>
+            <div class="agent-task">— Morning brief active —</div>
+            <div class="agent-stats">
+              <span>7:30 AM daily</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+            <!-- ═══════════════════════════════════════════════════════════════════
+           CRON JOBS
+      ═══════════════════════════════════════════════════════════════════ -->
+      <div class="card span-12">
+        <div class="card-header">
+          <span class="card-title">Scheduled Jobs</span>
+          <span class="card-icon">⏰</span>
+        </div>
+        <div class="cron-grid">
+          <div class="cron-item">
+            <div class="cron-icon">☀️</div>
+            <div class="cron-info">
+              <div class="cron-name">Morning Brief</div>
+              <div class="cron-desc">Weather, calendar, status</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('morning-brief', this.value)">
+                <option value="30 7 * * *">7:30 AM</option>
+                <option value="0 8 * * *">8:00 AM</option>
+                <option value="0 9 * * *">9:00 AM</option>
+              </select>
+            </div>
+          </div>
+          <div class="cron-item">
+            <div class="cron-icon">📊</div>
+            <div class="cron-info">
+              <div class="cron-name">Dashboard Sync</div>
+              <div class="cron-desc">Tasks, agents, status</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('dashboard-sync', this.value)">
+                <option value="0 */2 * * *">Every 2 hours</option>
+                <option value="0 */1 * * *">Every hour</option>
+                <option value="0 */4 * * *">Every 4 hours</option>
+              </select>
+            </div>
+          </div>
+          <div class="cron-item">
+            <div class="cron-icon">🔄</div>
+            <div class="cron-info">
+              <div class="cron-name">Repo Sync</div>
+              <div class="cron-desc">Journal, exchange files</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('repo-sync', this.value)">
+                <option value="0 */2 * * *">Every 2 hours</option>
+                <option value="0 */1 * * *">Every hour</option>
+              </select>
+            </div>
+          </div>
+          <div class="cron-item">
+            <div class="cron-icon">📓</div>
+            <div class="cron-info">
+              <div class="cron-name">Daily Journal</div>
+              <div class="cron-desc">Summarize day</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('journal', this.value)">
+                <option value="0 23 * * *">11:00 PM</option>
+                <option value="0 22 * * *">10:00 PM</option>
+                <option value="0 20 * * *">8:00 PM</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════════════════
+           REPOSITORIES
+      ═══════════════════════════════════════════════════════════════════ -->
+      <div class="card span-12">
+        <div class="card-header">
+          <span class="card-title">Repositories</span>
+          <span class="card-icon">📚</span>
+        </div>
+        <div class="repo-grid">
+          <div class="repo-card" onclick="window.open('https://github.com/aaronmaziarz/jarvis-command-center','_blank')">
+            <div class="repo-icon">🎛️</div>
+            <div class="repo-name">jarvis-command-center</div>
+            <div class="repo-desc">Main dashboard and project code</div>
+            <div class="repo-link">View →</div>
+          </div>
+          <div class="repo-card" onclick="window.open('https://github.com/aaronmaziarz/jarvis-journal','_blank')">
+            <div class="repo-icon">📓</div>
+            <div class="repo-name">jarvis-journal</div>
+            <div class="repo-desc">Daily journal and session summaries</div>
+            <div class="repo-link">View →</div>
+          </div>
+          <div class="repo-card" onclick="window.open('https://github.com/aaronmaziarz/jarvis-exchange','_blank')">
+            <div class="repo-icon">📁</div>
+            <div class="repo-name">jarvis-exchange</div>
+            <div class="repo-desc">File exchange between you and Jarvis</div>
+            <div class="repo-link">View →</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ═══════════════════════════════════════════════════════════════════
+           MISSION LOG
+      ═══════════════════════════════════════════════════════════════════════ -->
+      <div class="card span-4">
+        <div class="card-header">
+          <span class="card-title">Mission Log</span>
+          <span class="card-icon">📋</span>
+        </div>
+        <div class="task-list" id="task-list">
+          <div class="task-item">
+            <div class="task-status done"></div>
+            <div class="task-content">
+              <div class="task-name">Test sub-agent spawning</div>
+              <div class="task-meta">Completed • 12s</div>
+            </div>
+          </div>
+          <div class="task-item">
+            <div class="task-status done"></div>
+            <div class="task-content">
+              <div class="task-name">Build command center UI</div>
+              <div class="task-meta">Completed • Jarvis</div>
+            </div>
+          </div>
+          <div class="task-item">
+            <div class="task-status working"></div>
+            <div class="task-content">
+              <div class="task-name">UI optimization</div>
+              <div class="task-meta">In Progress • Phase 1.5</div>
+            </div>
+          </div>
+          <div class="task-item">
+            <div class="task-status pending"></div>
+            <div class="task-content">
+              <div class="task-name">GitHub integration</div>
+              <div class="task-meta">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ═══════════════════════════════════════════════════════════════════
+           FUTURE ACTIONS
+      ═══════════════════════════════════════════════════════════════════════ -->
+      <div class="card span-12">
+        <div class="card-header">
+          <span class="card-title">Future Actions</span>
+          <span class="card-icon">🚀</span>
+        </div>
+        <div class="future-actions">
+          <div class="action-input-wrap">
+            <input type="text" id="new-action" class="action-input" placeholder="Add new action..." onkeypress="if(event.key==='Enter')addAction()">
+            <button class="action-add-btn" onclick="addAction()">+</button>
+          </div>
+          <div class="future-list" id="future-list">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      JARVIS <span>//</span> COMMAND CENTER <span>//</span> EST. 2026
+    </div>
+  </div>
+  
+  <!-- Agent Detail Modal -->
+  <div class="modal-overlay" id="agent-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-agent-info">
+          <div class="modal-agent-icon" id="modal-icon">🤡</div>
+          <div class="modal-agent-title">
+            <h3 id="modal-name">Researcher</h3>
+            <span class="model-badge" id="modal-model">DeepSeek R1</span>
+          </div>
+        </div>
+        <div class="modal-model-select">
+          <label>Switch Model:</label>
+          <select id="agent-model-select" class="model-select" onchange="changeAgentModel(this.value)">
+            <option value="openrouter/minimax/minimax-m2.5">MiniMax M2.5</option>
+            <option value="openrouter/deepseek/deepseek-r1">DeepSeek R1</option>
+            <option value="openrouter/qwen/qwen-plus">Qwen Plus</option>
+            <option value="openrouter/anthropic/claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
+            <option value="openrouter/openai/gpt-4o">GPT-4o</option>
+          </select>
+            <option value="minimax/m2.5">MiniMax M2.5</option>
+            <option value="deepseek/r1" selected>DeepSeek R1</option>
+            <option value="qwen/plus">Qwen Plus</option>
+            <option value="anthropic/claude-sonnet">Claude Sonnet</option>
+            <option value="openai/gpt-4o">GPT-4o</option>
+          </select>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-stats-grid">
+          <div class="modal-stat-card">
+            <div class="modal-stat-value" id="modal-tasks">0</div>
+            <div class="modal-stat-label">Tasks Done</div>
+          </div>
+          <div class="modal-stat-card">
+            <div class="modal-stat-value" id="modal-spend">$0.00</div>
+            <div class="modal-stat-label">Total Spend</div>
+          </div>
+          <div class="modal-stat-card">
+            <div class="modal-stat-value" id="modal-uptime">0h</div>
+            <div class="modal-stat-label">Uptime</div>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <div class="modal-section-title">Agent Definition (Editable)</div>
+          <div class="modal-definition">
+            <textarea id="modal-definition" placeholder="Edit agent definition..."></textarea>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <div class="modal-section-title">Suggested Tasks</div>
+          <div class="modal-section">
+          <div class="modal-section-title">Tools &amp; Permissions</div>
+          <div class="modal-tools" id="modal-tools">
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <div class="modal-section-title">Suggested Tasks</div>
+          <div class="modal-section">
+          <div class="modal-section-title">Warnings</div>
+          <div class="modal-warnings" id="modal-warnings">
+            <div class="modal-warning">No warnings</div>
+          </div>
+        </div>
+        <div class="modal-suggestions" id="modal-suggestions">
+          </div>
+        <div class="modal-section">
+          <div class="modal-section-title">Verbose Output</div>
+          <div class="modal-verbose">
+            <textarea id="modal-verbose" placeholder="Recent agent run output will appear here..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="exportAgentDefinitions()">Export All</button>
+        <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="modal-btn modal-btn-primary" onclick="saveAgentDefinition()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    /* ═══════════════════════════════════════════════════════════════════════
+       JAVIS COMMAND CENTER v2.0 - DYNAMIC STATUS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    const STATUS_ENDPOINT = '/status.json';
+    const POLL_INTERVAL = 5000;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const statusBaseUrl = urlParams.get('statusUrl') || '';
+    const fullStatusUrl = statusBaseUrl + STATUS_ENDPOINT;
+    
+    // Smooth number counting animation
+    function animateNumber(element, target, duration = 1000, prefix = '', suffix = '') {
+      if (!element) return;
+      
+      const start = parseFloat(element.textContent.replace(/[^0-9.-]/g, '')) || 0;
+      const startTime = performance.now();
+      
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Ease out cubic
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = start + (target - start) * easeOut;
+        
+        if (Number.isInteger(target)) {
+          element.textContent = prefix + Math.round(current) + suffix;
+        } else {
+          element.textContent = prefix + current.toFixed(2) + suffix;
+        }
+        
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+      
+      requestAnimationFrame(update);
+    }
+    
+    // Uptime counter with smooth digit transitions
+    let seconds = 0;
+    let displayedUptime = { h: 0, m: 0, s: 0 };
+    
+    setInterval(() => {
+      seconds++;
+      const targetH = Math.floor(seconds / 3600);
+      const targetM = Math.floor((seconds % 3600) / 60);
+      const targetS = seconds % 60;
+      
+      // Smooth transition for uptime
+      const uptimeEl = document.getElementById('uptime');
+      if (uptimeEl) {
+        const h = targetH.toString().padStart(2, '0');
+        const m = targetM.toString().padStart(2, '0');
+        const s = targetS.toString().padStart(2, '0');
+        uptimeEl.textContent = `${h}:${m}:${s}`;
+      }
+    }, 1000);
+    
+    // Fetch and update status
+    async function fetchStatus() {
+      try {
+        const response = await fetch(fullStatusUrl);
+        if (!response.ok) throw new Error('Status fetch failed');
+        const data = await response.json();
+        updateDashboard(data);
+      } catch (err) {
+        console.log('Status poll:', err.message);
+      }
+    }
+    
+    function updateDashboard(data) {
+      const budgetEl = document.getElementById('budget');
+      if (budgetEl && data.budget) {
+        animateNumber(budgetEl, data.budget.remaining, 800, '$');
+      }
+      
+      const modelEl = document.getElementById('model');
+      if (modelEl && data.model) {
+        modelEl.textContent = data.model;
+      }
+      
+      const activeEl = document.getElementById('active-count');
+      if (activeEl && data.active_agent_count !== undefined) {
+        animateNumber(activeEl, data.active_agent_count, 600);
+      }
+      
+      const agentGrid = document.getElementById('agent-grid');
+      if (agentGrid && data.agents) {
+        updateAgentCards(agentGrid, data.agents);
+      }
+    }
+    
+    function updateAgentCards(grid, agents) {
+      const agentOrder = ['researcher', 'coder', 'writer', 'analyst'];
+      
+      agentOrder.forEach(agentId => {
+        const card = grid.querySelector(`[data-agent="${agentId}"]`);
+        if (!card || !agents[agentId]) return;
+        
+        const agentData = agents[agentId];
+        const statusEl = card.querySelector('.agent-status');
+        const taskEl = card.querySelector('.agent-task');
+        const statsEl = card.querySelector('.agent-stats');
+        
+        if (statusEl) {
+          const dot = statusEl.querySelector('.agent-status-dot');
+          statusEl.innerHTML = `${dot ? '<span class="agent-status-dot"></span>' : ''} ${agentData.status}`;
+        }
+        
+        if (taskEl) {
+          taskEl.textContent = agentData.task || '— Awaiting command —';
+        }
+        
+        if (statsEl) {
+          statsEl.innerHTML = `<span>✓ ${agentData.completed} completed</span><span>✗ ${agentData.failed} failed</span>`;
+        }
+        
+        card.classList.remove('active', 'working', 'error', 'planned');
+        if (agentData.status === 'working') {
+          card.classList.add('working');
+        } else if (agentData.status === 'active') {
+          card.classList.add('active');
+        } else if (agentData.status === 'error') {
+          card.classList.add('error');
+        } else if (agentData.status === 'offline') {
+          card.classList.add('planned');
+        }
+      });
+    }
+    
+    // Start polling
+    fetchStatus();
+    setInterval(fetchStatus, POLL_INTERVAL);
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       FUTURE ACTIONS MANAGEMENT
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    let futureActions = JSON.parse(localStorage.getItem('futureActions') || '[]');
+    
+    function renderFutureActions() {
+      const list = document.getElementById('future-list');
+      list.innerHTML = '';
+      futureActions.forEach((action, index) => {
+        const item = document.createElement('div');
+        item.className = `future-item ${action.completed ? 'completed' : ''}`;
+        item.innerHTML = `
+          <div class="future-checkbox ${action.completed ? 'checked' : ''}" onclick="toggleAction(${index})"></div>
+          <div class="future-text">${action.text}</div>
+          <button class="future-delete" onclick="deleteAction(${index})">×</button>
+        `;
+        list.appendChild(item);
+      });
+    }
+    
+    function addAction() {
+      const input = document.getElementById('new-action');
+      const text = input.value.trim();
+      if (text) {
+        futureActions.push({ text, completed: false });
+        localStorage.setItem('futureActions', JSON.stringify(futureActions));
+        input.value = '';
+        renderFutureActions();
+      }
+    }
+    
+    function toggleAction(index) {
+      futureActions[index].completed = !futureActions[index].completed;
+      localStorage.setItem('futureActions', JSON.stringify(futureActions));
+      renderFutureActions();
+    }
+    
+    function deleteAction(index) {
+      futureActions.splice(index, 1);
+      localStorage.setItem('futureActions', JSON.stringify(futureActions));
+      renderFutureActions();
+    }
+    
+    // Initialize with default actions
+    if (futureActions.length === 0) {
+      futureActions = [
+        { text: 'Complete web browser setup (Chrome extension relay)', completed: false },
+        { text: 'Set up cloudflare tunnel for remote dashboard access', completed: false }
+      ];
+      localStorage.setItem('futureActions', JSON.stringify(futureActions));
+    }
+    
+    renderFutureActions();
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       ACTION HANDLERS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    function triggerAction(action) {
+      console.log('⚡ Action triggered:', action);
+    }
+    
+    // Touch feedback with spring physics
+    document.querySelectorAll('.action-btn, .agent-card, .hero-stat, .repo-card, .future-item').forEach(el => {
+      el.addEventListener('touchstart', function(e) {
+        this.style.transform = 'scale(0.96)';
+      });
+      el.addEventListener('touchend', function() {
+        this.style.transform = '';
+      });
+    });
+    
+    // Ripple effect for buttons
+    document.querySelectorAll('.action-btn, .modal-btn, .action-add-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+    
+    // Smooth scroll behavior
+    document.querySelectorAll('.task-list, .future-list').forEach(list => {
+      list.style.scrollBehavior = 'smooth';
+    });
+    
+    // Agent Modal Data
+    const agentData = {
+      researcher: { 
+        name: "Researcher", icon: "🤡", model: "DeepSeek R1", role: "Web search & analysis", 
+        tasksCompleted: 2, totalSpend: "$0.14", uptime: "2h 15m", status: "active",
+        definition: "You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning and research.
+
+CORE MISSION:
+Find, gather, analyze, and synthesize information from web searches, documents, and comprehensive APIs. Provide research with citations.
+
+TOOLS:
+- web_search: Search the web for current info
+- web_fetch: Grab article/content from URLs
+- memory_search: Search previous context
+
+METHODOLOGY:
+1. Clarify the research question
+2. Use multiple search queries if needed
+3. Fetch and analyze top sources
+4. Synthesize findings with pros/cons
+5. Always cite sources with URLs
+
+OUTPUT FORMAT:
+- Executive summary first
+- Bullet points for key findings
+- Pros/cons when comparing options
+- Sources cited at the end
+- Think step-by-step for complex research",
+        suggestions: ["Research AI automation tools", "Find best APIs for X", "Competitive analysis", "Summarize article"],
+        tools: ["web_search", "web_fetch", "browser", "memory_search"],
+        warnings: []
+      },
+      coder: { 
+        name: "Coder", icon: "💻", model: "Qwen2.5 Coder", role: "Python, SQL & automation", 
+        tasksCompleted: 1, totalSpend: "$0.20", uptime: "1h 45m", status: "active",
+        definition: "You are the Coder agent for Jarvis, powered by Qwen2.5 Coder 32B for code generation and debugging.
+
+CORE MISSION:
+Write clean, working code and help debug issues across Python, SQL, bash, and other languages.
+
+TOOLS:
+- exec: Run shell commands
+- read/write/edit: File operations
+- sessions_spawn: Spawn sub-agents
+
+GUIDELINES:
+1. Write modular, readable code with comments
+2. Include error handling
+3. Use type hints where helpful
+4. Test logic before presenting
+5. Think about edge cases
+6. Optimize for performance
+
+PREFERRED LANGUAGES:
+- Python for scripts/automation
+- SQL for database queries
+- Bash for shell operations
+- YAML/JSON for configs",
+        suggestions: ["Write Python script", "Debug code", "Create SQL query", "Build automation"],
+        tools: ["exec", "read", "write", "edit", "sessions_spawn"],
+        warnings: []
+      },
+      frontend: { 
+        name: "Frontend Dev", icon: "🎨", model: "Claude Sonnet 4.6", role: "UI/UX & dashboard", 
+        tasksCompleted: 1, totalSpend: "$3.00", uptime: "45m", status: "ready",
+        definition: "You are the Frontend Dev agent for Jarvis, powered by Claude Sonnet 4.6 for premium UI/UX.
+
+CORE MISSION:
+Create stunning, cutting-edge user interfaces with Apple-quality aesthetics. Think product page meets 2080 sci-fi.
+
+TOOLS:
+- read/write/edit: HTML/CSS/JS files
+- exec: Run build commands
+- browser: Test in browser
+- canvas: Render previews
+
+AESTHETIC REQUIREMENTS:
+- Apple 2080 vision: Clean, premium, minimal
+- Premium colors: #2997ff blues, #bf5af2 purples, #30d158 greens
+- Glassmorphism: backdrop-filter blur, transparency
+- Smooth animations: CSS transitions with spring physics
+- Micro-interactions: hover lifts, tap scales
+- Mobile-first responsive design
+
+TECHNICAL:
+- CSS variables for theming
+- Modern CSS (grid, flexbox, custom properties)
+- Web fonts from Google Fonts
+- Performance optimized",
+        suggestions: ["Overhaul dashboard", "Add components", "Mobile optimization", "Add animations"],
+        tools: ["read", "write", "edit", "exec", "browser", "canvas"],
+        warnings: []
+      },
+      security: { 
+        name: "Security", icon: "🛡️", model: "DeepSeek R1", role: "Audits & hardening", 
+        tasksCompleted: 1, totalSpend: "$0.07", uptime: "30m", status: "ready",
+        definition: "You are the Security Agent for Jarvis, powered by DeepSeek R1 for thorough security analysis.
+
+CORE MISSION:
+Identify security vulnerabilities, recommend hardening, and ensure the system is secure.
+
+TOOLS:
+- exec: Run security commands
+- healthcheck: Security audit skill
+- memory_search: Check configs
+- read: Review files
+
+AUDIT CATEGORIES:
+1. Network: Ports, firewall, exposure
+2. Authentication: Tokens, keys, access
+3. Files: Permissions, sensitive data
+4. Dependencies: Outdated packages
+5. Docker: Container security
+
+SEVERITY LEVELS:
+- Critical: Immediate action required
+- High: Fix within 24h
+- Medium: Fix within week
+- Low: Fix when convenient
+- Info: Note for awareness
+
+Always provide actionable remediation steps.",
+        suggestions: ["Run security audit", "Check firewall", "Review access", "Scan vulnerabilities"],
+        tools: ["exec", "healthcheck", "memory_search", "read"],
+        warnings: ["No rate limiting on gateway", "denyCommands not fully effective"]
+      },
+      writer: { 
+        name: "Writer", icon: "✍️", model: "MiniMax M2.5", role: "Copy & documentation", 
+        tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", status: "ready",
+        definition: "You are the Writer agent for Jarvis, powered by MiniMax M2.5 for natural language generation.
+
+CORE MISSION:
+Create natural, human-sounding copy that doesn't feel AI-generated. Match brand voice.
+
+TOOLS:
+- read: Review existing content
+- write: Create new content
+- edit: Revise content
+- memory_search: Check brand guidelines
+
+GUIDELINES:
+1. Write like a real person - conversational but professional
+2. Avoid corporate jargon and filler words
+3. Keep sentences varied in length
+4. Use active voice
+5. Match brand: tech-forward, modern, approachable
+6. Proofread before delivering
+
+CONTENT TYPES:
+- Landing page copy
+- Proposals
+- Technical docs
+- Blog posts
+- Email templates",
+        suggestions: ["Write landing page copy", "Draft proposal", "Edit document", "Create blog post"],
+        tools: ["read", "write", "edit", "memory_search"],
+        warnings: []
+      },
+      analyst: { 
+        name: "Analyst", icon: "📊", model: "Qwen Plus", role: "Data & reporting", 
+        tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", status: "ready",
+        definition: "You are the Analyst agent for Jarvis, powered by Qwen Plus for data processing and analysis.
+
+CORE MISSION:
+Process data, generate insights, and create reports from various sources.
+
+TOOLS:
+- exec: Run data scripts
+- read: Access data files
+- write: Create reports
+- web_fetch: Get external data
+
+CAPABILITIES:
+- Python/pandas for data manipulation
+- SQL queries
+- Report generation
+- Data visualization
+- Spreadsheet processing
+- Statistical analysis
+
+OUTPUT:
+- Clear, actionable insights
+- Visual charts/tables where helpful
+- Executive summary
+- Data-backed recommendations",
+        suggestions: ["Analyze data", "Build report", "Create dashboard", "Process spreadsheet"],
+        tools: ["exec", "read", "write", "web_fetch"],
+        warnings: []
+      },
+      scheduler: { 
+        name: "Scheduler", icon: "⏰", model: "MiniMax M2.5", role: "Calendar & reminders", 
+        tasksCompleted: 1, totalSpend: "$0.05", uptime: "6h 20m", status: "active",
+        definition: "You are the Scheduler agent for Jarvis, powered by MiniMax M2.5 for time management.
+
+CORE MISSION:
+Manage time, reminders, and scheduling via cron jobs and calendar integration.
+
+TOOLS:
+- exec: Run scheduling commands
+- cron: Schedule via openclaw
+- read/write: Manage config files
+
+CAPABILITIES:
+- Create cron jobs
+- Set reminders
+- Check schedules
+- Manage recurring tasks
+- Timezone aware (Arizona MST)
+
+CRON FORMAT:
+Standard cron: minute hour day month weekday
+Example: '0 8 * * *' = 8 AM daily",
+        suggestions: ["Set reminder", "Schedule cron", "Check calendar", "Add to-do"],
+        tools: ["exec", "cron", "read", "write"],
+        warnings: []
+      }
+    };
+    let currentAgent = null;
+    function openAgentModal(a){const ag=agentData[a];if(!ag)return;currentAgent=a;document.getElementById("modal-icon").textContent=ag.icon;document.getElementById("modal-name").textContent=ag.name;document.getElementById("modal-model").textContent=ag.model;document.getElementById("modal-tasks").textContent=ag.tasksCompleted;document.getElementById("modal-spend").textContent=ag.totalSpend;document.getElementById("modal-uptime").textContent=ag.uptime;document.getElementById("modal-definition").value=ag.definition;document.getElementById("modal-suggestions").innerHTML=ag.suggestions.map(s=>`<span class="modal-suggestion-tag">${s}</span>`).join("");document.getElementById("agent-modal").classList.add("active");document.body.style.overflow="hidden"}
+    function closeModal(){document.getElementById("agent-modal").classList.remove("active");document.body.style.overflow="";currentAgent=null}
+    function saveAgentDefinition(){if(!currentAgent)return;const d=document.getElementById("modal-definition").value;agentData[currentAgent].definition=d;localStorage.setItem("agentDefinitions",JSON.stringify(Object.fromEntries(Object.entries(agentData).map(([k,v])=>[k,v.definition]))));const b=document.querySelector(".modal-btn-primary");b.textContent="✓ Saved!";setTimeout(()=>{b.textContent="Save Changes"},2000)}; window.exportAgentDefinitions=function(){const data=JSON.stringify(agentData,null,2);const blob=new Blob([data],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="jarvis-agents-"+new Date().toISOString().split("T")[0]+".json";a.click();URL.revokeObjectURL(url)}
+    document.getElementById("agent-modal").addEventListener("click",e=>{if(e.target.id==="agent-modal")closeModal()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+    document.querySelectorAll(".agent-card").forEach(c=>{c.style.cursor="pointer";c.addEventListener("click",function(){openAgentModal(this.getAttribute("data-agent"))})});
+    const savedDefs=JSON.parse(localStorage.getItem("agentDefinitions")||"{}");Object.keys(savedDefs).forEach(k=>{if(agentData[k])agentData[k].definition=savedDefs[k]});
+
+    
+    // Task click handler for status/next steps
+    const taskRecommendations = {
+      'Test sub-agent': { status: 'Completed', next: 'Review agent logs for insights', agent: 'researcher' },
+      'Build command center UI': { status: 'Completed', next: 'Test mobile responsiveness', agent: 'frontend' },
+      'UI optimization': { status: 'In Progress', next: 'Apply Apple refinements', agent: 'frontend' },
+      'GitHub integration': { status: 'Pending', next: 'Set up auto-deploy workflow', agent: 'coder' },
+      'Research AI tools': { status: 'Completed', next: 'Install recommended skills', agent: 'researcher' },
+      'Create jarvis-journal': { status: 'Completed', next: 'Daily sync to journal', agent: 'scheduler' },
+      'Create jarvis-exchange': { status: 'Completed', next: 'Test file exchange', agent: 'scheduler' }
+    };
+    
+    function showTaskDetail(taskName) {
+      const rec = taskRecommendations[taskName] || { status: 'Unknown', next: 'Check with Jarvis', agent: 'any' };
+      alert('Task: ' + taskName + '\n\nStatus: ' + rec.status + '\nNext Step: ' + rec.next + '\n\nSuggested Agent: ' + rec.agent);
+    }
+    
+    // Make task items clickable
+    document.querySelectorAll('.task-item').forEach(item => {
+      item.classList.add('clickable');
+      item.addEventListener('click', function() {
+        const taskName = this.querySelector('.task-name').textContent;
+        showTaskDetail(taskName);
+      });
+    });
+
+
+    
+    // KPI Metrics Update (every 10 seconds)
+    async function updateKPIs() {
+      try {
+        const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
+        const data = await resp.json();
+        
+        if (data.kpis) {
+          document.getElementById('kpi-tasks-total').textContent = data.kpis.tasksTotal || 0;
+          document.getElementById('kpi-active').textContent = data.kpis.agentsActive || 0;
+          document.getElementById('kpi-pending').textContent = data.kpis.tasksPending || 0;
+          document.getElementById('kpi-tasks-today').textContent = data.kpis.tasksToday || 0;
+        }
+      } catch (e) {
+        // Use default values if status endpoint not available
+      }
+    }
+    
+    // Update KPIs every 10 seconds
+    setInterval(updateKPIs, 10000);
+    
+    // Update budget from status
+    async function updateBudget() {
+      try {
+        const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
+        const data = await resp.json();
+        
+        if (data.budget) {
+          const b = data.budget;
+          document.getElementById('budget').textContent = '$' + b.remaining.toFixed(2);
+          document.getElementById('budget-spent').textContent = '($' + b.spent.toFixed(2) + ' spent)';
+          // Also update progress bar if exists
+          const budgetProgress = document.getElementById('budget-progress');
+          if(budgetProgress) {
+            budgetProgress.style.width = b.percent_used + '%';
+          }
+        }
+      } catch (e) {
+        // Use default
+      }
+    }
+    
+    // Update budget every 30 seconds
+    setInterval(updateBudget, 30000);
+
+
+    
+    // Spawn agent with selected model
+    async function spawnAgent(agentType, customModel) {
+      const model = customModel || document.getElementById('agent-model-select')?.value || localStorage.getItem('jarvisModel') || 'minimax/m2.5';
+      console.log('🚀 Spawning', agentType, 'with model:', model);
+      
+      // Show loading state
+      const btn = event.target;
+      const originalText = btn.textContent;
+      btn.textContent = '⏳ Spawning...';
+      btn.disabled = true;
+      
+      // Save model preference
+      localStorage.setItem('agentModel_' + agentType, model);
+      
+      // In a full implementation, this would call Jarvis via API
+      // For now, alert the user
+      alert('🤖 Would spawn ' + agentType + ' with model: ' + model + '\n\nIn full implementation, this triggers Jarvis to spawn the sub-agent.');
+      
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+    
+    // Update triggerAction to use selected model
+    const originalTriggerAction = window.triggerAction || function(){};
+    window.triggerAction = function(action) {
+      console.log('⚡ Action:', action);
+      if (action.startsWith('spawn-')) {
+        const agentType = action.replace('spawn-', '');
+        spawnAgent(agentType);
+      } else {
+        originalTriggerAction(action);
+      }
+    };
+
+
+    
+    // Cron job schedule update
+    function updateCron(job, schedule) {
+      console.log('⏰ Updating cron:', job, 'to', schedule);
+      localStorage.setItem('cron_' + job, schedule);
+      
+      // Show confirmation
+      alert('⏰ Cron schedule updated for ' + job + '\nNew schedule: ' + schedule + '\n\nNote: This saves locally. Tell Jarvis to apply the change to the system.');
+    }
+    
+    // Load saved cron schedules
+    function loadCronSchedules() {
+      const jobs = ['morning-brief', 'dashboard-sync', 'repo-sync', 'journal'];
+      jobs.forEach(job => {
+        const saved = localStorage.getItem('cron_' + job);
+        if (saved) {
+          const select = document.querySelector('[onchange*="' + job + '"]');
+          if (select) select.value = saved;
+        }
+      });
+    }
+    
+    loadCronSchedules();
+
+
+    
+    // Auto track spend from agent runs
+    const modelPricing = {
+      'minimax-m2.5': { input: 0.2, output: 0.2 },  // per 1M
+      'deepseek-r1': { input: 0.07, output: 0.28 },
+      'gpt-4o': { input: 2.5, output: 10.0 },
+      'claude-sonnet-4': { input: 3.0, output: 15.0 },
+      'qwen-coder': { input: 0.2, output: 0.2 },
+      'qwen-plus': { input: 0.4, output: 1.2 }
+    };
+    
+    function calculateSpend() {
+      // Estimate from stored run data
+      let totalSpend = 0;
+      const runData = JSON.parse(localStorage.getItem('agentRuns') || '{}');
+      
+      Object.values(runData).forEach(run => {
+        const model = run.model || 'minimax-m2.5';
+        const pricing = modelPricing[model] || { input: 0.2, output: 0.2 };
+        const tokens = run.tokens || 0;
+        totalSpend += (tokens / 1_000_000) * ((pricing.input + pricing.output) / 2);
+      });
+      
+      return totalSpend;
+    }
+    
+    // Update spend display
+    function updateSpend() {
+      const spend = calculateSpend();
+      const remaining = 20 - spend;
+      document.getElementById('budget').textContent = '$' + remaining.toFixed(2);
+      if (document.getElementById('budget-spent')) {
+        document.getElementById('budget-spent').textContent = '($' + spend.toFixed(2) + ' spent)';
+      }
+    }
+    
+    setInterval(updateSpend, 30000);
+
+    console.log('🤖 Jarvis Command Center v2.0 loaded');
+    console.log('System: Online // Ready for commands');
+    function changeAgentModel(model){
+      if(!currentAgent) return;
+      console.log('⚡ Changing agent model:', currentAgent, '->', model);
+      agentData[currentAgent].model = model;
+      document.getElementById('modal-model').textContent = model.split('/').pop();
+      localStorage.setItem('agentModel_' + currentAgent, model);
+      const btn = document.querySelector('.modal-btn-primary');
+      btn.textContent = '✓ Model Changed!';
+      setTimeout(() => { btn.textContent = 'Save Changes'; }, 2000);
+    }
+    
+    function changeThinking(level){
+      const levels={0:'Off',1:'Low',2:'Medium',3:'High',4:'Max'};
+      localStorage.setItem('jarvisThinking',level);
+      console.log('🧠 Thinking level:',levels[level]);
+      alert('Thinking level set to: '+levels[level]);
+    }
+    function changeModel(model){console.log('⚡ Changing model to:',model);const m=document.getElementById('model-select');localStorage.setItem('jarvisModel',model);document.getElementById('model').querySelector('.hero-stat-value')?document.getElementById('model').querySelector('.hero-stat-value').textContent=model.split('/').pop():null;alert('Model changed to '+model+'. Jarvis will use this model for the next request.')}
+    
+    // Load saved model on startup
+    const savedModel=localStorage.getItem('jarvisModel');if(savedModel){const ms=document.getElementById('model-select');if(ms){ms.value=savedModel}}
+    const savedThinking=localStorage.getItem('jarvisThinking');if(savedThinking){const ts=document.getElementById('thinking-level');if(ts){ts.value=savedThinking}}
+    
+    console.log('Polling status from:', fullStatusUrl);
+  </script>
+</body>
+</html>
