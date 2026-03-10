@@ -173,6 +173,28 @@ Transform Jarvis into an AI operations hub that:
 
 ## Current Future Actions
 
+### X.com / Twitter Access
+Options for monitoring feeds:
+1. **Grok API (xAI)** - Native Twitter access, real-time
+   - Go to https://x.ai/api
+   - Get API key
+   - I can query for trending topics, user tweets
+   
+2. **Twitter API v2** - Official but expensive
+   - Developer portal: https://developer.twitter.com
+   - Free tier very limited
+   
+3. **Web Fetch** - Direct page scraping (may be blocked)
+   - Can try fetching public X pages
+
+**Recommended:** Grok API - it's designed for this
+
+## Current Future Actions
+
+1. [ ] Set up X.com/Twitter access (Grok API)
+
+
+
 1. [ ] Set up Codex CLI (on PC with sudo/permissions)
    - Run: npm install -g @openai/codex
    - Then: codex auth login
@@ -181,6 +203,28 @@ Transform Jarvis into an AI operations hub that:
 2. [x] OpenRouter API - works for AI calls, usage endpoint needs different scope (may need new key)
 
 ## Current Future Actions
+
+### X.com / Twitter Access
+Options for monitoring feeds:
+1. **Grok API (xAI)** - Native Twitter access, real-time
+   - Go to https://x.ai/api
+   - Get API key
+   - I can query for trending topics, user tweets
+   
+2. **Twitter API v2** - Official but expensive
+   - Developer portal: https://developer.twitter.com
+   - Free tier very limited
+   
+3. **Web Fetch** - Direct page scraping (may be blocked)
+   - Can try fetching public X pages
+
+**Recommended:** Grok API - it's designed for this
+
+## Current Future Actions
+
+1. [ ] Set up X.com/Twitter access (Grok API)
+
+
 
 1. [ ] Enable OpenRouter API for auto spend tracking
    - Go to openrouter.ai/account to get API key
