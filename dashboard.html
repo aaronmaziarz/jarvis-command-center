@@ -462,6 +462,143 @@
     .task-list::-webkit-scrollbar-track { background: transparent; }
     .task-list::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 2px; opacity: 0.3; }
     
+    /* Future Actions */
+    .future-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .action-input-wrap {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .action-input {
+      flex: 1;
+      padding: 14px 18px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    .action-input:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.15);
+    }
+    
+    .action-input::placeholder {
+      color: var(--text-muted);
+    }
+    
+    .action-add-btn {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+      border: none;
+      border-radius: 12px;
+      color: var(--bg-deep);
+      font-size: 28px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .action-add-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+    }
+    
+    .future-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .future-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .future-item:hover {
+      border-color: var(--neon-magenta);
+      background: rgba(255, 0, 170, 0.05);
+    }
+    
+    .future-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--neon-magenta);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    
+    .future-checkbox:hover {
+      background: rgba(255, 0, 170, 0.2);
+    }
+    
+    .future-checkbox.checked {
+      background: var(--neon-magenta);
+    }
+    
+    .future-checkbox.checked::after {
+      content: '✓';
+      color: var(--bg-deep);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    
+    .future-text {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .future-item.completed .future-text {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+    
+    .future-delete {
+      width: 28px;
+      height: 28px;
+      background: transparent;
+      border: 1px solid var(--neon-red);
+      border-radius: 6px;
+      color: var(--neon-red);
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .future-item:hover .future-delete {
+      opacity: 1;
+    }
+    
+    .future-delete:hover {
+      background: var(--neon-red);
+      color: var(--bg-deep);
+    }
+    
     .task-item {
       display: flex; 
       align-items: center; 
@@ -846,6 +983,22 @@
             </div>
           </div>
         </div>
+      
+      <!-- Future Actions -->
+      <div class="card span-12">
+        <div class="card-header">
+          <span class="card-title">🚀 Future Actions</span>
+          <span class="card-icon">📝</span>
+        </div>
+        <div class="future-actions">
+          <div class="action-input-wrap">
+            <input type="text" id="new-action" class="action-input" placeholder="Add new action..." onkeypress="if(event.key==='Enter')addAction()">
+            <button class="action-add-btn" onclick="addAction()">+</button>
+          </div>
+          <div class="future-list" id="future-list">
+            <!-- Dynamic actions will appear here -->
+          </div>
+        </div>
       </div>
     </div>
     
@@ -963,6 +1116,58 @@
     // Start polling
     fetchStatus(); // Initial fetch
     setInterval(fetchStatus, POLL_INTERVAL);
+    
+    // Future Actions Management
+    let futureActions = JSON.parse(localStorage.getItem('futureActions') || '[]');
+    
+    function renderFutureActions() {
+      const list = document.getElementById('future-list');
+      list.innerHTML = '';
+      futureActions.forEach((action, index) => {
+        const item = document.createElement('div');
+        item.className = `future-item ${action.completed ? 'completed' : ''}`;
+        item.innerHTML = `
+          <div class="future-checkbox ${action.completed ? 'checked' : ''}" onclick="toggleAction(${index})"></div>
+          <div class="future-text">${action.text}</div>
+          <button class="future-delete" onclick="deleteAction(${index})">×</button>
+        `;
+        list.appendChild(item);
+      });
+    }
+    
+    function addAction() {
+      const input = document.getElementById('new-action');
+      const text = input.value.trim();
+      if (text) {
+        futureActions.push({ text, completed: false });
+        localStorage.setItem('futureActions', JSON.stringify(futureActions));
+        input.value = '';
+        renderFutureActions();
+      }
+    }
+    
+    function toggleAction(index) {
+      futureActions[index].completed = !futureActions[index].completed;
+      localStorage.setItem('futureActions', JSON.stringify(futureActions));
+      renderFutureActions();
+    }
+    
+    function deleteAction(index) {
+      futureActions.splice(index, 1);
+      localStorage.setItem('futureActions', JSON.stringify(futureActions));
+      renderFutureActions();
+    }
+    
+    // Initialize with default actions if empty
+    if (futureActions.length === 0) {
+      futureActions = [
+        { text: 'Complete web browser setup (Chrome extension relay)', completed: false },
+        { text: 'Set up cloudflare tunnel for remote dashboard access', completed: false }
+      ];
+      localStorage.setItem('futureActions', JSON.stringify(futureActions));
+    }
+    
+    renderFutureActions();
     
     // Action handler
     function triggerAction(action) {
