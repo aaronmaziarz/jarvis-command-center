@@ -173,6 +173,17 @@ Transform Jarvis into an AI operations hub that:
 
 ## Current Future Actions
 
+1. [ ] Set up Codex CLI (OpenAI)
+   - Run: `npm install -g @openai/codex` 
+   - Then run: `codex auth login`
+   - Use Aaron's OpenAI account
+
+2. [ ] Get new OpenRouter API key
+   - Go to https://openrouter.ai/keys
+   - Replace key in ~/.openclaw/agents/main/agent/models.json
+
+## Current Future Actions
+
 1. [ ] Enable OpenRouter API for auto spend tracking
    - Go to openrouter.ai/account to get API key
    - Then I can query /api/v1/usage endpoint
