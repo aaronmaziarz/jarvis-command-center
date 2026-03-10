@@ -10,13 +10,13 @@
 
 | Agent | Model | Cost | Best For |
 |-------|-------|------|----------|
-| **Researcher** | `deepseek/deepseek-r1` | ~$0.07/1M | Deep research, reasoning |
-| **Coder** | `qwen/qwen2.5-coder-32b-instruct` | ~$0.20/1M | Code generation, debugging |
-| **Frontend Dev** | `anthropic/claude-sonnet-4-20250514` | ~$3/1M | High-end UI/UX, complex frontend |
-| **Writer** | `minimax/minimax-m2.5` | ~$0.20/1M | Copy, docs (default) |
-| **Analyst** | `qwen/qwen-plus` | ~$0.40/1M | Data, long context |
-| **Scheduler** | `minimax/minimax-m2.5` | ~$0.20/1M | Simple tasks (default) |
-| **Security** | `deepseek/deepseek-r1` | ~$0.07/1M | Security audits, hardening |
+| **Researcher** | `openrouter/deepseek/deepseek-r1` | ~$0.07/1M | Deep research, reasoning |
+| **Coder** | `openrouter/qwen/qwen2.5-coder-32b-instruct` | ~$0.20/1M | Code generation, debugging |
+| **Frontend Dev** | `openrouter/anthropic/claude-sonnet-4-20250514` | ~$3/1M | High-end UI/UX, complex frontend |
+| **Writer** | `openrouter/minimax/minimax-m2.5` | ~$0.20/1M | Copy, docs (default) |
+| **Analyst** | `openrouter/qwen/qwen-plus` | ~$0.40/1M | Data, long context |
+| **Scheduler** | `openrouter/minimax/minimax-m2.5` | ~$0.20/1M | Simple tasks (default) |
+| **Security** | `openrouter/deepseek/deepseek-r1` | ~$0.07/1M | Security audits, hardening |
 
 *Models can be overridden per task by Jarvis*
 
@@ -68,7 +68,7 @@ Guidelines:
 
 ### 3. Frontend Dev 🎨
 - **Role:** High-end UI/UX development, dashboard overhauls, complex frontend
-- **Model:** `anthropic/claude-sonnet-4-20250514` (Claude Sonnet 4.6 - latest)
+- **Model:** `openrouter/anthropic/claude-sonnet-4-20250514` (Claude Sonnet 4.6 - latest)
 - **When to use:** "Overhaul the dashboard", "Make this look like Apple in 2080", "Full redesign"
 - **System prompt:**
 ```
