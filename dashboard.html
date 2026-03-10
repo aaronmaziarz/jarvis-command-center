@@ -2775,6 +2775,7 @@ html, body {
     // Initialize with default actions
     if (futureActions.length === 0) {
       futureActions = [
+    { text: 'Refine daily brief template - adjust topics and research focus', completed: false },
         { text: 'Complete web browser setup (Chrome extension relay)', completed: false },
         { text: 'Set up cloudflare tunnel for remote dashboard access', completed: false }
       ];
@@ -3251,6 +3252,22 @@ Example: '0 8 * * *' = 8 AM daily",
     }
     
     setInterval(updateSpend, 30000);
+
+    
+    // Refine daily brief action
+    function refineBrief() {
+      alert('📰 Daily Brief Refinement\n\nCurrent settings:\n- Morning at 7:30 AM\n- Topics: AI, Automation, MazTech, Coding\n- Researches web before each brief\n\nTo update: Tell Jarvis what topics to add/remove or adjust the template.');
+    }
+    
+    // Update triggerAction to handle refine-brief
+    const oldTrigger = window.triggerAction;
+    window.triggerAction = function(action) {
+      if (action === 'refine-brief') {
+        refineBrief();
+        return;
+      }
+      if (oldTrigger) oldTrigger(action);
+    };
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
