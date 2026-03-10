@@ -1891,6 +1891,21 @@ html, body {
       margin-top: 4px;
     }
 
+
+    .agent-card.ready {
+      opacity: 0.85;
+    }
+    
+    .agent-card.ready .agent-status {
+      background: rgba(41, 151, 255, 0.1);
+      color: var(--primary-blue);
+    }
+    
+    .agent-card.ready .agent-status-dot {
+      background: var(--primary-blue);
+      box-shadow: 0 0 8px var(--primary-blue);
+    }
+
   </style>
 </head>
 <body>
@@ -2049,7 +2064,7 @@ html, body {
           <span class="card-icon">👥</span>
         </div>
         <div class="agent-grid" id="agent-grid">
-          <div class="agent-card active" data-agent="researcher">
+          <div class="agent-card ready" data-agent="researcher">
             <div class="agent-header">
               <div class="agent-icon">🤡</div>
               <div>
@@ -2057,18 +2072,17 @@ html, body {
                 <div class="agent-role">Web search & analysis</div>
               </div>
             </div>
-            <div class="agent-status">
+            <div class="agent-status ready">
               <span class="agent-status-dot"></span>
-              Active
+              Ready
             </div>
             <div class="agent-task">— DeepSeek R1 —</div>
             <div class="agent-stats">
               <span>✓ 2 completed</span>
-              <span>✗ 0 failed</span>
             </div>
           </div>
           
-          <div class="agent-card active" data-agent="coder">
+          <div class="agent-card ready" data-agent="coder">
             <div class="agent-header">
               <div class="agent-icon">💻</div>
               <div>
@@ -2076,14 +2090,13 @@ html, body {
                 <div class="agent-role">Python, SQL & automation</div>
               </div>
             </div>
-            <div class="agent-status">
+            <div class="agent-status ready">
               <span class="agent-status-dot"></span>
-              Active
+              Ready
             </div>
             <div class="agent-task">— Qwen2.5 Coder —</div>
             <div class="agent-stats">
               <span>✓ 1 completed</span>
-              <span>✗ 0 failed</span>
             </div>
           </div>
           
