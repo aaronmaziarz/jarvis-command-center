@@ -29,7 +29,7 @@
       --glass-border-hover: rgba(255, 255, 255, 0.14);
       --glass-blur: 40px;
       
-      /* Accent Colors */
+      /* Accent Colors - Softer Apple palette */
       --accent-primary: #2997ff;
       --accent-primary-dim: rgba(41, 151, 255, 0.15);
       --accent-secondary: #bf5af2;
@@ -42,16 +42,21 @@
       --text-secondary: rgba(245, 245, 247, 0.6);
       --text-tertiary: rgba(245, 245, 247, 0.35);
       
-      /* Ambient Glows */
-      --glow-blue: rgba(41, 151, 255, 0.2);
-      --glow-purple: rgba(191, 90, 242, 0.15);
-      --glow-green: rgba(48, 209, 88, 0.15);
+      /* Ambient Glows - Reduced intensity */
+      --glow-blue: rgba(41, 151, 255, 0.12);
+      --glow-purple: rgba(191, 90, 242, 0.08);
+      --glow-green: rgba(48, 209, 88, 0.08);
       
-      /* Spacing */
-      --radius-sm: 12px;
-      --radius-md: 16px;
-      --radius-lg: 24px;
-      --radius-xl: 32px;
+      /* Spacing - Increased rounded corners (Apple style) */
+      --radius-sm: 16px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+      --radius-full: 9999px;
+      
+      /* Spring Physics */
+      --spring-smooth: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --spring-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
     
     * { 
@@ -119,7 +124,7 @@
     .hero {
       margin-bottom: 32px;
       padding: 28px 32px;
-      background: linear-gradient(135deg, rgba(41, 151, 255, 0.08) 0%, rgba(191, 90, 242, 0.04) 100%);
+      background: linear-gradient(135deg, rgba(41, 151, 255, 0.06) 0%, rgba(191, 90, 242, 0.03) 100%);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       backdrop-filter: blur(var(--glass-blur));
@@ -131,13 +136,17 @@
       gap: 20px;
       position: relative;
       overflow: hidden;
+      box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
     
     .hero::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(41, 151, 255, 0.5), transparent);
+      background: linear-gradient(90deg, transparent, rgba(41, 151, 255, 0.3), transparent);
     }
     
     .hero-content {
@@ -150,25 +159,31 @@
       width: 72px; height: 72px;
       background: linear-gradient(145deg, #1a1a24, #0d0d12);
       border: 1px solid var(--glass-border);
-      border-radius: 22px;
+      border-radius: 24px;
       display: flex; 
       align-items: center; 
       justify-content: center;
       font-size: 34px;
       box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
       position: relative;
+      transition: transform 0.4s var(--spring-smooth);
+    }
+    
+    .hero:hover .hero-avatar {
+      transform: scale(1.05) translateY(-2px);
     }
     
     .hero-avatar::after {
       content: '';
       position: absolute;
-      inset: -2px;
-      border-radius: 24px;
-      border: 1px solid rgba(41, 151, 255, 0.3);
+      inset: -3px;
+      border-radius: 28px;
+      border: 1px solid rgba(41, 151, 255, 0.2);
       opacity: 0;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s var(--spring-smooth);
     }
     
     .hero:hover .hero-avatar::after {
@@ -223,32 +238,42 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 20px;
+      padding: 14px 22px;
       background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
+      cursor: pointer;
     }
     
     .hero-stat:hover {
       background: var(--bg-card-hover);
       border-color: var(--glass-border-hover);
-      transform: translateY(-2px);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(41, 151, 255, 0.1);
+    }
+    
+    .hero-stat:active {
+      transform: translateY(-2px) scale(0.98);
+      transition: all 0.15s ease;
     }
     
     .hero-stat-icon {
-      width: 32px; height: 32px;
+      width: 36px; height: 36px;
       background: var(--accent-primary-dim);
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
     }
     
     .hero-stat-value {
       font-size: 18px;
       font-weight: 600;
+      font-variant-numeric: tabular-nums;
     }
     
     .hero-stat-label {
@@ -278,18 +303,26 @@
       transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
       overflow: hidden;
+      box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.15);
     }
     
     .card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
     }
     
     .card:hover { 
       background: var(--bg-card-hover);
       border-color: var(--glass-border-hover);
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 8px 24px rgba(41, 151, 255, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.2);
     }
     
     .card.span-3 { grid-column: span 3; }
@@ -306,16 +339,19 @@
     .repo-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 20px;
-      transition: all 0.3s ease;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all 0.4s var(--spring-smooth);
       cursor: pointer;
     }
     
     .repo-card:hover {
       background: rgba(255, 255, 255, 0.06);
-      transform: translateY(-4px);
+      transform: translateY(-6px) scale(1.02);
       border-color: rgba(41, 151, 255, 0.3);
+      box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.3),
+        0 8px 20px rgba(41, 151, 255, 0.1);
     }
     
     .repo-icon {
@@ -394,16 +430,18 @@
     
     .health-item {
       text-align: center;
-      padding: 16px 12px;
+      padding: 18px 14px;
       background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      transition: all 0.3s ease;
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
+      cursor: pointer;
     }
     
     .health-item:hover {
       background: var(--bg-card-hover);
-      transform: translateY(-2px);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     }
     
     .health-value {
@@ -445,32 +483,46 @@
       padding: 16px;
       background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       color: var(--text-primary);
       font-family: 'Outfit', sans-serif;
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s var(--spring-smooth);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .action-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
     
     .action-btn:hover { 
       background: var(--bg-card-hover);
-      border-color: var(--accent-primary);
-      box-shadow: 0 0 20px var(--glow-blue);
-      transform: translateY(-3px);
+      border-color: rgba(41, 151, 255, 0.4);
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 
+        0 16px 32px rgba(0, 0, 0, 0.25),
+        0 6px 16px rgba(41, 151, 255, 0.12);
     }
     
     .action-btn:active {
-      transform: translateY(-1px) scale(0.98);
+      transform: translateY(-2px) scale(0.96);
+      transition: all 0.15s ease;
     }
     
     .action-btn span.icon {
-      font-size: 18px;
+      font-size: 20px;
     }
     
     /* ═══════════════════════════════════════════════════════════════════════
@@ -489,7 +541,7 @@
       border-radius: var(--radius-lg);
       padding: 20px;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.5s var(--spring-smooth);
       position: relative;
       overflow: hidden;
     }
@@ -502,12 +554,15 @@
       background: var(--accent-primary);
       opacity: 0;
       transform: scaleY(0);
-      transition: all 0.3s ease;
+      transition: all 0.4s var(--spring-smooth);
     }
     
     .agent-card:hover { 
       background: var(--bg-card-hover); 
-      transform: translateX(6px);
+      transform: translateX(8px) translateY(-4px);
+      box-shadow: 
+        0 16px 32px rgba(0, 0, 0, 0.25),
+        0 6px 16px rgba(41, 151, 255, 0.08);
     }
     
     .agent-card:hover::before { 
@@ -670,16 +725,17 @@
       display: flex; 
       align-items: center; 
       gap: 14px;
-      padding: 14px 16px;
+      padding: 16px 18px;
       background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      transition: all 0.3s ease;
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
     }
     
     .task-item:hover {
       background: var(--bg-card-hover);
       border-color: var(--glass-border-hover);
+      transform: translateX(4px);
     }
     
     .task-status { 
@@ -743,20 +799,21 @@
     
     .action-input {
       flex: 1;
-      padding: 16px 20px;
+      padding: 18px 24px;
       background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       color: var(--text-primary);
       font-family: 'Outfit', sans-serif;
       font-size: 14px;
       outline: none;
-      transition: all 0.3s ease;
+      transition: all 0.4s var(--spring-smooth);
     }
     
     .action-input:focus {
-      border-color: var(--accent-primary);
-      box-shadow: 0 0 25px var(--glow-blue);
+      border-color: rgba(41, 151, 255, 0.5);
+      box-shadow: 0 0 30px rgba(41, 151, 255, 0.15);
+      transform: translateY(-2px);
     }
     
     .action-input::placeholder {
@@ -764,28 +821,30 @@
     }
     
     .action-add-btn {
-      width: 52px;
-      height: 52px;
+      width: 56px;
+      height: 56px;
       background: linear-gradient(135deg, var(--accent-primary), #0a7aff);
       border: none;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       color: white;
       font-size: 28px;
       font-weight: 400;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s var(--spring-smooth);
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 6px 20px rgba(41, 151, 255, 0.3);
     }
     
     .action-add-btn:hover {
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 8px 30px var(--glow-blue);
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: 0 12px 36px rgba(41, 151, 255, 0.4);
     }
     
     .action-add-btn:active {
-      transform: scale(0.98);
+      transform: scale(0.95);
+      transition: all 0.15s ease;
     }
     
     .future-list {
@@ -801,43 +860,46 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 16px 18px;
+      padding: 18px 20px;
       background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      transition: all 0.3s ease;
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--spring-smooth);
     }
     
     .future-item:hover {
       background: var(--bg-card-hover);
-      border-color: var(--accent-secondary);
+      border-color: rgba(191, 90, 242, 0.4);
+      transform: translateX(4px);
     }
     
     .future-checkbox {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border: 2px solid var(--accent-secondary);
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: all 0.3s var(--spring-smooth);
       flex-shrink: 0;
     }
     
     .future-checkbox:hover {
       background: rgba(191, 90, 242, 0.2);
+      transform: scale(1.1);
     }
     
     .future-checkbox.checked {
       background: var(--accent-secondary);
+      transform: scale(1.1);
     }
     
     .future-checkbox.checked::after {
       content: '✓';
       color: white;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
     }
     
@@ -853,16 +915,16 @@
     }
     
     .future-delete {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       background: transparent;
       border: 1px solid var(--accent-danger);
-      border-radius: 6px;
+      border-radius: 10px;
       color: var(--accent-danger);
       font-size: 18px;
       cursor: pointer;
       opacity: 0;
-      transition: all 0.3s ease;
+      transition: all 0.3s var(--spring-smooth);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -875,6 +937,7 @@
     .future-delete:hover {
       background: var(--accent-danger);
       color: white;
+      transform: scale(1.1);
     }
     
     /* ═══════════════════════════════════════════════════════════════════════
@@ -1306,6 +1369,26 @@
       resize: vertical;
     }
 
+
+    .modal-model-select {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .modal-model-select label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .modal-model-select .model-select {
+      flex: 1;
+      max-width: 200px;
+    }
+
   </style>
 </head>
 <body>
@@ -1682,6 +1765,17 @@
           <div class="modal-agent-title">
             <h3 id="modal-name">Researcher</h3>
             <span class="model-badge" id="modal-model">DeepSeek R1</span>
+          </div>
+        </div>
+        <div class="modal-model-select">
+          <label>Switch Model:</label>
+          <select id="agent-model-select" class="model-select" onchange="changeAgentModel(this.value)">
+            <option value="minimax/m2.5">MiniMax M2.5</option>
+            <option value="deepseek/r1" selected>DeepSeek R1</option>
+            <option value="qwen/plus">Qwen Plus</option>
+            <option value="anthropic/claude-sonnet">Claude Sonnet</option>
+            <option value="openai/gpt-4o">GPT-4o</option>
+          </select>
           </div>
         </div>
         <button class="modal-close" onclick="closeModal()">×</button>
@@ -2142,6 +2236,17 @@ Example: '0 8 * * *' = 8 AM daily",
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
+    function changeAgentModel(model){
+      if(!currentAgent) return;
+      console.log('⚡ Changing agent model:', currentAgent, '->', model);
+      agentData[currentAgent].model = model;
+      document.getElementById('modal-model').textContent = model.split('/').pop();
+      localStorage.setItem('agentModel_' + currentAgent, model);
+      const btn = document.querySelector('.modal-btn-primary');
+      btn.textContent = '✓ Model Changed!';
+      setTimeout(() => { btn.textContent = 'Save Changes'; }, 2000);
+    }
+    
     function changeThinking(level){
       const levels={0:'Off',1:'Low',2:'Medium',3:'High',4:'Max'};
       localStorage.setItem('jarvisThinking',level);
