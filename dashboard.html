@@ -855,6 +855,15 @@
   </div>
   
   <script>
+    // Configuration
+    const STATUS_ENDPOINT = '/status.json';
+    const POLL_INTERVAL = 5000; // 5 seconds
+    
+    // Status endpoint URL - can be overridden via query param
+    const urlParams = new URLSearchParams(window.location.search);
+    const statusBaseUrl = urlParams.get('statusUrl') || '';
+    const fullStatusUrl = statusBaseUrl + STATUS_ENDPOINT;
+    
     // Uptime counter
     let seconds = 0;
     setInterval(() => {
@@ -865,6 +874,95 @@
       document.getElementById('uptime').textContent = 
         `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }, 1000);
+    
+    // Fetch and update status
+    async function fetchStatus() {
+      try {
+        const response = await fetch(fullStatusUrl);
+        if (!response.ok) throw new Error('Status fetch failed');
+        const data = await response.json();
+        updateDashboard(data);
+      } catch (err) {
+        console.log('Status poll:', err.message);
+      }
+    }
+    
+    function updateDashboard(data) {
+      // Update budget
+      const budgetEl = document.querySelector('.stat-pill .value.budget');
+      if (budgetEl && data.budget) {
+        budgetEl.textContent = `$${data.budget.remaining.toFixed(2)}`;
+      }
+      
+      // Update model
+      const modelEl = document.querySelector('.stat-pill .value.model');
+      if (modelEl && data.model) {
+        modelEl.textContent = data.model;
+      }
+      
+      // Update Jarvis context
+      const contextEl = document.getElementById('jarvis-context');
+      if (contextEl && data.jarvis) {
+        contextEl.innerHTML = `<span style="color: var(--neon-cyan)">▸</span> ${data.jarvis.context}`;
+      }
+      
+      // Update system health - active count
+      const activeEl = document.querySelector('.health-item:last-child .health-value');
+      if (activeEl && data.active_agent_count !== undefined) {
+        activeEl.textContent = data.active_agent_count;
+      }
+      
+      // Update agent grid
+      const agentGrid = document.getElementById('agent-grid');
+      if (agentGrid && data.agents) {
+        updateAgentCards(agentGrid, data.agents);
+      }
+    }
+    
+    function updateAgentCards(grid, agents) {
+      const agentOrder = ['researcher', 'coder', 'writer', 'analyst'];
+      
+      agentOrder.forEach(agentId => {
+        const card = grid.querySelector(`[data-agent="${agentId}"]`);
+        if (!card || !agents[agentId]) return;
+        
+        const agentData = agents[agentId];
+        const statusEl = card.querySelector('.agent-status');
+        const taskEl = card.querySelector('.agent-task');
+        const statsEl = card.querySelector('.agent-stats');
+        
+        // Update status
+        if (statusEl) {
+          statusEl.textContent = agentData.status.toUpperCase();
+        }
+        
+        // Update task
+        if (taskEl) {
+          taskEl.textContent = agentData.task || '— Awaiting command —';
+        }
+        
+        // Update stats
+        if (statsEl) {
+          statsEl.innerHTML = `<span>✓ ${agentData.completed} completed</span><span>✗ ${agentData.failed} failed</span>`;
+        }
+        
+        // Update card class
+        card.classList.remove('active', 'working', 'error', 'planned');
+        if (agentData.status === 'working') {
+          card.classList.add('working');
+        } else if (agentData.status === 'active') {
+          card.classList.add('active');
+        } else if (agentData.status === 'error') {
+          card.classList.add('error');
+        } else if (agentData.status === 'offline') {
+          card.classList.add('planned');
+        }
+      });
+    }
+    
+    // Start polling
+    fetchStatus(); // Initial fetch
+    setInterval(fetchStatus, POLL_INTERVAL);
     
     // Action handler
     function triggerAction(action) {
@@ -884,6 +982,7 @@
     
     console.log('🤖 Jarvis Command Center v1.0 loaded');
     console.log('System: Online // Ready for commands');
+    console.log('Polling status from:', fullStatusUrl);
   </script>
 </body>
 </html>
