@@ -84,7 +84,7 @@
 ```javascript
 // GPT-5.4 Pro for planning
 sessions_spawn({
-  model: "openrouter/openai/gpt-5.4-pro",
+  model: "openrouter/openai/gpt-5.4",
   task: "Plan the Chronos architecture...",
   mode: "run"
 })

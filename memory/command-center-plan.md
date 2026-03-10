@@ -1,7 +1,7 @@
 # 🤖 Jarvis Command Center - Master Plan
 
 *Created: 2026-03-09*
-*Updated: 2026-03-10*
+*Updated: 2026-03-10 21:13 UTC*
 *Owner: Aaron Maziarz*
 *Status: In Progress*
 
@@ -10,406 +10,161 @@
 ## Vision
 
 Transform Jarvis into an AI operations hub that:
-1. **Manages a team of specialized sub-agents** for parallel task execution
-2. **Provides a real-time dashboard** for full system visibility and control
-3. **Operates autonomously** within defined boundaries while keeping Aaron in the loop
+1. Manages a team of specialized sub-agents for parallel task execution
+2. Provides a real-time dashboard for visibility and control
+3. Operates autonomously within defined boundaries while keeping Aaron informed
 
 ---
 
-## Part 1: Agent Team Architecture
+## Current Project Goals
 
-### The Squad (Sub-Agent Roles)
-
-| Agent | Role | Specialty | Model |
-|-------|------|-----------|-------|
-| **Researcher** | Web search, content fetching, competitive analysis | Deep research | DeepSeek R1 ✓ |
-| **Coder** | Python, SQL, scripting, automation pipelines | Code generation | Qwen2.5 Coder ✓ |
-| **Writer** | Copy, docs, proposals, content drafting | Words that sound human | Planned |
-| **Analyst** | Data processing, spreadsheets, reporting | Numbers & insights | Planned |
-| **Scheduler** | Calendar, reminders, cron jobs | Time & deadlines | Planned |
+1. Finish functional dashboard wiring so UI controls trigger real agent actions
+2. Enable true per-agent model switching instead of cosmetic-only selectors
+3. Add reliable budget/spend tracking for OpenRouter usage
+4. Complete browser control setup via Chrome Extension Relay
+5. Continue UI polish / office redesign work for the command center
 
 ---
 
-## Part 2: Dashboard Features
+## Project Status Snapshot
 
-### Implemented
-- ✅ Jarvis status with live uptime
-- ✅ Agent grid (Researcher, Coder active)
-- ✅ Task queue / Mission Log
-- ✅ System health indicators
-- ✅ Quick Actions buttons
-- ✅ Future Actions log (add/remove tasks)
-- ✅ Real-time polling from status server
-
-### In Progress
-- 🔄 Real-time updates via polling
-
-### Planned
-- ⏳ Mobile PWA installation
-- ⏳ Cloudflare tunnel for remote access
+- **Phase 1: Foundation** — ✅ Complete
+- **Phase 2: Dashboard v1** — ✅ Complete
+- **Phase 3: Real-Time Features** — 🔄 In Progress
+  - Polling/status server is in place
+  - Browser control and action wiring still need completion
+- **Phase 4: Polish** — ⏳ Not complete
+  - UI refinements underway
+  - Mobile/PWA and Cloudflare tunnel still pending
 
 ---
 
-## Part 3: Browser Control Options
+## Completed on 2026-03-10
 
-### Option 1: Chrome Extension Relay (RECOMMENDED)
-- **What:** Install OpenClaw browser extension on Chrome
-- **Setup:** Add extension to Chrome → Click toolbar icon to attach tab
-- **Pros:** Easiest setup, works immediately
-- **Cons:** Requires browser to stay open
-
-### Option 2: Install Chromium in Docker
-- **What:** Add Chromium to container via Dockerfile
-- **Setup:** Modify Docker config, rebuild container
-- **Pros:** Full browser automation in container
-- **Cons:** Requires Docker changes, more resources
-
-### Option 3: Browser on Host
-- **What:** Connect to browser on Windows host
-- **Setup:** Configure Docker to share browser process
-- **Pros:** Powerful, full access
-- **Cons:** Complex setup
-
-**Chosen Path:** Option 1 (Chrome Extension Relay) - Start here
-
----
-
-## Part 4: Implementation Phases
-
-### Phase 1: Foundation ✅
-- [x] Define sub-agent prompts/roles
-- [x] Set up memory structure for agent tracking
-- [x] Create basic status reporting
-- [x] Test sub-agent spawning
-
-### Phase 2: Dashboard v1 ✅
-- [x] Build HTML/CSS dashboard
-- [x] Add Jarvis status card
-- [x] Add agent grid with status
-- [x] Add task queue view
-- [x] Deploy to GitHub Pages
-
-### Phase 3: Real-Time Features 🔄
-- [x] Status server for polling
-- [x] Dashboard polls every 5 seconds
-- [ ] Add browser control (see options above)
-
-### Phase 4: Polish
-- [ ] UI refinements
-- [ ] Mobile PWA
-- [ ] Cloudflare tunnel
-
----
-
-## Budget Management
-
-- **$20/month** allocation
-- Track per-request cost
-- Alert when below $5 remaining
-- Default to efficient models for simple tasks
-
----
-
-## Rules (From Aaron)
-
-1. ✅ Document everything in memory folders
-2. ✅ Review workspace folders for context
-3. ✅ Ask permission before large/critical tasks
-4. ✅ Never spend real money without asking
-5. ✅ Ask before deleting unrecoverable files
-6. ✅ Keep Future Actions updated on dashboard
-
----
-
-## Repositories Created
-
-| Repo | Purpose | URL |
-|------|---------|-----|
-| jarvis-command-center | Main dashboard and project | github.com/aaronmaziarz/jarvis-command-center |
-| jarvis-journal | Daily journal entries | github.com/aaronmaziarz/jarvis-journal |
-| jarvis-exchange | File exchange | github.com/aaronmaziarz/jarvis-exchange |
-
-## Sub-Agents Active
-
-| Agent | Model | Status |
-|-------|-------|--------|
-| Researcher 🤡 | DeepSeek R1 | ✅ Active |
-| Coder 💻 | Qwen2.5 Coder 32B | ✅ Active |
-| Frontend Dev 🎨 | Claude Sonnet 4 | ✅ Active |
-| Writer ✍️ | MiniMax M2.5 | ✅ Active |
-| Analyst 📊 | Qwen Plus | ✅ Active |
-| Scheduler ⏰ | MiniMax M2.5 | ✅ Active |
-
-## Daily Schedule
-
-- **7:30 AM Arizona** - Morning brief (cron job set up)
-
-## Current Security Status
-
-### Audit Results (2026-03-10)
-**Status:** ✅ Minor issues found
-
-| Severity | Count |
-|----------|-------|
-| Critical | 0 |
-| Warning | 2 |
-| Info | 1 |
-
-### Findings:
-1. ⚠️ **No auth rate limiting** - gateway.bind is not loopback, no rate limit configured
-2. ⚠️ **Ineffective denyCommands** - Some command entries don't work as expected
-3. ℹ️ **Attack surface** - Browser control enabled, personal assistant trust model
-
-### Recommendations:
-- Add rate limiting to gateway.auth.rateLimit
-- Review and fix denyCommands entries
-- Consider restricting gateway.bind to localhost if not needed remotely
-
-### Security Agent 🛡️
-- Active with DeepSeek R1
-- Can run: "Run security audit", "Check firewall", "Review system security"
-
----
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-### Credentials Management
-- [ ] Set up proper credential storage (see credentials-management.md)
-- [ ] Add API keys to environment/docker-compose
-- [ ] Document keys in TOOLS.md
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-### X.com / Twitter Access
-Options for monitoring feeds:
-1. **Grok API (xAI)** - Native Twitter access, real-time
-   - Go to https://x.ai/api
-   - Get API key
-   - I can query for trending topics, user tweets
-   
-2. **Twitter API v2** - Official but expensive
-   - Developer portal: https://developer.twitter.com
-   - Free tier very limited
-   
-3. **Web Fetch** - Direct page scraping (may be blocked)
-   - Can try fetching public X pages
-
-**Recommended:** Grok API - it's designed for this
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-### Credentials Management
-- [ ] Set up proper credential storage (see credentials-management.md)
-- [ ] Add API keys to environment/docker-compose
-- [ ] Document keys in TOOLS.md
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-1. [ ] Set up X.com/Twitter access (Grok API)
-
-
-
-1. [ ] Set up Codex CLI (on PC with sudo/permissions)
-   - Run: npm install -g @openai/codex
-   - Then: codex auth login
-   - Added to dashboard as option
-
-2. [x] OpenRouter API - works for AI calls, usage endpoint needs different scope (may need new key)
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-### Credentials Management
-- [ ] Set up proper credential storage (see credentials-management.md)
-- [ ] Add API keys to environment/docker-compose
-- [ ] Document keys in TOOLS.md
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-### X.com / Twitter Access
-Options for monitoring feeds:
-1. **Grok API (xAI)** - Native Twitter access, real-time
-   - Go to https://x.ai/api
-   - Get API key
-   - I can query for trending topics, user tweets
-   
-2. **Twitter API v2** - Official but expensive
-   - Developer portal: https://developer.twitter.com
-   - Free tier very limited
-   
-3. **Web Fetch** - Direct page scraping (may be blocked)
-   - Can try fetching public X pages
-
-**Recommended:** Grok API - it's designed for this
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-### Credentials Management
-- [ ] Set up proper credential storage (see credentials-management.md)
-- [ ] Add API keys to environment/docker-compose
-- [ ] Document keys in TOOLS.md
-
-## 🚀 ACTIVE PROJECT: AI Task Management App
-
-### Research Phase ✅ COMPLETE
-- [ ] Deep research on Motion app
-- [ ] Deep research on Akiflow
-- [ ] Competitive analysis
-- [ ] Feature comparison
-- [ ] Create comprehensive plan
-
-### Models Using:
-- Claude Sonnet 4.6 (research)
-- GPT 5.4 Pro (planning)
-
-## Current Future Actions
-
-1. [ ] Set up X.com/Twitter access (Grok API)
-
-
-
-1. [ ] Enable OpenRouter API for auto spend tracking
-   - Go to openrouter.ai/account to get API key
-   - Then I can query /api/v1/usage endpoint
-2. [ ] Verify all dashboard features working
-
-1. Complete web browser setup (Chrome extension relay)
-2. Set up Cloudflare tunnel for remote dashboard access
-
-## Latest Update (2026-03-10 5:00 PM UTC)
-
-### Dashboard Sync Report
-
-#### Current Project Goals
-- ✅ Phase 1: Foundation - Complete
-- ✅ Phase 2: Dashboard v1 - Complete
-- 🔄 Phase 3: Real-Time Features - In Progress
-- ⏳ Phase 4: Polish - Not Started
-
-#### Tasks In Progress
-- Real-time updates via polling (dashboard)
-
-#### Completed Tasks (Today)
 - Dashboard created and deployed to GitHub Pages
-- 7 sub-agents configured and ready
-- 3 GitHub repos created
-- Cron jobs configured (morning brief, dashboard sync, repo sync, KPI update, journal)
-- Workspace documentation complete
+- 7 sub-agents configured
+- 3 GitHub repositories created
+- Cron jobs configured and active
+- Agent modal added with editable definitions
+- Model selector dropdown added
+- Thinking level control added
+- Per-agent model selection UI added
+- Clickable task handling added
+- Repositories section added
+- Mobile optimization added
 
-#### Agent Activity
-| Agent | Status | Tasks Completed |
-|-------|--------|-----------------|
-| Researcher 🤡 | Idle | 0 |
-| Coder 💻 | Idle | 0 |
-| Frontend Dev 🎨 | Idle | 0 |
-| Security 🛡️ | Idle | 0 |
-| Writer ✍️ | Idle | 0 |
-| Analyst 📊 | Idle | 0 |
-| Scheduler ⏰ | Idle | 0 |
-
-#### Budget Status
-- **$20/month** allocation
-- **Status:** Healthy (no alerts)
-- Default model: MiniMax M2.5
-
-#### Pending Actions
-1. Set up X.com/Twitter access (Grok API)
-2. Complete web browser setup (Chrome extension relay)
-3. Set up Cloudflare tunnel for remote dashboard access
-
-#### Blockers
-- None currently
+### Dashboard URL
+- https://aaronmaziarz.github.io/jarvis-command-center/dashboard.html
 
 ---
 
-*Sync completed: 2026-03-10 17:00 UTC*
+## Tasks In Progress
+
+- Wire dashboard buttons/actions to actual sub-agent spawning
+- Make selected dashboard models apply to launched agents
+- Fix OpenRouter usage/budget tracking
+- Finish Chrome Extension Relay browser setup
+- Continue office redesign / agent visualization improvements
+- Continue Apple-style UI refinements
+
+---
+
+## Agent Roster
+
+### Configured Agents (7)
+- Researcher — DeepSeek R1
+- Coder — Qwen2.5 Coder 32B
+- Frontend Dev — Claude Sonnet 4.6
+- Security — DeepSeek R1
+- Writer — MiniMax M2.5
+- Analyst — Qwen Plus
+- Scheduler — MiniMax M2.5
+
+### Runtime State Tracked in `memory/agent-states.json`
+- Researcher — idle
+- Coder — idle
+- Writer — idle
+- Analyst — idle
+- Scheduler — idle
+
+### Tracking Gap
+- `Frontend Dev` and `Security` are configured, but not currently represented in `memory/agent-states.json`
+- No tracked agent has recorded task completions yet in the state file
+
+---
+
+## Repositories
+
+- `jarvis-command-center` — dashboard project
+- `jarvis-journal` — daily summaries / journal
+- `jarvis-exchange` — file sharing
+
+---
+
+## Cron Jobs Active
+
+- Morning Brief — 7:30 AM daily
+- Dashboard Sync — every 2 hours (8 AM–8 PM)
+- Repo Sync — every 2 hours
+- KPI Update — every 15 minutes
+- Daily Journal — 11 PM daily
+
+---
+
+## Budget Status
+
+- **Budget:** $20/month
+- **Default model behavior:** MiniMax M2.5 is still being used unless a different model is explicitly requested
+- **Spend telemetry:** Not automated yet
+- **Current issue:** Token stats are not being recorded, so actual spend cannot be verified automatically
+- **Related follow-up:** OpenRouter usage endpoint may require different API key scope / configuration
+
+---
+
+## Current Future Actions
+
+1. Set up proper credential storage
+2. Add API keys to environment / docker-compose
+3. Document keys in `TOOLS.md`
+4. Set up X.com/Twitter access (recommended: Grok API)
+5. Enable OpenRouter API usage access for automatic spend tracking
+6. Verify all dashboard features are working end-to-end
+7. Complete web browser setup (Chrome Extension Relay)
+8. Wire dashboard spawning with selected models
+9. Enable actual sub-agent model switching
+10. Set up Cloudflare tunnel for remote dashboard access
+11. Complete office redesign / command center visualization
+
+---
+
+## Blockers / Gaps
+
+1. **Budget tracking blocker** — spend is not automatically visible yet
+2. **Dashboard action blocker** — model selector and spawn controls are not fully wired
+3. **Agent tracking blocker** — runtime state file does not include all configured agents
+4. **Browser blocker** — browser automation depends on Chrome Extension Relay setup (or alternate browser path)
+
+---
+
+## Other Tracked Initiative
+
+### AI Task Management App
+- Research phase was previously marked complete
+- No new progress was recorded in today’s daily log
+- Main active focus currently remains the Jarvis Command Center
+
+---
+
+## Latest Sync Summary (2026-03-10 21:13 UTC)
+
+- Command center build remains the primary active project
+- Dashboard deployment, repos, cron setup, and UI feature buildout remain the major completed items today
+- All tracked agents in `memory/agent-states.json` are currently idle
+- Runtime tracking still only covers 5 agents; `Frontend Dev` and `Security` are still missing from the state file
+- No runtime completions are recorded in `memory/agent-states.json`
+- Main remaining work is dashboard action wiring, real model switching, spend telemetry, browser setup, and UI polish
+- No critical stop-work blocker is recorded, but telemetry gaps and incomplete wiring still limit confidence in automation
+
+---
+
+*Sync completed: 2026-03-10 21:13 UTC*
