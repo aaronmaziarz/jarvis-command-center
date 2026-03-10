@@ -3037,8 +3037,9 @@ CRON FORMAT:
 Standard cron: minute hour day month weekday
 Example: '0 8 * * *' = 8 AM daily",
         suggestions: ["Set reminder", "Schedule cron", "Check calendar", "Add to-do"],
-        tools: ["exec", "cron", "read", "write"],
-        warnings: []
+        tools: ["exec", "cron", "read", "write", "git"],
+        warnings: [],
+        suggestions: ["Run daily cleanup", "Optimize memory files", "Sync repos"]
       }
     };
     let currentAgent = null;

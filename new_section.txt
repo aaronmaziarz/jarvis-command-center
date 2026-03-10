@@ -1,0 +1,243 @@
+      <!-- ═══════════════════════════════════════════════════════════════════════
+           AGENT COMMAND CENTER
+      ═══════════════════════════════════════════════════════════════════════ -->
+      <div class="card span-8">
+        <div class="card-header">
+          <span class="card-title">Command Center</span>
+          <span class="card-icon">🎛️</span>
+        </div>
+        
+        <!-- RESEARCH ZONE -->
+        <div class="zone-header">
+          <div class="zone-indicator research"></div>
+          <span class="zone-title">Research Zone</span>
+          <div class="zone-line"></div>
+        </div>
+        <div class="workstation-row">
+          <div class="workstation ready" data-agent="researcher" onclick="openAgentModal('researcher')">
+            <div class="ws-monitor">
+              <div class="ws-header">
+                <div class="ws-agent-info">
+                  <div class="ws-avatar">🤡</div>
+                  <div class="ws-name-role">
+                    <div class="ws-name">Researcher</div>
+                    <div class="ws-role">Web search & analysis</div>
+                  </div>
+                </div>
+                <div class="ws-status-light">
+                  <div class="ws-led"></div>
+                  <span>Ready</span>
+                </div>
+              </div>
+            </div>
+            <div class="ws-desk">
+              <div class="ws-task">— DeepSeek R1 —</div>
+              <div class="ws-stats">
+                <div class="ws-stat">✓ 2 completed</div>
+                <div class="ws-stat">⏱️ 2h 15m</div>
+              </div>
+              <div class="ws-desk-items">
+                <div class="desk-item">🔍</div>
+                <div class="desk-item">📄</div>
+                <div class="desk-item">📊</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEVELOPMENT ZONE -->
+        <div class="zone-header">
+          <div class="zone-indicator development"></div>
+          <span class="zone-title">Development Zone</span>
+          <div class="zone-line"></div>
+        </div>
+        <div class="workstation-row">
+          <div class="workstation ready" data-agent="coder" onclick="openAgentModal('coder')">
+            <div class="ws-monitor">
+              <div class="ws-header">
+                <div class="ws-agent-info">
+                  <div class="ws-avatar">💻</div>
+                  <div class="ws-name-role">
+                    <div class="ws-name">Coder</div>
+                    <div class="ws-role">Python, SQL & automation</div>
+                  </div>
+                </div>
+                <div class="ws-status-light">
+                  <div class="ws-led"></div>
+                  <span>Ready</span>
+                </div>
+              </div>
+            </div>
+            <div class="ws-desk">
+              <div class="ws-task">— Qwen2.5 Coder —</div>
+              <div class="ws-stats">
+                <div class="ws-stat">✓ 1 completed</div>
+                <div class="ws-stat">⏱️ 1h 45m</div>
+              </div>
+              <div class="ws-desk-items">
+                <div class="desk-item">🐍</div>
+                <div class="desk-item">🗄️</div>
+                <div class="desk-item">⚙️</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="workstation" data-agent="frontend" onclick="openAgentModal('frontend')">
+            <div class="ws-monitor">
+              <div class="ws-header">
+                <div class="ws-agent-info">
+                  <div class="ws-avatar">🎨</div>
+                  <div class="ws-name-role">
+                    <div class="ws-name">Frontend</div>
+                    <div class="ws-role">UI/UX & dashboard</div>
+                  </div>
+                </div>
+                <div class="ws-status-light">
+                  <div class="ws-led"></div>
+                  <span>Ready</span>
+                </div>
+              </div>
+            </div>
+            <div class="ws-desk">
+              <div class="ws-task">— Claude Sonnet 4.6 —</div>
+              <div class="ws-stats">
+                <div class="ws-stat">✓ 1 completed</div>
+                <div class="ws-stat">⏱️ 45m</div>
+              </div>
+              <div class="ws-desk-items">
+                <div class="desk-item">🎛️</div>
+                <div class="desk-item">📐</div>
+                <div class="desk-item">✨</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="workstation" data-agent="security" onclick="openAgentModal('security')">
+            <div class="ws-monitor">
+              <div class="ws-header">
+                <div class="ws-agent-info">
+                  <div class="ws-avatar">🛡️</div>
+                  <div class="ws-name-role">
+                    <div class="ws-name">Security</div>
+                    <div class="ws-role">Audits & hardening</div>
+                  </div>
+                </div>
+                <div class="ws-status-light">
+                  <div class="ws-led"></div>
+                  <span>Ready</span>
+                </div>
+              </div>
+            </div>
+            <div class="ws-desk">
+              <div class="ws-task">— DeepSeek R1 —</div>
+              <div class="ws-stats">
+                <div class="ws-stat">⚠️ 2 warnings</div>
+                <div class="ws-stat">⏱️ 30m</div>
+              </div>
+              <div class="ws-desk-items">
+                <div class="desk-item">🔐</div>
+                <div class="desk-item">📋</div>
+                <div class="desk-item">⚡</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPERATIONS ZONE -->
+        <div class="zone-header">
+          <div class="zone-indicator operations"></div>
+          <span class="zone-title">Operations Zone</span>
+          <div class="zone-line"></div>
+        </div>
+        <div class="workstation-row">
+          <div class="workstation" data-agent="writer" onclick="openAgentModal('writer')">
+            <div class="ws-monitor">
+              <div class="ws-header">
+                <div class="ws-agent-info">
+                  <div class="ws-avatar">✍️</div>
+                  <div class="ws-name-role">
+                    <div class="ws-name">Writer</div>
+                    <div class="ws-role">Copy & documentation</div>
+                  </div>
+                </div>
+                <div class="ws-status-light">
+                  <div class="ws-led"></div>
+                  <span>Ready</span>
+                </div>
+              </div>
+            </div>
+            <div class="ws-desk">
+              <div class="ws-task">— MiniMax M2.5 —</div>
+              <div class="ws-stats">
+                <div class="ws-stat">Available</div>
+                <div class="ws-stat">⏱️ 0m</div>
+              </div>
+              <div class="ws-desk-items">
+                <div class="desk-item">📝</div>
+                <div class="desk-item">📄</div>
+                <div class="desk-item">✒️</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="workstation" data-agent="analyst" onclick="openAgentModal('analyst')">
+            <div class="ws-monitor">
+              <div class="ws-header">
+                <div class="ws-agent-info">
+                  <div class="ws-avatar">📊</div>
+                  <div class="ws-name-role">
+                    <div class="ws-name">Analyst</div>
+                    <div class="ws-role">Data & reporting</div>
+                  </div>
+                </div>
+                <div class="ws-status-light">
+                  <div class="ws-led"></div>
+                  <span>Ready</span>
+                </div>
+              </div>
+            </div>
+            <div class="ws-desk">
+              <div class="ws-task">— Qwen Plus —</div>
+              <div class="ws-stats">
+                <div class="ws-stat">Available</div>
+                <div class="ws-stat">⏱️ 0m</div>
+              </div>
+              <div class="ws-desk-items">
+                <div class="desk-item">📈</div>
+                <div class="desk-item">📉</div>
+                <div class="desk-item">🔢</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="workstation" data-agent="scheduler" onclick="openAgentModal('scheduler')">
+            <div class="ws-monitor">
+              <div class="ws-header">
+                <div class="ws-agent-info">
+                  <div class="ws-avatar">⏰</div>
+                  <div class="ws-name-role">
+                    <div class="ws-name">Scheduler</div>
+                    <div class="ws-role">Calendar & reminders</div>
+                  </div>
+                </div>
+                <div class="ws-status-light">
+                  <div class="ws-led"></div>
+                  <span>Ready</span>
+                </div>
+              </div>
+            </div>
+            <div class="ws-desk">
+              <div class="ws-task">— MiniMax M2.5 —</div>
+              <div class="ws-stats">
+                <div class="ws-stat">7:30 AM daily</div>
+                <div class="ws-stat">⏱️ 6h 20m</div>
+              </div>
+              <div class="ws-desk-items">
+                <div class="desk-item">📅</div>
+                <div class="desk-item">🔔</div>
+                <div class="desk-item">⏱️</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
