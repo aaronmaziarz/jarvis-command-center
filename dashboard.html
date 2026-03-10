@@ -276,6 +276,63 @@
     .card.span-5 { grid-column: span 5; }
     .card.span-6 { grid-column: span 6; }
     .card.span-7 { grid-column: span 7; }
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    
+    .repo-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .repo-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-4px);
+      border-color: rgba(41, 151, 255, 0.3);
+    }
+    
+    .repo-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    
+    .repo-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    
+    .repo-desc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 12px;
+    }
+    
+    .repo-link {
+      font-size: 12px;
+      color: var(--primary-blue);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 900px) {
+      .repo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .repo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
     .card.span-8 { grid-column: span 8; }
     .card.span-12 { grid-column: span 12; }
     
@@ -1367,6 +1424,36 @@
             <div class="agent-stats">
               <span>7:30 AM daily</span>
             </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ═══════════════════════════════════════════════════════════════════
+           REPOSITORIES
+      ═══════════════════════════════════════════════════════════════════ -->
+      <div class="card span-12">
+        <div class="card-header">
+          <span class="card-title">Repositories</span>
+          <span class="card-icon">📚</span>
+        </div>
+        <div class="repo-grid">
+          <div class="repo-card" onclick="window.open('https://github.com/aaronmaziarz/jarvis-command-center','_blank')">
+            <div class="repo-icon">🎛️</div>
+            <div class="repo-name">jarvis-command-center</div>
+            <div class="repo-desc">Main dashboard and project code</div>
+            <div class="repo-link">View →</div>
+          </div>
+          <div class="repo-card" onclick="window.open('https://github.com/aaronmaziarz/jarvis-journal','_blank')">
+            <div class="repo-icon">📓</div>
+            <div class="repo-name">jarvis-journal</div>
+            <div class="repo-desc">Daily journal and session summaries</div>
+            <div class="repo-link">View →</div>
+          </div>
+          <div class="repo-card" onclick="window.open('https://github.com/aaronmaziarz/jarvis-exchange','_blank')">
+            <div class="repo-icon">📁</div>
+            <div class="repo-name">jarvis-exchange</div>
+            <div class="repo-desc">File exchange between you and Jarvis</div>
+            <div class="repo-link">View →</div>
           </div>
         </div>
       </div>
