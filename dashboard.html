@@ -865,13 +865,22 @@
         </div>
         <div class="actions">
           <button class="action-btn" onclick="triggerAction('spawn-researcher')">
-            <span>🤡</span> Researcher
+            <span>🤡</span> Research
           </button>
           <button class="action-btn" onclick="triggerAction('spawn-coder')">
-            <span>💻</span> Coder
+            <span>💻</span> Code
+          </button>
+          <button class="action-btn" onclick="triggerAction('spawn-frontend')">
+            <span>🎨</span> Frontend
+          </button>
+          <button class="action-btn" onclick="triggerAction('security-audit')">
+            <span>🛡️</span> Security
           </button>
           <button class="action-btn" onclick="triggerAction('health')">
             <span>💓</span> Health
+          </button>
+          <button class="action-btn" onclick="triggerAction('weather')">
+            <span>🌤️</span> Weather
           </button>
         </div>
       </div>
@@ -891,15 +900,15 @@
                 <div class="agent-role">Web search & analysis</div>
               </div>
             </div>
-            <div class="agent-status">IDLE</div>
-            <div class="agent-task">— Awaiting command —</div>
+            <div class="agent-status">ACTIVE</div>
+            <div class="agent-task">— DeepSeek R1 —</div>
             <div class="agent-stats">
-              <span>✓ 1 completed</span>
+              <span>✓ 2 completed</span>
               <span>✗ 0 failed</span>
             </div>
           </div>
           
-          <div class="agent-card" data-agent="coder">
+          <div class="agent-card active" data-agent="coder">
             <div class="agent-header">
               <div class="agent-icon">💻</div>
               <div>
@@ -907,15 +916,45 @@
                 <div class="agent-role">Python, SQL & automation</div>
               </div>
             </div>
-            <div class="agent-status">IDLE</div>
-            <div class="agent-task">— Awaiting command —</div>
+            <div class="agent-status">ACTIVE</div>
+            <div class="agent-task">— Qwen2.5 Coder —</div>
             <div class="agent-stats">
-              <span>✓ 0 completed</span>
+              <span>✓ 1 completed</span>
               <span>✗ 0 failed</span>
             </div>
           </div>
           
-          <div class="agent-card planned" data-agent="writer">
+          <div class="agent-card" data-agent="frontend">
+            <div class="agent-header">
+              <div class="agent-icon">🎨</div>
+              <div>
+                <div class="agent-name">FRONTEND</div>
+                <div class="agent-role">UI/UX & dashboard</div>
+              </div>
+            </div>
+            <div class="agent-status">READY</div>
+            <div class="agent-task">— Claude Sonnet 4 —</div>
+            <div class="agent-stats">
+              <span>Ready for overhaul</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="security">
+            <div class="agent-header">
+              <div class="agent-icon">🛡️</div>
+              <div>
+                <div class="agent-name">SECURITY</div>
+                <div class="agent-role">Audits & hardening</div>
+              </div>
+            </div>
+            <div class="agent-status">READY</div>
+            <div class="agent-task">— DeepSeek R1 —</div>
+            <div class="agent-stats">
+              <span>2 warnings found</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="writer">
             <div class="agent-header">
               <div class="agent-icon">✍️</div>
               <div>
@@ -923,14 +962,14 @@
                 <div class="agent-role">Copy & documentation</div>
               </div>
             </div>
-            <div class="agent-status">OFFLINE</div>
-            <div class="agent-task">Coming in Phase 2</div>
+            <div class="agent-status">READY</div>
+            <div class="agent-task">— MiniMax M2.5 —</div>
             <div class="agent-stats">
-              <span>—</span>
+              <span>Available</span>
             </div>
           </div>
           
-          <div class="agent-card planned" data-agent="analyst">
+          <div class="agent-card" data-agent="analyst">
             <div class="agent-header">
               <div class="agent-icon">📊</div>
               <div>
@@ -938,10 +977,25 @@
                 <div class="agent-role">Data & reporting</div>
               </div>
             </div>
-            <div class="agent-status">OFFLINE</div>
-            <div class="agent-task">Coming in Phase 2</div>
+            <div class="agent-status">READY</div>
+            <div class="agent-task">— Qwen Plus —</div>
             <div class="agent-stats">
-              <span>—</span>
+              <span>Available</span>
+            </div>
+          </div>
+          
+          <div class="agent-card" data-agent="scheduler">
+            <div class="agent-header">
+              <div class="agent-icon">⏰</div>
+              <div>
+                <div class="agent-name">SCHEDULER</div>
+                <div class="agent-role">Calendar & reminders</div>
+              </div>
+            </div>
+            <div class="agent-status">READY</div>
+            <div class="agent-task">— Morning brief active —</div>
+            <div class="agent-stats">
+              <span>7:30 AM daily</span>
             </div>
           </div>
         </div>
