@@ -1260,6 +1260,52 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+    /* Mobile Optimization */
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      .hero { padding: 16px; flex-direction: column; gap: 16px; }
+      .hero-content { flex-direction: column; text-align: center; }
+      .hero-avatar { width: 60px; height: 60px; font-size: 28px; }
+      .hero-text h1 { font-size: 28px; }
+      .hero-stats { flex-wrap: wrap; justify-content: center; gap: 12px; }
+      .hero-stat { padding: 8px 12px; }
+      .grid { gap: 12px; }
+      .card { padding: 14px; }
+      .card.span-3, .card.span-4, .card.span-6, .card.span-8, .card.span-12 { grid-column: span 12; }
+      .agent-grid { grid-template-columns: 1fr; }
+      .repo-grid { grid-template-columns: 1fr; }
+      .modal-container { max-width: 95%; margin: 10px; }
+      .modal-header { padding: 16px; }
+      .modal-body { padding: 16px; }
+      .modal-stats-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stat-icon { display: none; }
+      .model-select { min-width: 100px; font-size: 11px; }
+      .tagline { font-size: 12px; }
+      footer { padding: 16px; font-size: 11px; }
+    }
+    
+    /* Reduce background effects on mobile for performance */
+    @media (max-width: 480px) {
+      body::before { display: none; }
+      body { background-image: none; }
+    }
+
+
+    .modal-verbose textarea {
+      width: 100%;
+      min-height: 100px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      resize: vertical;
+    }
+
   </style>
 </head>
 <body>
@@ -1286,7 +1332,34 @@
         <div class="hero-stat">
           <div class="hero-stat-icon">🧠</div>
           <div>
-            <div class="hero-stat-value"><select id="model-select" class="model-select" onchange="changeModel(this.value)"><option value="minimax/m2.5">MiniMax M2.5</option><option value="deepseek/r1">DeepSeek R1</option><option value="openai/gpt-4o">GPT-4o</option><option value="claude-sonnet">Claude Sonnet</option><option value="qwen/coder">Qwen Coder</option></select></div>
+            <div class="hero-stat-value"><select id="model-select" class="model-select" onchange="changeModel(this.value)">
+            <optgroup label="Fast">
+              <option value="minimax/m2.5" selected>MiniMax M2.5</option>
+              <option value="google/gemini-2.0-flash">Gemini 2.0 Flash</option>
+            </optgroup>
+            <optgroup label="Reasoning">
+              <option value="deepseek/deepseek-r1">DeepSeek R1</option>
+              <option value="deepseek/deepseek-chat">DeepSeek Chat</option>
+            </optgroup>
+            <optgroup label="Coding">
+              <option value="qwen/qwen2.5-coder-32b">Qwen Coder 32B</option>
+              <option value="anthropic/claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
+              <option value="anthropic/claude-opus-4-20251114">Claude Opus 4.6</option>
+            </optgroup>
+            <optgroup label="GPT">
+              <option value="openai/gpt-4o">GPT-4o</option>
+              <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
+              <option value="openai/o1">OpenAI o1</option>
+            </optgroup>
+            <optgroup label="Gemini">
+              <option value="google/gemini-2.0-pro">Gemini 2.0 Pro</option>
+              <option value="google/gemini-1.5-pro">Gemini 1.5 Pro</option>
+            </optgroup>
+            <optgroup label="Premium">
+              <option value="openai/gpt-4-turbo">GPT-4 Turbo</option>
+              <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+            </optgroup>
+          </select></div>
             <div class="hero-stat-label">Model</div>
           </div>
         </div>
@@ -1295,6 +1368,21 @@
           <div>
             <div class="hero-stat-value" id="uptime">00:00:00</div>
             <div class="hero-stat-label">Uptime</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-icon">💭</div>
+            <div>
+              <div class="hero-stat-value">
+                <select id="thinking-level" class="model-select" style="min-width:80px" onchange="changeThinking(this.value)">
+                  <option value="0">Off</option>
+                  <option value="1">Low</option>
+                  <option value="2" selected>Med</option>
+                  <option value="3">High</option>
+                  <option value="4">Max</option>
+                </select>
+              </div>
+              <div class="hero-stat-label">Think</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1631,7 +1719,18 @@
         
         <div class="modal-section">
           <div class="modal-section-title">Suggested Tasks</div>
-          <div class="modal-suggestions" id="modal-suggestions">
+          <div class="modal-section">
+          <div class="modal-section-title">Warnings</div>
+          <div class="modal-warnings" id="modal-warnings">
+            <div class="modal-warning">No warnings</div>
+          </div>
+        </div>
+        <div class="modal-suggestions" id="modal-suggestions">
+          </div>
+        <div class="modal-section">
+          <div class="modal-section-title">Verbose Output</div>
+          <div class="modal-verbose">
+            <textarea id="modal-verbose" placeholder="Recent agent run output will appear here..."></textarea>
           </div>
         </div>
       </div>
@@ -1817,13 +1916,220 @@
     
     // Agent Modal Data
     const agentData = {
-      researcher: { name: "Researcher", icon: "🤡", model: "DeepSeek R1", role: "Web search & analysis", tasksCompleted: 2, totalSpend: "$0.14", uptime: "2h 15m", definition: "You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning.", suggestions: ["Research AI tools", "Find best APIs", "Competitive analysis"], tools: ["web_search", "web_fetch", "browser", "memory_search"] },
-      coder: { name: "Coder", icon: "💻", model: "Qwen2.5 Coder", role: "Python, SQL & automation", tasksCompleted: 1, totalSpend: "$0.20", uptime: "1h 45m", definition: "You are the Coder agent for Jarvis.", suggestions: ["Write Python script", "Debug code", "Create SQL query"], tools: ["exec", "read", "write", "edit", "sessions_spawn"] },
-      frontend: { name: "Frontend Dev", icon: "🎨", model: "Claude Sonnet 4.6", role: "UI/UX & dashboard", tasksCompleted: 1, totalSpend: "$3.00", uptime: "45m", definition: "You are the Frontend Dev agent.", suggestions: ["Overhaul dashboard", "Add components"], tools: ["read", "write", "edit", "exec", "browser", "canvas"] },
-      security: { name: "Security", icon: "🛡️", model: "DeepSeek R1", role: "Audits & hardening", tasksCompleted: 1, totalSpend: "$0.07", uptime: "30m", definition: "You are the Security Agent.", suggestions: ["Run security audit", "Check firewall"], tools: ["exec", "healthcheck", "memory_search", "read"] },
-      writer: { name: "Writer", icon: "✍️", model: "MiniMax M2.5", role: "Copy & documentation", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Writer agent.", suggestions: ["Write copy", "Draft proposal"], tools: ["read", "write", "edit", "memory_search"] },
-      analyst: { name: "Analyst", icon: "📊", model: "Qwen Plus", role: "Data & reporting", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Analyst agent.", suggestions: ["Analyze data", "Build report"], tools: ["exec", "read", "write", "web_fetch"] },
-      scheduler: { name: "Scheduler", icon: "⏰", model: "MiniMax M2.5", role: "Calendar & reminders", tasksCompleted: 1, totalSpend: "$0.05", uptime: "6h 20m", definition: "You are the Scheduler agent.", suggestions: ["Set reminder", "Schedule cron"], tools: ["exec", "cron", "read", "write"] }
+      researcher: { 
+        name: "Researcher", icon: "🤡", model: "DeepSeek R1", role: "Web search & analysis", 
+        tasksCompleted: 2, totalSpend: "$0.14", uptime: "2h 15m", status: "active",
+        definition: "You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning and research.
+
+CORE MISSION:
+Find, gather, analyze, and synthesize information from web searches, documents, and comprehensive APIs. Provide research with citations.
+
+TOOLS:
+- web_search: Search the web for current info
+- web_fetch: Grab article/content from URLs
+- memory_search: Search previous context
+
+METHODOLOGY:
+1. Clarify the research question
+2. Use multiple search queries if needed
+3. Fetch and analyze top sources
+4. Synthesize findings with pros/cons
+5. Always cite sources with URLs
+
+OUTPUT FORMAT:
+- Executive summary first
+- Bullet points for key findings
+- Pros/cons when comparing options
+- Sources cited at the end
+- Think step-by-step for complex research",
+        suggestions: ["Research AI automation tools", "Find best APIs for X", "Competitive analysis", "Summarize article"],
+        tools: ["web_search", "web_fetch", "browser", "memory_search"],
+        warnings: []
+      },
+      coder: { 
+        name: "Coder", icon: "💻", model: "Qwen2.5 Coder", role: "Python, SQL & automation", 
+        tasksCompleted: 1, totalSpend: "$0.20", uptime: "1h 45m", status: "active",
+        definition: "You are the Coder agent for Jarvis, powered by Qwen2.5 Coder 32B for code generation and debugging.
+
+CORE MISSION:
+Write clean, working code and help debug issues across Python, SQL, bash, and other languages.
+
+TOOLS:
+- exec: Run shell commands
+- read/write/edit: File operations
+- sessions_spawn: Spawn sub-agents
+
+GUIDELINES:
+1. Write modular, readable code with comments
+2. Include error handling
+3. Use type hints where helpful
+4. Test logic before presenting
+5. Think about edge cases
+6. Optimize for performance
+
+PREFERRED LANGUAGES:
+- Python for scripts/automation
+- SQL for database queries
+- Bash for shell operations
+- YAML/JSON for configs",
+        suggestions: ["Write Python script", "Debug code", "Create SQL query", "Build automation"],
+        tools: ["exec", "read", "write", "edit", "sessions_spawn"],
+        warnings: []
+      },
+      frontend: { 
+        name: "Frontend Dev", icon: "🎨", model: "Claude Sonnet 4.6", role: "UI/UX & dashboard", 
+        tasksCompleted: 1, totalSpend: "$3.00", uptime: "45m", status: "ready",
+        definition: "You are the Frontend Dev agent for Jarvis, powered by Claude Sonnet 4.6 for premium UI/UX.
+
+CORE MISSION:
+Create stunning, cutting-edge user interfaces with Apple-quality aesthetics. Think product page meets 2080 sci-fi.
+
+TOOLS:
+- read/write/edit: HTML/CSS/JS files
+- exec: Run build commands
+- browser: Test in browser
+- canvas: Render previews
+
+AESTHETIC REQUIREMENTS:
+- Apple 2080 vision: Clean, premium, minimal
+- Premium colors: #2997ff blues, #bf5af2 purples, #30d158 greens
+- Glassmorphism: backdrop-filter blur, transparency
+- Smooth animations: CSS transitions with spring physics
+- Micro-interactions: hover lifts, tap scales
+- Mobile-first responsive design
+
+TECHNICAL:
+- CSS variables for theming
+- Modern CSS (grid, flexbox, custom properties)
+- Web fonts from Google Fonts
+- Performance optimized",
+        suggestions: ["Overhaul dashboard", "Add components", "Mobile optimization", "Add animations"],
+        tools: ["read", "write", "edit", "exec", "browser", "canvas"],
+        warnings: []
+      },
+      security: { 
+        name: "Security", icon: "🛡️", model: "DeepSeek R1", role: "Audits & hardening", 
+        tasksCompleted: 1, totalSpend: "$0.07", uptime: "30m", status: "ready",
+        definition: "You are the Security Agent for Jarvis, powered by DeepSeek R1 for thorough security analysis.
+
+CORE MISSION:
+Identify security vulnerabilities, recommend hardening, and ensure the system is secure.
+
+TOOLS:
+- exec: Run security commands
+- healthcheck: Security audit skill
+- memory_search: Check configs
+- read: Review files
+
+AUDIT CATEGORIES:
+1. Network: Ports, firewall, exposure
+2. Authentication: Tokens, keys, access
+3. Files: Permissions, sensitive data
+4. Dependencies: Outdated packages
+5. Docker: Container security
+
+SEVERITY LEVELS:
+- Critical: Immediate action required
+- High: Fix within 24h
+- Medium: Fix within week
+- Low: Fix when convenient
+- Info: Note for awareness
+
+Always provide actionable remediation steps.",
+        suggestions: ["Run security audit", "Check firewall", "Review access", "Scan vulnerabilities"],
+        tools: ["exec", "healthcheck", "memory_search", "read"],
+        warnings: ["No rate limiting on gateway", "denyCommands not fully effective"]
+      },
+      writer: { 
+        name: "Writer", icon: "✍️", model: "MiniMax M2.5", role: "Copy & documentation", 
+        tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", status: "ready",
+        definition: "You are the Writer agent for Jarvis, powered by MiniMax M2.5 for natural language generation.
+
+CORE MISSION:
+Create natural, human-sounding copy that doesn't feel AI-generated. Match brand voice.
+
+TOOLS:
+- read: Review existing content
+- write: Create new content
+- edit: Revise content
+- memory_search: Check brand guidelines
+
+GUIDELINES:
+1. Write like a real person - conversational but professional
+2. Avoid corporate jargon and filler words
+3. Keep sentences varied in length
+4. Use active voice
+5. Match brand: tech-forward, modern, approachable
+6. Proofread before delivering
+
+CONTENT TYPES:
+- Landing page copy
+- Proposals
+- Technical docs
+- Blog posts
+- Email templates",
+        suggestions: ["Write landing page copy", "Draft proposal", "Edit document", "Create blog post"],
+        tools: ["read", "write", "edit", "memory_search"],
+        warnings: []
+      },
+      analyst: { 
+        name: "Analyst", icon: "📊", model: "Qwen Plus", role: "Data & reporting", 
+        tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", status: "ready",
+        definition: "You are the Analyst agent for Jarvis, powered by Qwen Plus for data processing and analysis.
+
+CORE MISSION:
+Process data, generate insights, and create reports from various sources.
+
+TOOLS:
+- exec: Run data scripts
+- read: Access data files
+- write: Create reports
+- web_fetch: Get external data
+
+CAPABILITIES:
+- Python/pandas for data manipulation
+- SQL queries
+- Report generation
+- Data visualization
+- Spreadsheet processing
+- Statistical analysis
+
+OUTPUT:
+- Clear, actionable insights
+- Visual charts/tables where helpful
+- Executive summary
+- Data-backed recommendations",
+        suggestions: ["Analyze data", "Build report", "Create dashboard", "Process spreadsheet"],
+        tools: ["exec", "read", "write", "web_fetch"],
+        warnings: []
+      },
+      scheduler: { 
+        name: "Scheduler", icon: "⏰", model: "MiniMax M2.5", role: "Calendar & reminders", 
+        tasksCompleted: 1, totalSpend: "$0.05", uptime: "6h 20m", status: "active",
+        definition: "You are the Scheduler agent for Jarvis, powered by MiniMax M2.5 for time management.
+
+CORE MISSION:
+Manage time, reminders, and scheduling via cron jobs and calendar integration.
+
+TOOLS:
+- exec: Run scheduling commands
+- cron: Schedule via openclaw
+- read/write: Manage config files
+
+CAPABILITIES:
+- Create cron jobs
+- Set reminders
+- Check schedules
+- Manage recurring tasks
+- Timezone aware (Arizona MST)
+
+CRON FORMAT:
+Standard cron: minute hour day month weekday
+Example: '0 8 * * *' = 8 AM daily",
+        suggestions: ["Set reminder", "Schedule cron", "Check calendar", "Add to-do"],
+        tools: ["exec", "cron", "read", "write"],
+        warnings: []
+      }
     };
     let currentAgent = null;
     function openAgentModal(a){const ag=agentData[a];if(!ag)return;currentAgent=a;document.getElementById("modal-icon").textContent=ag.icon;document.getElementById("modal-name").textContent=ag.name;document.getElementById("modal-model").textContent=ag.model;document.getElementById("modal-tasks").textContent=ag.tasksCompleted;document.getElementById("modal-spend").textContent=ag.totalSpend;document.getElementById("modal-uptime").textContent=ag.uptime;document.getElementById("modal-definition").value=ag.definition;document.getElementById("modal-suggestions").innerHTML=ag.suggestions.map(s=>`<span class="modal-suggestion-tag">${s}</span>`).join("");document.getElementById("agent-modal").classList.add("active");document.body.style.overflow="hidden"}
@@ -1836,10 +2142,17 @@
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
+    function changeThinking(level){
+      const levels={0:'Off',1:'Low',2:'Medium',3:'High',4:'Max'};
+      localStorage.setItem('jarvisThinking',level);
+      console.log('🧠 Thinking level:',levels[level]);
+      alert('Thinking level set to: '+levels[level]);
+    }
     function changeModel(model){console.log('⚡ Changing model to:',model);const m=document.getElementById('model-select');localStorage.setItem('jarvisModel',model);document.getElementById('model').querySelector('.hero-stat-value')?document.getElementById('model').querySelector('.hero-stat-value').textContent=model.split('/').pop():null;alert('Model changed to '+model+'. Jarvis will use this model for the next request.')}
     
     // Load saved model on startup
     const savedModel=localStorage.getItem('jarvisModel');if(savedModel){const ms=document.getElementById('model-select');if(ms){ms.value=savedModel}}
+    const savedThinking=localStorage.getItem('jarvisThinking');if(savedThinking){const ts=document.getElementById('thinking-level');if(ts){ts.value=savedThinking}}
     
     console.log('Polling status from:', fullStatusUrl);
   </script>
