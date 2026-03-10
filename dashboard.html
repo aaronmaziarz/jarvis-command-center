@@ -650,153 +650,263 @@ html, body {
     }
     
     /* ═══════════════════════════════════════════════════════════════════════
-       AGENT SWARM GRID
+       AGENT COMMAND CENTER - Futuristic Office/Command Center
     ═══════════════════════════════════════════════════════════════════════ */
     
-    .agent-grid { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 12px; 
+    /* Zone Header Styles */
+    .zone-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
     
-    .agent-card {
-      background: var(--glass-light);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
+    .zone-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px currentColor;
+      animation: zonePulse 2.5s ease-in-out infinite;
+    }
+    
+    .zone-indicator.research { background: #bf5af2; color: #bf5af2; }
+    .zone-indicator.development { background: #2997ff; color: #2997ff; }
+    .zone-indicator.operations { background: #30d158; color: #30d158; }
+    
+    @keyframes zonePulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+    
+    .zone-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-tertiary);
+    }
+    
+    .zone-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+    }
+    
+    /* Workstation Grid */
+    .workstation-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    
+    .workstation-row:last-child { margin-bottom: 0; }
+    
+    /* Workstation Card */
+    .workstation {
+      background: linear-gradient(160deg, rgba(25, 25, 38, 0.95), rgba(15, 15, 24, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 0;
       cursor: pointer;
-      transition: all 0.5s var(--spring-smooth);
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
       overflow: hidden;
     }
     
-    .agent-card::before {
+    .workstation::before {
       content: '';
       position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
+      top: 0; left: 0; right: 0;
+      height: 3px;
       background: var(--accent-primary);
-      opacity: 0;
-      transform: scaleY(0);
-      transition: all 0.4s var(--spring-smooth);
+      opacity: 0.25;
+      transition: all 0.4s ease;
     }
     
-    .agent-card:hover { 
-      background: var(--bg-card-hover); 
-      transform: translateX(8px) translateY(-4px);
+    .workstation:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(41, 151, 255, 0.35);
       box-shadow: 
-        0 16px 32px rgba(0, 0, 0, 0.25),
-        0 6px 16px rgba(41, 151, 255, 0.08);
+        0 28px 56px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(41, 151, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
     }
     
-    .agent-card:hover::before { 
-      opacity: 1; 
-      transform: scaleY(1);
-    }
+    .workstation:hover::before { opacity: 1; height: 4px; }
     
-    .agent-card.active { 
+    .workstation.active {
       border-color: var(--accent-primary);
-      background: linear-gradient(135deg, var(--accent-primary-dim) 0%, transparent 100%);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 30px rgba(41, 151, 255, 0.12);
     }
     
-    .agent-card.active::before { 
-      opacity: 1; 
-      transform: scaleY(1);
+    .workstation.active::before {
+      background: linear-gradient(90deg, var(--accent-primary), #5aaaff);
+      opacity: 1;
     }
     
-    .agent-card.working { 
+    .workstation.working {
       border-color: var(--accent-warning);
-      background: linear-gradient(135deg, rgba(255, 159, 10, 0.08) 0%, transparent 100%);
     }
     
-    .agent-card.working::before { 
+    .workstation.working::before {
       background: var(--accent-warning);
-      opacity: 1; 
-      transform: scaleY(1);
-      animation: pulse 1.5s ease-in-out infinite;
+      opacity: 1;
+      animation: workingPulse 1.2s ease-in-out infinite;
     }
     
-    @keyframes pulse {
+    @keyframes workingPulse {
       0%, 100% { opacity: 0.6; }
       50% { opacity: 1; }
     }
     
-    .agent-card.error { 
-      border-color: var(--accent-danger);
-      background: linear-gradient(135deg, rgba(255, 69, 58, 0.08) 0%, transparent 100%);
+    .workstation.error { border-color: var(--accent-danger); }
+    .workstation.error::before { background: var(--accent-danger); opacity: 1; }
+    .workstation.ready { opacity: 0.8; }
+    
+    /* Monitor Section */
+    .ws-monitor {
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 16px 18px;
+      position: relative;
     }
     
-    .agent-card.error::before { 
-      background: var(--accent-danger);
-      opacity: 1; 
-      transform: scaleY(1);
+    .ws-monitor::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 40%);
+      pointer-events: none;
     }
     
-    .agent-card.planned {
-      opacity: 0.5;
+    .ws-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
     }
     
-    .agent-header { 
-      display: flex; 
-      align-items: center; 
-      gap: 14px; 
-      margin-bottom: 14px; 
+    .ws-agent-info {
+      display: flex;
+      align-items: center;
+      gap: 11px;
     }
     
-    .agent-icon {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--glass-light), transparent);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      display: flex; 
-      align-items: center; 
+    .ws-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, rgba(41, 151, 255, 0.12), rgba(191, 90, 242, 0.08));
+      border: 1px solid rgba(41, 151, 255, 0.15);
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      font-size: 26px;
+      font-size: 20px;
       transition: all 0.4s var(--spring-smooth);
     }
     
-    .agent-card:hover .agent-icon {
-      transform: scale(1.1) rotate(5deg);
+    .workstation:hover .ws-avatar {
+      transform: scale(1.12) rotate(5deg);
+      border-color: rgba(41, 151, 255, 0.35);
     }
     
-    .agent-name { 
-      font-weight: 600; 
-      font-size: 15px; 
-      letter-spacing: 0.3px;
-    }
+    .ws-name-role { display: flex; flex-direction: column; }
+    .ws-name { font-size: 14px; font-weight: 600; color: #fff; letter-spacing: 0.3px; }
+    .ws-role { font-size: 10px; color: var(--text-tertiary); }
     
-    .agent-role { 
-      font-size: 12px; 
-      color: var(--text-tertiary); 
-    }
-    
-    .agent-status {
-      display: inline-flex;
+    /* Status Light */
+    .ws-status-light {
+      display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px; 
-      padding: 8px 14px;
-      border-radius: var(--radius-full);
-      background: var(--glass-light);
-      color: var(--text-tertiary);
-      font-weight: 500;
-      letter-spacing: 0.5px;
+      gap: 7px;
+      padding: 5px 11px;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 18px;
+      font-size: 9px;
       text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    
+    .ws-led {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
       transition: all 0.3s ease;
     }
     
-    .agent-card.active .agent-status { 
-      background: var(--accent-primary-dim);
-      color: var(--accent-primary);
+    .workstation.active .ws-led {
+      background: var(--accent-primary);
+      box-shadow: 0 0 10px var(--accent-primary);
     }
     
-    .agent-card.working .agent-status { 
-      background: rgba(255, 159, 10, 0.15);
-      color: var(--accent-warning);
+    .workstation.working .ws-led {
+      background: var(--accent-warning);
+      box-shadow: 0 0 10px var(--accent-warning);
+      animation: ledBlink 1s ease-in-out infinite;
     }
     
-    .agent-card.error .agent-status { 
-      background: rgba(255, 69, 58, 0.15);
+    .workstation.error .ws-led {
+      background: var(--accent-danger);
+      box-shadow: 0 0 10px var(--accent-danger);
+    }
+    
+    @keyframes ledBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    
+    /* Desk Section */
+    .ws-desk {
+      padding: 14px 18px;
+      background: linear-gradient(180deg, rgba(30, 30, 45, 0.4) 0%, rgba(20, 20, 32, 0.6) 100%);
+    }
+    
+    .ws-task {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 10px;
+    }
+    
+    .ws-stats {
+      display: flex;
+      gap: 14px;
+      font-size: 10px;
+      color: var(--text-tertiary);
+    }
+    
+    .ws-stat {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    /* Desk Items - Subtle decorative elements */
+    .ws-desk-items {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    
+    .desk-item {
+      width: 24px; height: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      opacity: 0.5;
+    }
+
+    /* Legacy agent-grid for compatibility */
+    .agent-grid { display: none; }
       color: var(--accent-danger);
     }
     
@@ -1925,7 +2035,7 @@ html, body {
         <div class="hero-stat">
           <div class="hero-stat-icon">💰</div>
           <div>
-            <div class="hero-stat-value" id="budget">$20.00</div>
+            <div class="hero-stat-value"><span id="budget">$20.00</span><span id="budget-spent" style="font-size:10px;opacity:0.5;margin-left:4px"></span></div>
             <div class="hero-stat-label">Budget</div>
           </div>
         </div>
@@ -2857,6 +2967,31 @@ Example: '0 8 * * *' = 8 AM daily",
     
     // Update KPIs every 10 seconds
     setInterval(updateKPIs, 10000);
+    
+    // Update budget from status
+    async function updateBudget() {
+      try {
+        const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
+        const data = await resp.json();
+        
+        if (data.budget) {
+          const b = data.budget;
+          document.getElementById('budget').textContent = '$' + b.remaining.toFixed(2);
+          document.getElementById('budget-spent').textContent = '($' + b.spent.toFixed(2) + ' spent)';
+          // Also update progress bar if exists
+          const budgetProgress = document.getElementById('budget-progress');
+          if(budgetProgress) {
+            budgetProgress.style.width = b.percent_used + '%';
+          }
+        }
+      } catch (e) {
+        // Use default
+      }
+    }
+    
+    // Update budget every 30 seconds
+    setInterval(updateBudget, 30000);
+
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');

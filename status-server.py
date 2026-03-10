@@ -66,14 +66,51 @@ def get_kpis():
 
 
 def get_budget():
-    """Read current budget from file."""
-    if os.path.exists(BUDGET_FILE):
-        try:
-            with open(BUDGET_FILE, 'r') as f:
-                return json.load(f)
-        except:
-            pass
-    return {"remaining": 20.00, "monthly_limit": 20.00, "spent": 0.00}
+    """Get budget with actual spending"""
+    import os
+    import json
+    
+    budget_file = os.path.expanduser('~/.openclaw/budget.json')
+    monthly_limit = 20.00  # $20/month
+    
+    spent = 0.00
+    
+    # Try to read from agent run logs
+    try:
+        runs_dir = os.path.expanduser('~/.openclaw/subagents/runs')
+        if os.path.exists(runs_dir):
+            for f in os.listdir(runs_dir):
+                if f.endswith('.json'):
+                    with open(os.path.join(runs_dir, f), 'r') as rf:
+                        data = json.load(rf)
+                        # Estimate cost from tokens
+                        tokens = data.get('total_tokens', 0)
+                        # Rough estimate: $1 per million tokens average
+                        spent += (tokens / 1_000_000) * 1.0
+    except:
+        pass
+    
+    # Also check sessions for usage
+    sessions_dir = os.path.expanduser('~/.openclaw/agents/main/sessions')
+    if os.path.exists(sessions_dir):
+        for f in os.listdir(sessions_dir):
+            if f.endswith('.jsonl'):
+                try:
+                    with open(os.path.join(sessions_dir, f), 'r') as rf:
+                        # Rough estimation from file size
+                        size = os.path.getsize(os.path.join(sessions_dir, f))
+                        spent += (size / 1_000_000) * 0.5  # Rough estimate
+                except:
+                    pass
+    
+    remaining = max(0, monthly_limit - spent)
+    
+    return {
+        "remaining": round(remaining, 2),
+        "monthly_limit": monthly_limit,
+        "spent": round(spent, 2),
+        "percent_used": round((spent / monthly_limit) * 100, 1) if monthly_limit > 0 else 0
+    }
 
 
 def get_gateway_status():
