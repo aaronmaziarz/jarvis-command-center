@@ -193,6 +193,27 @@
       font-weight: 400;
     }
     
+    .model-select-wrap {
+      position: relative;
+    }
+    
+    .model-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+      min-width: 180px;
+    }
+    
+    .model-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 10px rgba(41, 151, 255, 0.3);
+    }
+    
     .hero-stats {
       display: flex;
       gap: 16px;
@@ -895,7 +916,28 @@
       
       .hero { flex-direction: column; text-align: center; }
       .hero-content { flex-direction: column; }
-      .hero-stats { width: 100%; justify-content: center; }
+      .model-select-wrap {
+      position: relative;
+    }
+    
+    .model-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+      min-width: 180px;
+    }
+    
+    .model-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 10px rgba(41, 151, 255, 0.3);
+    }
+    
+    .hero-stats { width: 100%; justify-content: center; }
     }
     
     @media (max-width: 768px) {
@@ -917,7 +959,28 @@
     @media (max-width: 480px) {
       .actions-grid { grid-template-columns: 1fr; }
       
-      .hero-stats { flex-direction: column; }
+      .model-select-wrap {
+      position: relative;
+    }
+    
+    .model-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+      min-width: 180px;
+    }
+    
+    .model-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 10px rgba(41, 151, 255, 0.3);
+    }
+    
+    .hero-stats { flex-direction: column; }
       .hero-stat { width: 100%; justify-content: center; }
     }
     
@@ -1223,7 +1286,7 @@
         <div class="hero-stat">
           <div class="hero-stat-icon">🧠</div>
           <div>
-            <div class="hero-stat-value" id="model">M2.5</div>
+            <div class="hero-stat-value"><select id="model-select" class="model-select" onchange="changeModel(this.value)"><option value="minimax/m2.5">MiniMax M2.5</option><option value="deepseek/r1">DeepSeek R1</option><option value="openai/gpt-4o">GPT-4o</option><option value="claude-sonnet">Claude Sonnet</option><option value="qwen/coder">Qwen Coder</option></select></div>
             <div class="hero-stat-label">Model</div>
           </div>
         </div>
@@ -1773,6 +1836,11 @@
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
+    function changeModel(model){console.log('⚡ Changing model to:',model);const m=document.getElementById('model-select');localStorage.setItem('jarvisModel',model);document.getElementById('model').querySelector('.hero-stat-value')?document.getElementById('model').querySelector('.hero-stat-value').textContent=model.split('/').pop():null;alert('Model changed to '+model+'. Jarvis will use this model for the next request.')}
+    
+    // Load saved model on startup
+    const savedModel=localStorage.getItem('jarvisModel');if(savedModel){const ms=document.getElementById('model-select');if(ms){ms.value=savedModel}}
+    
     console.log('Polling status from:', fullStatusUrl);
   </script>
 </body>
