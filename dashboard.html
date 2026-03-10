@@ -1862,6 +1862,35 @@ html, body {
       margin-top: 4px;
     }
 
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .kpi-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+    
+    .kpi-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
   </style>
 </head>
 <body>
@@ -2794,6 +2823,27 @@ Example: '0 8 * * *' = 8 AM daily",
       });
     });
 
+
+    
+    // KPI Metrics Update (every 10 seconds)
+    async function updateKPIs() {
+      try {
+        const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
+        const data = await resp.json();
+        
+        if (data.kpis) {
+          document.getElementById('kpi-tasks-total').textContent = data.kpis.tasksTotal || 0;
+          document.getElementById('kpi-active').textContent = data.kpis.agentsActive || 0;
+          document.getElementById('kpi-pending').textContent = data.kpis.tasksPending || 0;
+          document.getElementById('kpi-tasks-today').textContent = data.kpis.tasksToday || 0;
+        }
+      } catch (e) {
+        // Use default values if status endpoint not available
+      }
+    }
+    
+    // Update KPIs every 10 seconds
+    setInterval(updateKPIs, 10000);
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
