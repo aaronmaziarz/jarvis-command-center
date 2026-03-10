@@ -3099,7 +3099,36 @@ Example: '0 8 * * *' = 8 AM daily",
     setInterval(updateKPIs, 10000);
     
     // Update budget from status
-    async function updateBudget() {
+    
+    
+      try {
+        const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
+        const data = await resp.json();
+        
+        if (data.budget) {
+          const b = data.budget;
+          
+          // If OpenRouter data available, use it
+          if (b.openrouter && b.openrouter.total_spend !== undefined) {
+            const spent = parseFloat(b.openrouter.total_spend);
+            const remaining = 20 - spent;
+            document.getElementById('budget').textContent = '$' + remaining.toFixed(2);
+            if (document.getElementById('budget-spent')) {
+              document.getElementById('budget-spent').textContent = '($' + spent.toFixed(2) + ' OpenRouter)';
+            }
+          } else {
+            // Fallback to estimated
+            document.getElementById('budget').textContent = '$' + b.remaining.toFixed(2);
+            if (document.getElementById('budget-spent')) {
+              document.getElementById('budget-spent').textContent = '($' + b.spent.toFixed(2) + ' est)';
+            }
+          }
+        }
+      } catch (e) {
+        console.log('Budget update failed:', e);
+      }
+    }
+
       try {
         const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
         const data = await resp.json();

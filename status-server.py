@@ -5,6 +5,45 @@ Polls OpenClaw gateway and subagent data to provide real-time status.
 """
 
 import json
+
+def get_openrouter_usage():
+    """Get real usage from OpenRouter API"""
+    import requests
+    import os
+    
+    # Try to get API key from config
+    config_path = os.path.expanduser('~/.openclaw/agents/main/agent/models.json')
+    api_key = None
+    
+    try:
+        import json
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+            api_key = config.get('default', {}).get('key')
+    except:
+        pass
+    
+    if not api_key:
+        return None
+    
+    try:
+        resp = requests.get(
+            f"https://openrouter.ai/api/v1/usage?date=2026-03",
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=5
+        )
+        if resp.status_code == 200:
+            data = resp.json()
+            return {
+                "total_spend": data.get("total_spend", 0),
+                "currency": data.get("currency", "USD"),
+                "requests": data.get("total_requests", 0)
+            }
+    except:
+        pass
+    
+    return None
+
 import os
 import sys
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -42,6 +81,45 @@ def get_kpis():
     
     # Count total tasks from agent states
     import json
+
+def get_openrouter_usage():
+    """Get real usage from OpenRouter API"""
+    import requests
+    import os
+    
+    # Try to get API key from config
+    config_path = os.path.expanduser('~/.openclaw/agents/main/agent/models.json')
+    api_key = None
+    
+    try:
+        import json
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+            api_key = config.get('default', {}).get('key')
+    except:
+        pass
+    
+    if not api_key:
+        return None
+    
+    try:
+        resp = requests.get(
+            f"https://openrouter.ai/api/v1/usage?date=2026-03",
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=5
+        )
+        if resp.status_code == 200:
+            data = resp.json()
+            return {
+                "total_spend": data.get("total_spend", 0),
+                "currency": data.get("currency", "USD"),
+                "requests": data.get("total_requests", 0)
+            }
+    except:
+        pass
+    
+    return None
+
     agent_states_file = os.path.join(memory_dir, 'agent-states.json')
     total_tasks = 0
     active_agents = 0
@@ -69,6 +147,45 @@ def get_budget():
     """Get budget with actual spending"""
     import os
     import json
+
+def get_openrouter_usage():
+    """Get real usage from OpenRouter API"""
+    import requests
+    import os
+    
+    # Try to get API key from config
+    config_path = os.path.expanduser('~/.openclaw/agents/main/agent/models.json')
+    api_key = None
+    
+    try:
+        import json
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+            api_key = config.get('default', {}).get('key')
+    except:
+        pass
+    
+    if not api_key:
+        return None
+    
+    try:
+        resp = requests.get(
+            f"https://openrouter.ai/api/v1/usage?date=2026-03",
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=5
+        )
+        if resp.status_code == 200:
+            data = resp.json()
+            return {
+                "total_spend": data.get("total_spend", 0),
+                "currency": data.get("currency", "USD"),
+                "requests": data.get("total_requests", 0)
+            }
+    except:
+        pass
+    
+    return None
+
     
     budget_file = os.path.expanduser('~/.openclaw/budget.json')
     monthly_limit = 20.00  # $20/month
@@ -107,6 +224,7 @@ def get_budget():
     
     return {
         "remaining": round(remaining, 2),
+        "openrouter": get_openrouter_usage(),
         "monthly_limit": monthly_limit,
         "spent": round(spent, 2),
         "percent_used": round((spent / monthly_limit) * 100, 1) if monthly_limit > 0 else 0
