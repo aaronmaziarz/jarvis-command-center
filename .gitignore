@@ -1,0 +1,10 @@
+# Ignore OpenClaw internal files
+.openclaw/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Credentials (keep local)
+credentials/

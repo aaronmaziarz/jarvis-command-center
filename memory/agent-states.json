@@ -1,0 +1,42 @@
+{
+  "researcher": {
+    "status": "idle",
+    "current_task": null,
+    "started_at": null,
+    "tasks_completed": 0,
+    "tasks_failed": 0,
+    "total_time_ms": 0
+  },
+  "coder": {
+    "status": "idle",
+    "current_task": null,
+    "started_at": null,
+    "tasks_completed": 0,
+    "tasks_failed": 0,
+    "total_time_ms": 0
+  },
+  "writer": {
+    "status": "idle",
+    "current_task": null,
+    "started_at": null,
+    "tasks_completed": 0,
+    "tasks_failed": 0,
+    "total_time_ms": 0
+  },
+  "analyst": {
+    "status": "idle",
+    "current_task": null,
+    "started_at": null,
+    "tasks_completed": 0,
+    "tasks_failed": 0,
+    "total_time_ms": 0
+  },
+  "scheduler": {
+    "status": "idle",
+    "current_task": null,
+    "started_at": null,
+    "tasks_completed": 0,
+    "tasks_failed": 0,
+    "total_time_ms": 0
+  }
+}
