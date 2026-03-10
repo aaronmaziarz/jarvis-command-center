@@ -2016,6 +2016,58 @@ html, body {
       box-shadow: 0 0 8px var(--primary-blue);
     }
 
+
+    .cron-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .cron-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+    }
+    
+    .cron-icon {
+      font-size: 24px;
+    }
+    
+    .cron-info {
+      flex: 1;
+    }
+    
+    .cron-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    
+    .cron-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .cron-select {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    @media (max-width: 768px) {
+      .cron-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -2292,6 +2344,73 @@ html, body {
         </div>
       </div>
       
+            <!-- ═══════════════════════════════════════════════════════════════════
+           CRON JOBS
+      ═══════════════════════════════════════════════════════════════════ -->
+      <div class="card span-12">
+        <div class="card-header">
+          <span class="card-title">Scheduled Jobs</span>
+          <span class="card-icon">⏰</span>
+        </div>
+        <div class="cron-grid">
+          <div class="cron-item">
+            <div class="cron-icon">☀️</div>
+            <div class="cron-info">
+              <div class="cron-name">Morning Brief</div>
+              <div class="cron-desc">Weather, calendar, status</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('morning-brief', this.value)">
+                <option value="30 7 * * *">7:30 AM</option>
+                <option value="0 8 * * *">8:00 AM</option>
+                <option value="0 9 * * *">9:00 AM</option>
+              </select>
+            </div>
+          </div>
+          <div class="cron-item">
+            <div class="cron-icon">📊</div>
+            <div class="cron-info">
+              <div class="cron-name">Dashboard Sync</div>
+              <div class="cron-desc">Tasks, agents, status</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('dashboard-sync', this.value)">
+                <option value="0 */2 * * *">Every 2 hours</option>
+                <option value="0 */1 * * *">Every hour</option>
+                <option value="0 */4 * * *">Every 4 hours</option>
+              </select>
+            </div>
+          </div>
+          <div class="cron-item">
+            <div class="cron-icon">🔄</div>
+            <div class="cron-info">
+              <div class="cron-name">Repo Sync</div>
+              <div class="cron-desc">Journal, exchange files</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('repo-sync', this.value)">
+                <option value="0 */2 * * *">Every 2 hours</option>
+                <option value="0 */1 * * *">Every hour</option>
+              </select>
+            </div>
+          </div>
+          <div class="cron-item">
+            <div class="cron-icon">📓</div>
+            <div class="cron-info">
+              <div class="cron-name">Daily Journal</div>
+              <div class="cron-desc">Summarize day</div>
+            </div>
+            <div class="cron-time">
+              <select class="cron-select" onchange="updateCron('journal', this.value)">
+                <option value="0 23 * * *">11:00 PM</option>
+                <option value="0 22 * * *">10:00 PM</option>
+                <option value="0 20 * * *">8:00 PM</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ═══════════════════════════════════════════════════════════════════
            REPOSITORIES
       ═══════════════════════════════════════════════════════════════════ -->
@@ -3038,6 +3157,31 @@ Example: '0 8 * * *' = 8 AM daily",
         originalTriggerAction(action);
       }
     };
+
+
+    
+    // Cron job schedule update
+    function updateCron(job, schedule) {
+      console.log('⏰ Updating cron:', job, 'to', schedule);
+      localStorage.setItem('cron_' + job, schedule);
+      
+      // Show confirmation
+      alert('⏰ Cron schedule updated for ' + job + '\nNew schedule: ' + schedule + '\n\nNote: This saves locally. Tell Jarvis to apply the change to the system.');
+    }
+    
+    // Load saved cron schedules
+    function loadCronSchedules() {
+      const jobs = ['morning-brief', 'dashboard-sync', 'repo-sync', 'journal'];
+      jobs.forEach(job => {
+        const saved = localStorage.getItem('cron_' + job);
+        if (saved) {
+          const select = document.querySelector('[onchange*="' + job + '"]');
+          if (select) select.value = saved;
+        }
+      });
+    }
+    
+    loadCronSchedules();
 
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
