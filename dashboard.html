@@ -2549,12 +2549,6 @@ html, body {
             <option value="openrouter/anthropic/claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
             <option value="openrouter/openai/gpt-4o">GPT-4o</option>
           </select>
-            <option value="minimax/m2.5">MiniMax M2.5</option>
-            <option value="deepseek/r1" selected>DeepSeek R1</option>
-            <option value="qwen/plus">Qwen Plus</option>
-            <option value="anthropic/claude-sonnet">Claude Sonnet</option>
-            <option value="openai/gpt-4o">GPT-4o</option>
-          </select>
           </div>
         </div>
         <button class="modal-close" onclick="closeModal()">×</button>
@@ -2857,7 +2851,7 @@ html, body {
       researcher: { 
         name: "Researcher", icon: "🤡", model: "DeepSeek R1", role: "Web search & analysis", 
         tasksCompleted: 2, totalSpend: "$0.14", uptime: "2h 15m", status: "active",
-        definition: "You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning and research.
+        definition: `You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning and research.
 
 CORE MISSION:
 Find, gather, analyze, and synthesize information from web searches, documents, and comprehensive APIs. Provide research with citations.
@@ -2879,7 +2873,7 @@ OUTPUT FORMAT:
 - Bullet points for key findings
 - Pros/cons when comparing options
 - Sources cited at the end
-- Think step-by-step for complex research",
+- Think step-by-step for complex research`,
         suggestions: ["Research AI automation tools", "Find best APIs for X", "Competitive analysis", "Summarize article"],
         tools: ["web_search", "web_fetch", "browser", "memory_search"],
         warnings: []
@@ -2887,7 +2881,7 @@ OUTPUT FORMAT:
       coder: { 
         name: "Coder", icon: "💻", model: "Qwen2.5 Coder", role: "Python, SQL & automation", 
         tasksCompleted: 1, totalSpend: "$0.20", uptime: "1h 45m", status: "active",
-        definition: "You are the Coder agent for Jarvis, powered by Qwen2.5 Coder 32B for code generation and debugging.
+        definition: `You are the Coder agent for Jarvis, powered by Qwen2.5 Coder 32B for code generation and debugging.
 
 CORE MISSION:
 Write clean, working code and help debug issues across Python, SQL, bash, and other languages.
@@ -2909,7 +2903,7 @@ PREFERRED LANGUAGES:
 - Python for scripts/automation
 - SQL for database queries
 - Bash for shell operations
-- YAML/JSON for configs",
+- YAML/JSON for configs`,
         suggestions: ["Write Python script", "Debug code", "Create SQL query", "Build automation"],
         tools: ["exec", "read", "write", "edit", "sessions_spawn"],
         warnings: []
@@ -2917,7 +2911,7 @@ PREFERRED LANGUAGES:
       frontend: { 
         name: "Frontend Dev", icon: "🎨", model: "Claude Sonnet 4.6", role: "UI/UX & dashboard", 
         tasksCompleted: 1, totalSpend: "$3.00", uptime: "45m", status: "ready",
-        definition: "You are the Frontend Dev agent for Jarvis, powered by Claude Sonnet 4.6 for premium UI/UX.
+        definition: `You are the Frontend Dev agent for Jarvis, powered by Claude Sonnet 4.6 for premium UI/UX.
 
 CORE MISSION:
 Create stunning, cutting-edge user interfaces with Apple-quality aesthetics. Think product page meets 2080 sci-fi.
@@ -2940,7 +2934,7 @@ TECHNICAL:
 - CSS variables for theming
 - Modern CSS (grid, flexbox, custom properties)
 - Web fonts from Google Fonts
-- Performance optimized",
+- Performance optimized`,
         suggestions: ["Overhaul dashboard", "Add components", "Mobile optimization", "Add animations"],
         tools: ["read", "write", "edit", "exec", "browser", "canvas"],
         warnings: []
@@ -2948,7 +2942,7 @@ TECHNICAL:
       security: { 
         name: "Security", icon: "🛡️", model: "DeepSeek R1", role: "Audits & hardening", 
         tasksCompleted: 1, totalSpend: "$0.07", uptime: "30m", status: "ready",
-        definition: "You are the Security Agent for Jarvis, powered by DeepSeek R1 for thorough security analysis.
+        definition: `You are the Security Agent for Jarvis, powered by DeepSeek R1 for thorough security analysis.
 
 CORE MISSION:
 Identify security vulnerabilities, recommend hardening, and ensure the system is secure.
@@ -2973,7 +2967,7 @@ SEVERITY LEVELS:
 - Low: Fix when convenient
 - Info: Note for awareness
 
-Always provide actionable remediation steps.",
+Always provide actionable remediation steps.`,
         suggestions: ["Run security audit", "Check firewall", "Review access", "Scan vulnerabilities"],
         tools: ["exec", "healthcheck", "memory_search", "read"],
         warnings: ["No rate limiting on gateway", "denyCommands not fully effective"]
@@ -2981,7 +2975,7 @@ Always provide actionable remediation steps.",
       writer: { 
         name: "Writer", icon: "✍️", model: "MiniMax M2.5", role: "Copy & documentation", 
         tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", status: "ready",
-        definition: "You are the Writer agent for Jarvis, powered by MiniMax M2.5 for natural language generation.
+        definition: `You are the Writer agent for Jarvis, powered by MiniMax M2.5 for natural language generation.
 
 CORE MISSION:
 Create natural, human-sounding copy that doesn't feel AI-generated. Match brand voice.
@@ -3005,7 +2999,7 @@ CONTENT TYPES:
 - Proposals
 - Technical docs
 - Blog posts
-- Email templates",
+- Email templates`,
         suggestions: ["Write landing page copy", "Draft proposal", "Edit document", "Create blog post"],
         tools: ["read", "write", "edit", "memory_search"],
         warnings: []
@@ -3013,7 +3007,7 @@ CONTENT TYPES:
       analyst: { 
         name: "Analyst", icon: "📊", model: "Qwen Plus", role: "Data & reporting", 
         tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", status: "ready",
-        definition: "You are the Analyst agent for Jarvis, powered by Qwen Plus for data processing and analysis.
+        definition: `You are the Analyst agent for Jarvis, powered by Qwen Plus for data processing and analysis.
 
 CORE MISSION:
 Process data, generate insights, and create reports from various sources.
@@ -3036,7 +3030,7 @@ OUTPUT:
 - Clear, actionable insights
 - Visual charts/tables where helpful
 - Executive summary
-- Data-backed recommendations",
+- Data-backed recommendations`,
         suggestions: ["Analyze data", "Build report", "Create dashboard", "Process spreadsheet"],
         tools: ["exec", "read", "write", "web_fetch"],
         warnings: []
@@ -3044,7 +3038,7 @@ OUTPUT:
       scheduler: { 
         name: "Scheduler", icon: "⏰", model: "MiniMax M2.5", role: "Calendar & reminders", 
         tasksCompleted: 1, totalSpend: "$0.05", uptime: "6h 20m", status: "active",
-        definition: "You are the Scheduler agent for Jarvis, powered by MiniMax M2.5 for time management.
+        definition: `You are the Scheduler agent for Jarvis, powered by MiniMax M2.5 for time management.
 
 CORE MISSION:
 Manage time, reminders, and scheduling via cron jobs and calendar integration.
@@ -3063,19 +3057,18 @@ CAPABILITIES:
 
 CRON FORMAT:
 Standard cron: minute hour day month weekday
-Example: '0 8 * * *' = 8 AM daily",
+Example: '0 8 * * *' = 8 AM daily`,
         suggestions: ["Set reminder", "Schedule cron", "Check calendar", "Add to-do"],
         warnings: []
       },
       organization: { 
         name: "Organization", icon: "🗂️", model: "MiniMax M2.5", role: "File & memory management", 
         tasksCompleted: 0, totalSpend: "$0.00", uptime: "New", status: "ready",
-        definition: "You are the Organization Agent for Jarvis - file and memory manager.",
+        definition: `You are the Organization Agent for Jarvis - file and memory manager.`,
         suggestions: ["Run daily cleanup", "Optimize memory files", "Sync repos"],
         tools: ["exec", "read", "write", "git"],
         warnings: []
       }
-    };
     };
     let currentAgent = null;
     function openAgentModal(a){const ag=agentData[a];if(!ag)return;currentAgent=a;document.getElementById("modal-icon").textContent=ag.icon;document.getElementById("modal-name").textContent=ag.name;document.getElementById("modal-model").textContent=ag.model;document.getElementById("modal-tasks").textContent=ag.tasksCompleted;document.getElementById("modal-spend").textContent=ag.totalSpend;document.getElementById("modal-uptime").textContent=ag.uptime;document.getElementById("modal-definition").value=ag.definition;document.getElementById("modal-suggestions").innerHTML=ag.suggestions.map(s=>`<span class="modal-suggestion-tag">${s}</span>`).join("");document.getElementById("agent-modal").classList.add("active");document.body.style.overflow="hidden"}
@@ -3133,10 +3126,8 @@ Example: '0 8 * * *' = 8 AM daily",
     
     // Update KPIs every 10 seconds
     setInterval(updateKPIs, 10000);
-    
     // Update budget from status
-    
-    
+    async function updateBudget() {
       try {
         const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
         const data = await resp.json();
@@ -3153,34 +3144,19 @@ Example: '0 8 * * *' = 8 AM daily",
               document.getElementById('budget-spent').textContent = '($' + spent.toFixed(2) + ' OpenRouter)';
             }
           } else {
-            // Fallback to estimated
+            // Fallback to estimated/local values
             document.getElementById('budget').textContent = '$' + b.remaining.toFixed(2);
             if (document.getElementById('budget-spent')) {
-              document.getElementById('budget-spent').textContent = '($' + b.spent.toFixed(2) + ' est)';
+              document.getElementById('budget-spent').textContent = '($' + b.spent.toFixed(2) + ' spent)';
+            }
+            const budgetProgress = document.getElementById('budget-progress');
+            if (budgetProgress && b.percent_used !== undefined) {
+              budgetProgress.style.width = b.percent_used + '%';
             }
           }
         }
       } catch (e) {
         console.log('Budget update failed:', e);
-      }
-    }
-
-      try {
-        const resp = await fetch(fullStatusUrl, { cache: 'no-cache' });
-        const data = await resp.json();
-        
-        if (data.budget) {
-          const b = data.budget;
-          document.getElementById('budget').textContent = '$' + b.remaining.toFixed(2);
-          document.getElementById('budget-spent').textContent = '($' + b.spent.toFixed(2) + ' spent)';
-          // Also update progress bar if exists
-          const budgetProgress = document.getElementById('budget-progress');
-          if(budgetProgress) {
-            budgetProgress.style.width = b.percent_used + '%';
-          }
-        }
-      } catch (e) {
-        // Use default
       }
     }
     
@@ -3301,11 +3277,19 @@ Example: '0 8 * * *' = 8 AM daily",
       alert('📰 Daily Brief Refinement\n\nCurrent settings:\n- Morning at 7:30 AM\n- Topics: AI, Automation, MazTech, Coding\n- Researches web before each brief\n\nTo update: Tell Jarvis what topics to add/remove or adjust the template.');
     }
     
-    // Update triggerAction to handle refine-brief
+    // Update triggerAction to handle the newer quick actions too
     const oldTrigger = window.triggerAction;
     window.triggerAction = function(action) {
       if (action === 'refine-brief') {
         refineBrief();
+        return;
+      }
+      if (action === 'setup-x') {
+        setupX();
+        return;
+      }
+      if (action === 'setup-creds') {
+        setupCreds();
         return;
       }
       if (oldTrigger) oldTrigger(action);
