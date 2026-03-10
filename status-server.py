@@ -21,6 +21,50 @@ GATEWAY_TOKEN = "97781c1ffe55cb0248394b17708c3913ed3ff367bc212bf0"
 BUDGET_FILE = os.path.join(OPENCLAW_DIR, "budget.json")
 
 
+
+def get_kpis():
+    """Get KPI metrics"""
+    import os
+    from datetime import datetime
+    
+    # Count tasks completed today
+    today = datetime.now().strftime('%Y-%m-%d')
+    memory_dir = os.path.expanduser('~/.openclaw/workspace/memory')
+    tasks_today = 0
+    
+    try:
+        daily_file = os.path.join(memory_dir, f'{today}.md')
+        if os.path.exists(daily_file):
+            with open(daily_file, 'r') as f:
+                tasks_today = f.read().count('✓')
+    except:
+        pass
+    
+    # Count total tasks from agent states
+    import json
+    agent_states_file = os.path.join(memory_dir, 'agent-states.json')
+    total_tasks = 0
+    active_agents = 0
+    
+    try:
+        if os.path.exists(agent_states_file):
+            with open(agent_states_file, 'r') as f:
+                states = json.load(f)
+                for agent, data in states.items():
+                    total_tasks += data.get('tasks_completed', 0)
+                    if data.get('status') in ['active', 'working']:
+                        active_agents += 1
+    except:
+        pass
+    
+    return {
+        "tasksTotal": total_tasks,
+        "tasksToday": tasks_today,
+        "agentsActive": active_agents,
+        "tasksPending": 2  # Could track from task list
+    }
+
+
 def get_budget():
     """Read current budget from file."""
     if os.path.exists(BUDGET_FILE):
