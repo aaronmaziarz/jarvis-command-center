@@ -21,14 +21,26 @@ The morning brief runs automatically via cron job. Each morning, check:
 ```
 ☀️ Good Morning, Aaron!
 
-Here's your daily briefing:
+📅 Date: [Day, Date] | Arizona
 
-🌤️ Arizona Weather: [current conditions]
-📅 Upcoming: [next few events]
-📧 Urgent: [any important emails]
-🤖 Jarvis Status: [online/agents active]
-💰 Budget: [$X.XX remaining]
-📋 Today's Focus: [top 3 priorities from Future Actions]
+---
+
+🎯 Top Story: [ONE interesting thing - or skip if nothing]
+
+🤖 Jarvis Update (Since Yesterday):
+- [Key accomplishments from memory/YYYY-MM-DD.md]
+- [New features/fixes]
+- Keep it to 3-4 bullet points max
+
+⚡ Automation: [Skip if no news]
+🤖 AI: [Skip if no news]
+💼 MazTech: [One actionable thing]
+
+📊 Stats:
+- Jarvis: [status]
+- Budget: $[remaining]
+
+📋 Today's Focus: [from Future Actions]
 ```
 
 ---

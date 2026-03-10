@@ -73,6 +73,16 @@ Based on workspace files, here's what matters to Aaron:
 
 ---
 
+## 🤖 Jarvis Update (Since Last Brief)
+[High-level summary of what Jarvis worked on since yesterday]
+- Key features added
+- Problems solved
+- New capabilities
+
+*Auto-generated from memory/YYYY-MM-DD.md - extract key accomplishments only*
+
+---
+
 💤 Brief ends here. Keep it tight!
 ```
 
