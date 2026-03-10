@@ -3255,6 +3255,10 @@ Example: '0 8 * * *' = 8 AM daily",
 
     
     // Refine daily brief action
+    function setupCreds() {
+      alert('🔐 Credentials Management\n\nCurrent Status:\n- OpenRouter: Needs valid key\n- Grok API: Not configured\n- 1Password: CLI not installed\n\nBest method for our setup:\n1. Environment variables in Docker\n2. OpenClaw config file\n3. 1Password CLI (later)\n\nTell Jarvis which credentials to add.');
+    }
+    
     function setupX() {
       alert('🐦 X.com / Twitter Setup\n\nOptions:\n1. Grok API (xAI) - Recommended\n   - Get key at x.ai/api\n2. Twitter API v2\n3. Web fetch (limited)\n\nTell Jarvis which option to set up, or provide an API key.');
     }

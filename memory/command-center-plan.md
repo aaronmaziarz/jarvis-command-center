@@ -173,6 +173,13 @@ Transform Jarvis into an AI operations hub that:
 
 ## Current Future Actions
 
+### Credentials Management
+- [ ] Set up proper credential storage (see credentials-management.md)
+- [ ] Add API keys to environment/docker-compose
+- [ ] Document keys in TOOLS.md
+
+## Current Future Actions
+
 ### X.com / Twitter Access
 Options for monitoring feeds:
 1. **Grok API (xAI)** - Native Twitter access, real-time
@@ -188,6 +195,13 @@ Options for monitoring feeds:
    - Can try fetching public X pages
 
 **Recommended:** Grok API - it's designed for this
+
+## Current Future Actions
+
+### Credentials Management
+- [ ] Set up proper credential storage (see credentials-management.md)
+- [ ] Add API keys to environment/docker-compose
+- [ ] Document keys in TOOLS.md
 
 ## Current Future Actions
 
@@ -204,6 +218,13 @@ Options for monitoring feeds:
 
 ## Current Future Actions
 
+### Credentials Management
+- [ ] Set up proper credential storage (see credentials-management.md)
+- [ ] Add API keys to environment/docker-compose
+- [ ] Document keys in TOOLS.md
+
+## Current Future Actions
+
 ### X.com / Twitter Access
 Options for monitoring feeds:
 1. **Grok API (xAI)** - Native Twitter access, real-time
@@ -219,6 +240,13 @@ Options for monitoring feeds:
    - Can try fetching public X pages
 
 **Recommended:** Grok API - it's designed for this
+
+## Current Future Actions
+
+### Credentials Management
+- [ ] Set up proper credential storage (see credentials-management.md)
+- [ ] Add API keys to environment/docker-compose
+- [ ] Document keys in TOOLS.md
 
 ## Current Future Actions
 
