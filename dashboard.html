@@ -2341,6 +2341,21 @@ html, body {
               <span>7:30 AM daily</span>
             </div>
           </div>
+          
+          <div class="agent-card" data-agent="organization">
+            <div class="agent-header">
+              <div class="agent-icon">🗂️</div>
+              <div>
+                <div class="agent-name">Organization</div>
+                <div class="agent-role">File & memory management</div>
+              </div>
+            </div>
+            <div class="agent-status">Ready</div>
+            <div class="agent-task">— Daily at 6 AM —</div>
+            <div class="agent-stats">
+              <span>New</span>
+            </div>
+          </div>
         </div>
       </div>
       
@@ -3040,10 +3055,17 @@ CRON FORMAT:
 Standard cron: minute hour day month weekday
 Example: '0 8 * * *' = 8 AM daily",
         suggestions: ["Set reminder", "Schedule cron", "Check calendar", "Add to-do"],
-        tools: ["exec", "cron", "read", "write", "git"],
-        warnings: [],
-        suggestions: ["Run daily cleanup", "Optimize memory files", "Sync repos"]
+        warnings: []
+      },
+      organization: { 
+        name: "Organization", icon: "🗂️", model: "MiniMax M2.5", role: "File & memory management", 
+        tasksCompleted: 0, totalSpend: "$0.00", uptime: "New", status: "ready",
+        definition: "You are the Organization Agent for Jarvis - file and memory manager.",
+        suggestions: ["Run daily cleanup", "Optimize memory files", "Sync repos"],
+        tools: ["exec", "read", "write", "git"],
+        warnings: []
       }
+    };
     };
     let currentAgent = null;
     function openAgentModal(a){const ag=agentData[a];if(!ag)return;currentAgent=a;document.getElementById("modal-icon").textContent=ag.icon;document.getElementById("modal-name").textContent=ag.name;document.getElementById("modal-model").textContent=ag.model;document.getElementById("modal-tasks").textContent=ag.tasksCompleted;document.getElementById("modal-spend").textContent=ag.totalSpend;document.getElementById("modal-uptime").textContent=ag.uptime;document.getElementById("modal-definition").value=ag.definition;document.getElementById("modal-suggestions").innerHTML=ag.suggestions.map(s=>`<span class="modal-suggestion-tag">${s}</span>`).join("");document.getElementById("agent-modal").classList.add("active");document.body.style.overflow="hidden"}
