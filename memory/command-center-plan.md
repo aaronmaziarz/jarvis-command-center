@@ -121,6 +121,29 @@ Transform Jarvis into an AI operations hub that:
 
 ---
 
+## Repositories Created
+
+| Repo | Purpose | URL |
+|------|---------|-----|
+| jarvis-command-center | Main dashboard and project | github.com/aaronmaziarz/jarvis-command-center |
+| jarvis-journal | Daily journal entries | github.com/aaronmaziarz/jarvis-journal |
+| jarvis-exchange | File exchange | github.com/aaronmaziarz/jarvis-exchange |
+
+## Sub-Agents Active
+
+| Agent | Model | Status |
+|-------|-------|--------|
+| Researcher 🤡 | DeepSeek R1 | ✅ Active |
+| Coder 💻 | Qwen2.5 Coder 32B | ✅ Active |
+| Frontend Dev 🎨 | Claude Sonnet 4 | ✅ Active |
+| Writer ✍️ | MiniMax M2.5 | ✅ Active |
+| Analyst 📊 | Qwen Plus | ✅ Active |
+| Scheduler ⏰ | MiniMax M2.5 | ✅ Active |
+
+## Daily Schedule
+
+- **7:30 AM Arizona** - Morning brief (cron job set up)
+
 ## Current Future Actions
 
 1. Complete web browser setup (Chrome extension relay)
