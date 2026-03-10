@@ -3004,6 +3004,42 @@ Example: '0 8 * * *' = 8 AM daily",
     setInterval(updateBudget, 30000);
 
 
+    
+    // Spawn agent with selected model
+    async function spawnAgent(agentType, customModel) {
+      const model = customModel || document.getElementById('agent-model-select')?.value || localStorage.getItem('jarvisModel') || 'minimax/m2.5';
+      console.log('🚀 Spawning', agentType, 'with model:', model);
+      
+      // Show loading state
+      const btn = event.target;
+      const originalText = btn.textContent;
+      btn.textContent = '⏳ Spawning...';
+      btn.disabled = true;
+      
+      // Save model preference
+      localStorage.setItem('agentModel_' + agentType, model);
+      
+      // In a full implementation, this would call Jarvis via API
+      // For now, alert the user
+      alert('🤖 Would spawn ' + agentType + ' with model: ' + model + '\n\nIn full implementation, this triggers Jarvis to spawn the sub-agent.');
+      
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+    
+    // Update triggerAction to use selected model
+    const originalTriggerAction = window.triggerAction || function(){};
+    window.triggerAction = function(action) {
+      console.log('⚡ Action:', action);
+      if (action.startsWith('spawn-')) {
+        const agentType = action.replace('spawn-', '');
+        spawnAgent(agentType);
+      } else {
+        originalTriggerAction(action);
+      }
+    };
+
+
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
     function changeAgentModel(model){
