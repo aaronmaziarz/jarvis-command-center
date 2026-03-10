@@ -199,6 +199,12 @@
       -webkit-background-clip: text; 
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes titleGlow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(41, 151, 255, 0.3)); }
+      50% { filter: drop-shadow(0 0 16px rgba(41, 151, 255, 0.5)); }
     }
     
     .hero-text .tagline {
@@ -409,13 +415,18 @@
     }
     
     .card-icon { 
-      width: 36px; height: 36px;
+      width: 40px; height: 40px;
       background: var(--glass-light);
-      border-radius: 10px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 20px;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .card:hover .card-icon {
+      transform: scale(1.1) rotate(5deg);
     }
     
     /* ═══════════════════════════════════════════════════════════════════════
@@ -445,20 +456,27 @@
     }
     
     .health-value {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 600;
       color: var(--accent-primary);
-      text-shadow: 0 0 30px var(--glow-blue);
+      text-shadow: 0 0 20px var(--glow-blue);
+      transition: all 0.3s ease;
+      animation: healthPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes healthPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
     }
     
     .health-value.green {
       color: var(--accent-tertiary);
-      text-shadow: 0 0 30px var(--glow-green);
+      text-shadow: 0 0 20px var(--glow-green);
     }
     
     .health-value.purple {
       color: var(--accent-secondary);
-      text-shadow: 0 0 30px var(--glow-purple);
+      text-shadow: 0 0 20px var(--glow-purple);
     }
     
     .health-label {
@@ -620,14 +638,19 @@
     }
     
     .agent-icon {
-      width: 48px; height: 48px;
+      width: 52px; height: 52px;
       background: linear-gradient(135deg, var(--glass-light), transparent);
       border: 1px solid var(--glass-border);
-      border-radius: 14px;
+      border-radius: 16px;
       display: flex; 
       align-items: center; 
       justify-content: center;
-      font-size: 24px;
+      font-size: 26px;
+      transition: all 0.4s var(--spring-smooth);
+    }
+    
+    .agent-card:hover .agent-icon {
+      transform: scale(1.1) rotate(5deg);
     }
     
     .agent-name { 
@@ -646,25 +669,24 @@
       align-items: center;
       gap: 6px;
       font-size: 11px; 
-      padding: 6px 12px;
-      border-radius: 8px;
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
       background: var(--glass-light);
       color: var(--text-tertiary);
       font-weight: 500;
       letter-spacing: 0.5px;
       text-transform: uppercase;
+      transition: all 0.3s ease;
     }
     
     .agent-card.active .agent-status { 
       background: var(--accent-primary-dim);
       color: var(--accent-primary);
-      box-shadow: 0 0 20px var(--glow-blue);
     }
     
     .agent-card.working .agent-status { 
       background: rgba(255, 159, 10, 0.15);
       color: var(--accent-warning);
-      box-shadow: 0 0 20px rgba(255, 159, 10, 0.2);
     }
     
     .agent-card.error .agent-status { 
@@ -1052,41 +1074,45 @@
       body { min-height: -webkit-fill-available; }
     }
     
-    /* Animations on load */
+    /* Animations on load - Apple smooth entrance */
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px) scale(0.95);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
     
     .card {
-      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+      animation: fadeInUp 0.7s var(--spring-smooth) backwards;
     }
     
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.15s; }
-    .card:nth-child(3) { animation-delay: 0.2s; }
-    .card:nth-child(4) { animation-delay: 0.25s; }
-    .card:nth-child(5) { animation-delay: 0.3s; }
+    .card:nth-child(1) { animation-delay: 0.08s; }
+    .card:nth-child(2) { animation-delay: 0.12s; }
+    .card:nth-child(3) { animation-delay: 0.16s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+    .card:nth-child(5) { animation-delay: 0.24s; }
+    .card:nth-child(6) { animation-delay: 0.28s; }
+    .card:nth-child(7) { animation-delay: 0.32s; }
+    .card:nth-child(8) { animation-delay: 0.36s; }
+    .card:nth-child(9) { animation-delay: 0.4s; }
     /* Agent Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 10000;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s var(--spring-smooth);
       padding: 20px;
     }
     
@@ -1096,22 +1122,25 @@
     }
     
     .modal-container {
-      background: linear-gradient(145deg, rgba(30, 30, 45, 0.95), rgba(15, 15, 25, 0.98));
+      background: linear-gradient(145deg, rgba(30, 30, 45, 0.98), rgba(15, 15, 25, 0.99));
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
+      border-radius: 28px;
       width: 100%;
       max-width: 600px;
       max-height: 90vh;
       overflow: hidden;
-      transform: scale(0.9) translateY(20px);
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: scale(0.85) translateY(30px) rotateX(-5deg);
+      transition: transform 0.5s var(--spring-smooth), opacity 0.3s ease;
+      opacity: 0;
       box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.5),
-        0 0 100px rgba(41, 151, 255, 0.1);
+        0 30px 60px rgba(0, 0, 0, 0.5),
+        0 0 120px rgba(41, 151, 255, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.3);
     }
     
     .modal-overlay.active .modal-container {
-      transform: scale(1) translateY(0);
+      transform: scale(1) translateY(0) rotateX(0);
+      opacity: 1;
     }
     
     .modal-header {
@@ -1165,20 +1194,20 @@
       height: 40px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border-radius: 14px;
       color: rgba(255, 255, 255, 0.6);
       font-size: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      transition: all 0.3s var(--spring-smooth);
     }
     
     .modal-close:hover {
       background: rgba(255, 255, 255, 0.1);
       color: #fff;
-      transform: rotate(90deg);
+      transform: rotate(90deg) scale(1.1);
     }
     
     .modal-body {
@@ -1197,9 +1226,15 @@
     .modal-stat-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: var(--radius-lg);
+      padding: 18px;
       text-align: center;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .modal-stat-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
     }
     
     .modal-stat-value {
@@ -1230,10 +1265,16 @@
     }
     
     .modal-definition {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
+      border-radius: var(--radius-lg);
       padding: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-definition:focus-within {
+      border-color: rgba(41, 151, 255, 0.3);
+      box-shadow: 0 0 20px rgba(41, 151, 255, 0.1);
     }
     
     .modal-definition textarea {
@@ -1244,9 +1285,10 @@
       color: rgba(255, 255, 255, 0.85);
       font-family: 'JetBrains Mono', 'SF Mono', monospace;
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.7;
       resize: vertical;
       outline: none;
+      transition: all 0.3s ease;
     }
     
     /* Tools Section */
@@ -1257,30 +1299,41 @@
     }
     
     .modal-tool-tag {
-      padding: 6px 12px;
+      padding: 8px 14px;
       background: rgba(191, 90, 242, 0.1);
       border: 1px solid rgba(191, 90, 242, 0.2);
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       font-size: 12px;
       color: #bf5af2;
       font-family: "JetBrains Mono", monospace;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .modal-tool-tag:hover {
+      background: rgba(191, 90, 242, 0.2);
+      transform: scale(1.05);
     }
     
     .modal-suggestions {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
     
     .modal-suggestion-tag {
-      padding: 8px 16px;
+      padding: 10px 18px;
       background: rgba(48, 209, 88, 0.1);
       border: 1px solid rgba(48, 209, 88, 0.2);
-      border-radius: 20px;
+      border-radius: var(--radius-full);
       font-size: 13px;
-      color: var(--primary-green);
+      color: var(--accent-tertiary);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s var(--spring-smooth);
+    }
+    
+    .modal-suggestion-tag:hover {
+      background: rgba(48, 209, 88, 0.2);
+      transform: translateY(-2px) scale(1.05);
     }
     
     .modal-footer {
@@ -1293,12 +1346,12 @@
     
     .modal-btn {
       flex: 1;
-      padding: 14px 24px;
-      border-radius: 14px;
+      padding: 16px 24px;
+      border-radius: var(--radius-lg);
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.4s var(--spring-smooth);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1311,17 +1364,96 @@
       color: rgba(255, 255, 255, 0.7);
     }
     
+    .modal-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
     .modal-btn-primary {
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+      background: linear-gradient(135deg, var(--accent-primary), #5aaaff);
       border: none;
       color: #fff;
       box-shadow: 0 8px 24px rgba(41, 151, 255, 0.3);
+    }
+    
+    .modal-btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 36px rgba(41, 151, 255, 0.4);
+    }
+    
+    .modal-btn:active {
+      transform: scale(0.97);
+      transition: all 0.15s ease;
     }
     
     @media (max-width: 600px) {
       .modal-stats-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+    }
+
+    /* Ripple Effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: ripple-anim 0.6s var(--spring-smooth);
+      pointer-events: none;
+    }
+    
+    @keyframes ripple-anim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* Smooth scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(41, 151, 255, 0.3);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(41, 151, 255, 0.5);
+    }
+    
+    /* Smooth Selection */
+    ::selection {
+      background: rgba(41, 151, 255, 0.3);
+      color: #fff;
+    }
+    
+    /* Progress bar animation */
+    .progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: 2px;
+      transition: width 1s var(--spring-smooth);
+    }
+    
+    /* Smooth state transitions */
+    .smooth-transition {
+      transition: all 0.4s var(--spring-smooth);
     }
 
     /* Mobile Optimization */
@@ -1358,15 +1490,21 @@
     .modal-verbose textarea {
       width: 100%;
       min-height: 100px;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: var(--radius-lg);
+      padding: 16px;
       color: rgba(255, 255, 255, 0.7);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      line-height: 1.5;
+      font-size: 12px;
+      line-height: 1.6;
       resize: vertical;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-verbose textarea:focus {
+      border-color: rgba(41, 151, 255, 0.3);
+      box-shadow: 0 0 20px rgba(41, 151, 255, 0.1);
     }
 
 
@@ -1848,15 +1986,53 @@
     const statusBaseUrl = urlParams.get('statusUrl') || '';
     const fullStatusUrl = statusBaseUrl + STATUS_ENDPOINT;
     
-    // Uptime counter
+    // Smooth number counting animation
+    function animateNumber(element, target, duration = 1000, prefix = '', suffix = '') {
+      if (!element) return;
+      
+      const start = parseFloat(element.textContent.replace(/[^0-9.-]/g, '')) || 0;
+      const startTime = performance.now();
+      
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Ease out cubic
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = start + (target - start) * easeOut;
+        
+        if (Number.isInteger(target)) {
+          element.textContent = prefix + Math.round(current) + suffix;
+        } else {
+          element.textContent = prefix + current.toFixed(2) + suffix;
+        }
+        
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+      
+      requestAnimationFrame(update);
+    }
+    
+    // Uptime counter with smooth digit transitions
     let seconds = 0;
+    let displayedUptime = { h: 0, m: 0, s: 0 };
+    
     setInterval(() => {
       seconds++;
-      const hrs = Math.floor(seconds / 3600);
-      const mins = Math.floor((seconds % 3600) / 60);
-      const secs = seconds % 60;
-      document.getElementById('uptime').textContent = 
-        `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      const targetH = Math.floor(seconds / 3600);
+      const targetM = Math.floor((seconds % 3600) / 60);
+      const targetS = seconds % 60;
+      
+      // Smooth transition for uptime
+      const uptimeEl = document.getElementById('uptime');
+      if (uptimeEl) {
+        const h = targetH.toString().padStart(2, '0');
+        const m = targetM.toString().padStart(2, '0');
+        const s = targetS.toString().padStart(2, '0');
+        uptimeEl.textContent = `${h}:${m}:${s}`;
+      }
     }, 1000);
     
     // Fetch and update status
@@ -1874,7 +2050,7 @@
     function updateDashboard(data) {
       const budgetEl = document.getElementById('budget');
       if (budgetEl && data.budget) {
-        budgetEl.textContent = `$${data.budget.remaining.toFixed(2)}`;
+        animateNumber(budgetEl, data.budget.remaining, 800, '$');
       }
       
       const modelEl = document.getElementById('model');
@@ -1884,7 +2060,7 @@
       
       const activeEl = document.getElementById('active-count');
       if (activeEl && data.active_agent_count !== undefined) {
-        activeEl.textContent = data.active_agent_count;
+        animateNumber(activeEl, data.active_agent_count, 600);
       }
       
       const agentGrid = document.getElementById('agent-grid');
@@ -1998,14 +2174,37 @@
       console.log('⚡ Action triggered:', action);
     }
     
-    // Touch feedback
-    document.querySelectorAll('.action-btn, .agent-card, .hero-stat').forEach(el => {
-      el.addEventListener('touchstart', function() {
-        this.style.transform = 'scale(0.98)';
+    // Touch feedback with spring physics
+    document.querySelectorAll('.action-btn, .agent-card, .hero-stat, .repo-card, .future-item').forEach(el => {
+      el.addEventListener('touchstart', function(e) {
+        this.style.transform = 'scale(0.96)';
       });
       el.addEventListener('touchend', function() {
         this.style.transform = '';
       });
+    });
+    
+    // Ripple effect for buttons
+    document.querySelectorAll('.action-btn, .modal-btn, .action-add-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+    
+    // Smooth scroll behavior
+    document.querySelectorAll('.task-list, .future-list').forEach(list => {
+      list.style.scrollBehavior = 'smooth';
     });
     
     // Agent Modal Data
