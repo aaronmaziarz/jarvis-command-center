@@ -8,27 +8,50 @@
   <title>Jarvis Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════════════════════════════
+       APPLE 2080 AESTHETIC - Ultra Premium Dashboard
+    ═══════════════════════════════════════════════════════════════════════ */
+    
     :root {
-      --bg-deep: #030308;
-      --bg-void: #060610;
-      --bg-card: rgba(15, 15, 25, 0.7);
-      --bg-card-hover: rgba(25, 25, 40, 0.8);
-      --border-glow: rgba(0, 255, 200, 0.15);
-      --border-glow-active: rgba(0, 255, 200, 0.4);
-      --text-primary: #e0fff8;
-      --text-secondary: rgba(0, 255, 200, 0.6);
-      --text-muted: rgba(0, 255, 200, 0.35);
-      --neon-cyan: #00ffc8;
-      --neon-cyan-dim: rgba(0, 255, 200, 0.1);
-      --neon-magenta: #ff00aa;
-      --neon-magenta-dim: rgba(255, 0, 170, 0.15);
-      --neon-blue: #00aaff;
-      --neon-yellow: #ffee00;
-      --neon-red: #ff3366;
-      --glass: rgba(255, 255, 255, 0.03);
+      /* Refined Color Palette - Apple meets Cyberpunk */
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a0f;
+      --bg-tertiary: #12121a;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --bg-card-active: rgba(255, 255, 255, 0.08);
+      
+      /* Glass Effects */
+      --glass-light: rgba(255, 255, 255, 0.04);
       --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-hover: rgba(255, 255, 255, 0.14);
+      --glass-blur: 40px;
+      
+      /* Accent Colors */
+      --accent-primary: #2997ff;
+      --accent-primary-dim: rgba(41, 151, 255, 0.15);
+      --accent-secondary: #bf5af2;
+      --accent-tertiary: #30d158;
+      --accent-warning: #ff9f0a;
+      --accent-danger: #ff453a;
+      
+      /* Text */
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(245, 245, 247, 0.6);
+      --text-tertiary: rgba(245, 245, 247, 0.35);
+      
+      /* Ambient Glows */
+      --glow-blue: rgba(41, 151, 255, 0.2);
+      --glow-purple: rgba(191, 90, 242, 0.15);
+      --glow-green: rgba(48, 209, 88, 0.15);
+      
+      /* Spacing */
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
     }
     
     * { 
@@ -38,154 +61,200 @@
       -webkit-tap-highlight-color: transparent;
     }
     
+    html {
+      scroll-behavior: smooth;
+    }
+    
     html, body {
       height: 100%;
       overflow-x: hidden;
     }
     
     body {
-      font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-deep);
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
       color: var(--text-primary);
       min-height: 100vh;
       line-height: 1.5;
-      background-image: 
-        radial-gradient(ellipse at 20% 20%, rgba(0, 255, 200, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(255, 0, 170, 0.02) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(0, 170, 255, 0.02) 0%, transparent 70%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     
-    /* Scanline effect */
+    /* Dynamic Ambient Background */
     body::before {
       content: '';
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 255, 200, 0.01) 2px,
-        rgba(0, 255, 200, 0.01) 4px
-      );
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(41, 151, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(191, 90, 242, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse 50% 30% at 10% 90%, rgba(48, 209, 88, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
       pointer-events: none;
-      z-index: 9999;
+      z-index: -1;
+    }
+    
+    /* Noise Texture Overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 9998;
     }
     
     .container { 
-      max-width: 1400px; 
+      max-width: 1280px; 
       margin: 0 auto; 
-      padding: 16px;
-      padding-bottom: 100px;
+      padding: 20px;
+      padding-bottom: 120px;
     }
     
-    /* Header */
-    header {
+    /* ═══════════════════════════════════════════════════════════════════════
+       HERO STATUS BANNER
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .hero {
+      margin-bottom: 32px;
+      padding: 28px 32px;
+      background: linear-gradient(135deg, rgba(41, 151, 255, 0.08) 0%, rgba(191, 90, 242, 0.04) 100%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
-      padding: 16px 20px;
-      background: var(--glass);
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(41, 151, 255, 0.5), transparent);
+    }
+    
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .hero-avatar {
+      width: 72px; height: 72px;
+      background: linear-gradient(145deg, #1a1a24, #0d0d12);
       border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-    
-    .logo { 
-      display: flex; 
-      align-items: center; 
-      gap: 14px; 
-    }
-    
-    .logo-icon {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
-      border-radius: 14px;
+      border-radius: 22px;
       display: flex; 
       align-items: center; 
       justify-content: center;
-      font-size: 26px;
+      font-size: 34px;
       box-shadow: 
-        0 0 30px rgba(0, 255, 200, 0.3),
-        0 0 60px rgba(0, 255, 200, 0.1),
-        inset 0 0 20px rgba(255, 255, 255, 0.1);
-      animation: iconGlow 3s ease-in-out infinite;
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
     }
     
-    @keyframes iconGlow {
-      0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 200, 0.3), 0 0 60px rgba(0, 255, 200, 0.1); }
-      50% { box-shadow: 0 0 40px rgba(0, 255, 200, 0.5), 0 0 80px rgba(0, 255, 200, 0.2); }
+    .hero-avatar::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 24px;
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    .logo h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 26px; 
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--neon-cyan), #fff, var(--neon-cyan));
-      background-size: 200% auto;
+    .hero:hover .hero-avatar::after {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    
+    .hero-text h1 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
       -webkit-background-clip: text; 
       -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-      letter-spacing: 2px;
+      background-clip: text;
     }
     
-    @keyframes shimmer {
-      to { background-position: 200% center; }
+    .hero-text .tagline {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+      font-weight: 400;
     }
     
-    .logo-sub { 
-      font-size: 11px; 
-      color: var(--text-muted);
-      letter-spacing: 3px;
+    .hero-stats {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .hero-stat:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--glass-border-hover);
+      transform: translateY(-2px);
+    }
+    
+    .hero-stat-icon {
+      width: 32px; height: 32px;
+      background: var(--accent-primary-dim);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    
+    .hero-stat-value {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .hero-stat-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     
-    /* Stats Bar */
-    .stats-bar { 
-      display: flex; 
-      gap: 10px; 
-    }
+    /* ═══════════════════════════════════════════════════════════════════════
+       GRID LAYOUT
+    ═══════════════════════════════════════════════════════════════════════ */
     
-    .stat-pill {
-      display: flex; 
-      align-items: center; 
-      gap: 8px;
-      padding: 10px 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 25px; 
-      font-size: 12px;
-      font-weight: 500;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-    
-    .stat-pill:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
-    }
-    
-    .stat-pill .label { color: var(--text-muted); }
-    .stat-pill .value { color: var(--neon-cyan); font-weight: 600; }
-    .stat-pill .value.budget { color: var(--neon-yellow); }
-    .stat-pill .value.model { color: var(--neon-blue); }
-    
-    /* Grid */
     .grid { 
       display: grid; 
       grid-template-columns: repeat(12, 1fr);
-      gap: 16px; 
+      gap: 20px; 
     }
     
     .card {
       background: var(--bg-card);
       border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 20px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
       overflow: hidden;
     }
@@ -194,20 +263,19 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-      opacity: 0.5;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     }
     
     .card:hover { 
-      transform: translateY(-4px);
-      border-color: var(--border-glow-active);
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 30px rgba(0, 255, 200, 0.1);
+      background: var(--bg-card-hover);
+      border-color: var(--glass-border-hover);
     }
     
+    .card.span-3 { grid-column: span 3; }
     .card.span-4 { grid-column: span 4; }
+    .card.span-5 { grid-column: span 5; }
     .card.span-6 { grid-column: span 6; }
+    .card.span-7 { grid-column: span 7; }
     .card.span-8 { grid-column: span 8; }
     .card.span-12 { grid-column: span 12; }
     
@@ -219,100 +287,118 @@
     }
     
     .card-title { 
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px; 
-      font-weight: 600; 
-      color: var(--text-muted); 
+      font-size: 13px; 
+      font-weight: 500; 
+      color: var(--text-tertiary); 
       text-transform: uppercase; 
-      letter-spacing: 2px; 
+      letter-spacing: 1px; 
     }
     
     .card-icon { 
-      font-size: 20px; 
-      opacity: 0.7;
-    }
-    
-    /* Jarvis Status */
-    .jarvis-status { 
-      display: flex; 
-      align-items: center; 
-      gap: 20px; 
-    }
-    
-    .jarvis-avatar {
-      width: 80px; height: 80px;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
-      border-radius: 50%;
-      display: flex; 
-      align-items: center; 
+      width: 36px; height: 36px;
+      background: var(--glass-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      font-size: 40px;
-      box-shadow: 
-        0 0 40px rgba(0, 255, 200, 0.4),
-        0 0 80px rgba(0, 255, 200, 0.2),
-        inset 0 0 30px rgba(255, 255, 255, 0.2);
-      animation: avatarPulse 3s ease-in-out infinite;
-      position: relative;
+      font-size: 18px;
     }
     
-    .jarvis-avatar::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 2px solid var(--neon-cyan);
-      opacity: 0.5;
-      animation: ringExpand 2s ease-out infinite;
+    /* ═══════════════════════════════════════════════════════════════════════
+       SYSTEM HEALTH METERS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
     }
     
-    @keyframes avatarPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+    .health-item {
+      text-align: center;
+      padding: 16px 12px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
     }
     
-    @keyframes ringExpand {
-      0% { transform: scale(1); opacity: 0.5; }
-      100% { transform: scale(1.3); opacity: 0; }
+    .health-item:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
     }
     
-    .jarvis-info h3 { 
-      font-family: 'Orbitron', sans-serif;
-      font-size: 24px; 
-      margin-bottom: 6px; 
-      letter-spacing: 2px;
+    .health-value {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--accent-primary);
+      text-shadow: 0 0 30px var(--glow-blue);
     }
     
-    .jarvis-info .state { 
-      display: flex; 
-      align-items: center; 
-      gap: 10px; 
-      color: var(--neon-cyan); 
-      font-size: 14px;
+    .health-value.green {
+      color: var(--accent-tertiary);
+      text-shadow: 0 0 30px var(--glow-green);
+    }
+    
+    .health-value.purple {
+      color: var(--accent-secondary);
+      text-shadow: 0 0 30px var(--glow-purple);
+    }
+    
+    .health-label {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       QUICK ACTIONS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    
+    .action-btn {
+      padding: 16px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
       font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     
-    .state-dot {
-      width: 10px; height: 10px;
-      background: var(--neon-cyan); 
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--neon-cyan);
-      animation: stateBlink 2s ease-in-out infinite;
+    .action-btn:hover { 
+      background: var(--bg-card-hover);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 20px var(--glow-blue);
+      transform: translateY(-3px);
     }
     
-    @keyframes stateBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    
-    .jarvis-context {
-      margin-top: 16px; 
-      padding: 14px 18px;
-      background: rgba(0, 255, 200, 0.03);
-      border: 1px solid rgba(0, 255, 200, 0.1);
-      border-radius: 12px;
-      font-size: 14px; 
-      color: var(--text-secondary);
-      font-family: 'Rajdhani', monospace;
+    .action-btn:active {
+      transform: translateY(-1px) scale(0.98);
     }
     
-    /* Agent Grid */
+    .action-btn span.icon {
+      font-size: 18px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       AGENT SWARM GRID
+    ═══════════════════════════════════════════════════════════════════════ */
+    
     .agent-grid { 
       display: grid; 
       grid-template-columns: repeat(2, 1fr); 
@@ -320,12 +406,12 @@
     }
     
     .agent-card {
-      background: var(--glass);
+      background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 18px;
+      border-radius: var(--radius-lg);
+      padding: 20px;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
@@ -335,38 +421,59 @@
       position: absolute;
       left: 0; top: 0; bottom: 0;
       width: 3px;
-      background: var(--neon-cyan);
+      background: var(--accent-primary);
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transform: scaleY(0);
+      transition: all 0.3s ease;
     }
     
     .agent-card:hover { 
       background: var(--bg-card-hover); 
-      transform: translateX(4px);
+      transform: translateX(6px);
     }
     
-    .agent-card:hover::before { opacity: 1; }
+    .agent-card:hover::before { 
+      opacity: 1; 
+      transform: scaleY(1);
+    }
     
     .agent-card.active { 
-      border-color: var(--neon-cyan); 
-      background: rgba(0, 255, 200, 0.05);
+      border-color: var(--accent-primary);
+      background: linear-gradient(135deg, var(--accent-primary-dim) 0%, transparent 100%);
     }
     
-    .agent-card.active::before { opacity: 1; }
+    .agent-card.active::before { 
+      opacity: 1; 
+      transform: scaleY(1);
+    }
     
     .agent-card.working { 
-      border-color: var(--neon-yellow);
-      background: rgba(255, 238, 0, 0.03);
+      border-color: var(--accent-warning);
+      background: linear-gradient(135deg, rgba(255, 159, 10, 0.08) 0%, transparent 100%);
     }
     
-    .agent-card.working::before { background: var(--neon-yellow); opacity: 1; }
+    .agent-card.working::before { 
+      background: var(--accent-warning);
+      opacity: 1; 
+      transform: scaleY(1);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
     
     .agent-card.error { 
-      border-color: var(--neon-red);
-      background: rgba(255, 51, 102, 0.03);
+      border-color: var(--accent-danger);
+      background: linear-gradient(135deg, rgba(255, 69, 58, 0.08) 0%, transparent 100%);
     }
     
-    .agent-card.error::before { background: var(--neon-red); opacity: 1; }
+    .agent-card.error::before { 
+      background: var(--accent-danger);
+      opacity: 1; 
+      transform: scaleY(1);
+    }
     
     .agent-card.planned {
       opacity: 0.5;
@@ -375,151 +482,239 @@
     .agent-header { 
       display: flex; 
       align-items: center; 
-      gap: 12px; 
-      margin-bottom: 12px; 
+      gap: 14px; 
+      margin-bottom: 14px; 
     }
     
     .agent-icon {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, rgba(0, 255, 200, 0.1), rgba(0, 170, 255, 0.1));
-      border: 1px solid rgba(0, 255, 200, 0.2);
-      border-radius: 12px;
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--glass-light), transparent);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
       display: flex; 
       align-items: center; 
       justify-content: center;
-      font-size: 22px;
+      font-size: 24px;
     }
     
     .agent-name { 
-      font-family: 'Orbitron', sans-serif;
       font-weight: 600; 
-      font-size: 14px; 
-      letter-spacing: 1px;
+      font-size: 15px; 
+      letter-spacing: 0.3px;
     }
     
     .agent-role { 
-      font-size: 11px; 
-      color: var(--text-muted); 
+      font-size: 12px; 
+      color: var(--text-tertiary); 
     }
     
     .agent-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 11px; 
-      padding: 5px 10px;
-      border-radius: 6px;
-      background: rgba(0, 255, 200, 0.05); 
-      color: var(--text-muted);
-      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: var(--glass-light);
+      color: var(--text-tertiary);
       font-weight: 500;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
     }
     
     .agent-card.active .agent-status { 
-      background: rgba(0, 255, 200, 0.15);
-      color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
+      background: var(--accent-primary-dim);
+      color: var(--accent-primary);
+      box-shadow: 0 0 20px var(--glow-blue);
     }
     
     .agent-card.working .agent-status { 
-      background: rgba(255, 238, 0, 0.15);
-      color: var(--neon-yellow);
-      box-shadow: 0 0 15px rgba(255, 238, 0, 0.2);
+      background: rgba(255, 159, 10, 0.15);
+      color: var(--accent-warning);
+      box-shadow: 0 0 20px rgba(255, 159, 10, 0.2);
     }
     
     .agent-card.error .agent-status { 
-      background: rgba(255, 51, 102, 0.15);
-      color: var(--neon-red);
+      background: rgba(255, 69, 58, 0.15);
+      color: var(--accent-danger);
+    }
+    
+    .agent-status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    
+    .agent-card.working .agent-status-dot {
+      animation: blink 1s ease-in-out infinite;
+    }
+    
+    @keyframes blink { 
+      0%, 100% { opacity: 1; } 
+      50% { opacity: 0.3; } 
     }
     
     .agent-task {
       font-size: 13px; 
       color: var(--text-secondary);
-      margin-top: 12px;
+      margin-top: 14px;
       white-space: nowrap; 
       overflow: hidden; 
       text-overflow: ellipsis;
-      font-family: 'Rajdhani', monospace;
+      font-family: 'JetBrains Mono', monospace;
     }
     
     .agent-stats { 
       display: flex; 
       gap: 16px; 
-      margin-top: 10px; 
+      margin-top: 12px; 
       font-size: 11px; 
-      color: var(--text-muted); 
+      color: var(--text-tertiary); 
     }
     
-    /* Task Queue */
+    /* ═══════════════════════════════════════════════════════════════════════
+       MISSION LOG
+    ═══════════════════════════════════════════════════════════════════════ */
+    
     .task-list { 
       display: flex; 
       flex-direction: column; 
       gap: 10px; 
-      max-height: 320px; 
+      max-height: 300px; 
       overflow-y: auto; 
     }
     
     .task-list::-webkit-scrollbar { width: 4px; }
     .task-list::-webkit-scrollbar-track { background: transparent; }
-    .task-list::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 2px; opacity: 0.3; }
+    .task-list::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 2px; opacity: 0.3; }
     
-    /* Future Actions */
+    .task-item {
+      display: flex; 
+      align-items: center; 
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--glass-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
+    }
+    
+    .task-item:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--glass-border-hover);
+    }
+    
+    .task-status { 
+      width: 8px; height: 8px; 
+      border-radius: 50%; 
+      flex-shrink: 0;
+    }
+    
+    .task-status.pending { 
+      background: var(--text-tertiary); 
+    }
+    
+    .task-status.working { 
+      background: var(--accent-warning); 
+      box-shadow: 0 0 10px rgba(255, 159, 10, 0.5);
+      animation: taskPulse 1s ease-in-out infinite;
+    }
+    
+    @keyframes taskPulse { 
+      0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 159, 10, 0.5); } 
+      50% { transform: scale(1.3); box-shadow: 0 0 15px rgba(255, 159, 10, 0.8); } 
+    }
+    
+    .task-status.done { 
+      background: var(--accent-tertiary); 
+      box-shadow: 0 0 10px rgba(48, 209, 88, 0.5);
+    }
+    
+    .task-status.error { 
+      background: var(--accent-danger); 
+      box-shadow: 0 0 10px rgba(255, 69, 58, 0.5);
+    }
+    
+    .task-content { flex: 1; }
+    
+    .task-name { 
+      font-size: 14px; 
+      font-weight: 500;
+    }
+    
+    .task-meta { 
+      font-size: 11px; 
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════
+       FUTURE ACTIONS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
     .future-actions {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      padding: 8px 4px;
     }
     
     .action-input-wrap {
       display: flex;
-      gap: 10px;
+      gap: 12px;
     }
     
     .action-input {
       flex: 1;
-      padding: 14px 18px;
-      background: var(--glass);
+      padding: 16px 20px;
+      background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       color: var(--text-primary);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 15px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
       outline: none;
       transition: all 0.3s ease;
     }
     
     .action-input:focus {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 20px rgba(0, 255, 200, 0.15);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 25px var(--glow-blue);
     }
     
     .action-input::placeholder {
-      color: var(--text-muted);
+      color: var(--text-tertiary);
     }
     
     .action-add-btn {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--accent-primary), #0a7aff);
       border: none;
-      border-radius: 12px;
-      color: var(--bg-deep);
+      border-radius: var(--radius-md);
+      color: white;
       font-size: 28px;
-      font-weight: 700;
+      font-weight: 400;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .action-add-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 8px 30px var(--glow-blue);
+    }
+    
+    .action-add-btn:active {
+      transform: scale(0.98);
     }
     
     .future-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      max-height: 320px;
+      gap: 10px;
+      max-height: 280px;
       overflow-y: auto;
       padding-right: 8px;
     }
@@ -529,22 +724,21 @@
       align-items: center;
       gap: 14px;
       padding: 16px 18px;
-      background: var(--glass);
+      background: var(--glass-light);
       border: 1px solid var(--glass-border);
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       transition: all 0.3s ease;
-      margin-bottom: 2px;
     }
     
     .future-item:hover {
-      border-color: var(--neon-magenta);
-      background: rgba(255, 0, 170, 0.05);
+      background: var(--bg-card-hover);
+      border-color: var(--accent-secondary);
     }
     
     .future-checkbox {
       width: 22px;
       height: 22px;
-      border: 2px solid var(--neon-magenta);
+      border: 2px solid var(--accent-secondary);
       border-radius: 6px;
       cursor: pointer;
       display: flex;
@@ -555,24 +749,24 @@
     }
     
     .future-checkbox:hover {
-      background: rgba(255, 0, 170, 0.2);
+      background: rgba(191, 90, 242, 0.2);
     }
     
     .future-checkbox.checked {
-      background: var(--neon-magenta);
+      background: var(--accent-secondary);
     }
     
     .future-checkbox.checked::after {
       content: '✓';
-      color: var(--bg-deep);
-      font-size: 14px;
-      font-weight: 700;
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
     }
     
     .future-text {
       flex: 1;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 400;
     }
     
     .future-item.completed .future-text {
@@ -584,13 +778,16 @@
       width: 28px;
       height: 28px;
       background: transparent;
-      border: 1px solid var(--neon-red);
+      border: 1px solid var(--accent-danger);
       border-radius: 6px;
-      color: var(--neon-red);
+      color: var(--accent-danger);
       font-size: 18px;
       cursor: pointer;
       opacity: 0;
       transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .future-item:hover .future-delete {
@@ -598,303 +795,211 @@
     }
     
     .future-delete:hover {
-      background: var(--neon-red);
-      color: var(--bg-deep);
+      background: var(--accent-danger);
+      color: white;
     }
     
-    .task-item {
-      display: flex; 
-      align-items: center; 
-      gap: 14px;
-      padding: 14px 16px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
+    /* ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════════════════ */
     
-    .task-item:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--border-glow);
-    }
-    
-    .task-status { 
-      width: 10px; height: 10px; 
-      border-radius: 50%; 
-      flex-shrink: 0;
-    }
-    
-    .task-status.pending { 
-      background: var(--text-muted); 
-      box-shadow: 0 0 8px var(--text-muted);
-    }
-    
-    .task-status.working { 
-      background: var(--neon-yellow); 
-      box-shadow: 0 0 10px var(--neon-yellow);
-      animation: taskPulse 1s ease-in-out infinite;
-    }
-    
-    @keyframes taskPulse { 
-      0%, 100% { transform: scale(1); } 
-      50% { transform: scale(1.2); } 
-    }
-    
-    .task-status.done { 
-      background: var(--neon-cyan); 
-      box-shadow: 0 0 10px var(--neon-cyan);
-    }
-    
-    .task-status.error { 
-      background: var(--neon-red); 
-      box-shadow: 0 0 10px var(--neon-red);
-    }
-    
-    .task-content { flex: 1; }
-    
-    .task-name { 
-      font-size: 14px; 
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    
-    .task-meta { 
-      font-size: 11px; 
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    
-    /* Quick Actions */
-    .actions { 
-      display: flex; 
-      gap: 10px; 
-      flex-wrap: wrap; 
-    }
-    
-    .action-btn {
-      padding: 14px 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      color: var(--text-primary);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: 0.5px;
-    }
-    
-    .action-btn:hover { 
-      background: rgba(0, 255, 200, 0.1);
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 25px rgba(0, 255, 200, 0.2);
-      transform: translateY(-2px);
-    }
-    
-    .action-btn:active {
-      transform: translateY(0);
-    }
-    
-    /* System Health Bars */
-    .health-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    
-    .health-item {
-      text-align: center;
-      padding: 16px;
-      background: var(--glass);
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-    }
-    
-    .health-value {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
-    }
-    
-    .health-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 4px;
-    }
-    
-    /* Footer */
     .footer {
       text-align: center;
-      padding: 30px;
-      color: var(--text-muted);
+      padding: 40px;
+      color: var(--text-tertiary);
       font-size: 12px;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
     
     .footer span {
-      color: var(--neon-cyan);
+      color: var(--accent-primary);
     }
     
-    /* Loading animation */
+    /* Loading */
     .loading { 
       display: inline-block; 
-      width: 12px; height: 12px; 
-      border: 2px solid var(--text-muted); 
-      border-top-color: var(--neon-cyan); 
+      width: 10px; height: 10px; 
+      border: 2px solid var(--text-tertiary); 
+      border-top-color: var(--accent-primary); 
       border-radius: 50%; 
-      animation: spin 1s linear infinite; 
+      animation: spin 0.8s linear infinite; 
     }
     
     @keyframes spin { to { transform: rotate(360deg); } }
     
-    /* Responsive */
+    /* ═══════════════════════════════════════════════════════════════════════
+       RESPONSIVE DESIGN
+    ═══════════════════════════════════════════════════════════════════════ */
+    
     @media (max-width: 1024px) {
-      .card.span-4 { grid-column: span 6; }
-      .card.span-6 { grid-column: span 12; }
-      .card.span-8 { grid-column: span 12; }
+      .card.span-3, .card.span-4 { grid-column: span 6; }
+      .card.span-5, .card.span-7 { grid-column: span 12; }
+      .card.span-6, .card.span-8 { grid-column: span 12; }
+      
+      .hero { flex-direction: column; text-align: center; }
+      .hero-content { flex-direction: column; }
+      .hero-stats { width: 100%; justify-content: center; }
     }
     
     @media (max-width: 768px) {
-      header { 
-        flex-direction: column; 
-        gap: 16px; 
-        text-align: center; 
-      }
+      .container { padding: 16px; }
       
-      .stats-bar { 
-        justify-content: center; 
-        flex-wrap: wrap; 
-      }
+      .hero { padding: 20px; margin-bottom: 24px; }
+      .hero-text h1 { font-size: 26px; }
+      .hero-stat { padding: 10px 14px; }
       
-      .card.span-4 { grid-column: span 12; }
+      .card.span-3, .card.span-4, .card.span-5, .card.span-6, .card.span-7, .card.span-8 { grid-column: span 12; }
       
       .agent-grid { grid-template-columns: 1fr; }
       
-      .health-grid { grid-template-columns: 1fr; }
+      .actions-grid { grid-template-columns: repeat(2, 1fr); }
       
-      .logo h1 { font-size: 22px; }
+      .health-grid { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 480px) {
+      .actions-grid { grid-template-columns: 1fr; }
+      
+      .hero-stats { flex-direction: column; }
+      .hero-stat { width: 100%; justify-content: center; }
     }
     
     /* iOS specific */
     @supports (-webkit-touch-callout: none) {
       body { min-height: -webkit-fill-available; }
     }
+    
+    /* Animations on load */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .card {
+      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+    }
+    
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.15s; }
+    .card:nth-child(3) { animation-delay: 0.2s; }
+    .card:nth-child(4) { animation-delay: 0.25s; }
+    .card:nth-child(5) { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <div class="logo">
-        <div class="logo-icon">🤖</div>
-        <div>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         HERO STATUS BANNER
+    ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-avatar">🤖</div>
+        <div class="hero-text">
           <h1>JARVIS</h1>
-          <div class="logo-sub">Command Center v1.0</div>
+          <div class="tagline">Command Center v2.0 — Online & Ready</div>
         </div>
       </div>
-      <div class="stats-bar">
-        <div class="stat-pill">
-          <span class="label">💰</span>
-          <span class="value budget">$20.00</span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-icon">💰</div>
+          <div>
+            <div class="hero-stat-value" id="budget">$20.00</div>
+            <div class="hero-stat-label">Budget</div>
+          </div>
         </div>
-        <div class="stat-pill">
-          <span class="label">🧠</span>
-          <span class="value model">M2.5</span>
+        <div class="hero-stat">
+          <div class="hero-stat-icon">🧠</div>
+          <div>
+            <div class="hero-stat-value" id="model">M2.5</div>
+            <div class="hero-stat-label">Model</div>
+          </div>
         </div>
-        <div class="stat-pill">
-          <span class="label">⏱️</span>
-          <span class="value" id="uptime">00:00:00</span>
+        <div class="hero-stat">
+          <div class="hero-stat-icon">⏱️</div>
+          <div>
+            <div class="hero-stat-value" id="uptime">00:00:00</div>
+            <div class="hero-stat-label">Uptime</div>
+          </div>
         </div>
       </div>
-    </header>
+    </section>
     
     <div class="grid">
-      <!-- Jarvis Status Card -->
-      <div class="card span-4">
+      <!-- ═══════════════════════════════════════════════════════════════════
+           SYSTEM HEALTH
+      ═══════════════════════════════════════════════════════════════════════ -->
+      <div class="card span-3">
         <div class="card-header">
           <span class="card-title">Neural Core</span>
           <span class="card-icon">🧠</span>
         </div>
-        <div class="jarvis-status">
-          <div class="jarvis-avatar">🤖</div>
-          <div class="jarvis-info">
-            <h3>JARVIS</h3>
-            <div class="state">
-              <span class="state-dot"></span>
-              <span>ONLINE</span>
-            </div>
+        <div class="health-grid" style="grid-template-columns: 1fr;">
+          <div class="health-item">
+            <div class="health-value green">98%</div>
+            <div class="health-label">Ready</div>
           </div>
-        </div>
-        <div class="jarvis-context" id="jarvis-context">
-          <span style="color: var(--neon-cyan)">▸</span> Command center initializing<br>
-          <span style="color: var(--text-muted)">Phase 1: Complete</span>
         </div>
       </div>
       
-      <!-- System Health -->
-      <div class="card span-4">
+      <!-- Memory -->
+      <div class="card span-3">
         <div class="card-header">
-          <span class="card-title">System Health</span>
-          <span class="card-icon">💓</span>
+          <span class="card-title">Capacity</span>
+          <span class="card-icon">💾</span>
         </div>
-        <div class="health-grid">
+        <div class="health-grid" style="grid-template-columns: 1fr;">
           <div class="health-item">
-            <div class="health-value" id="cpu">98%</div>
-            <div class="health-label">Ready</div>
+            <div class="health-value purple">∞</div>
+            <div class="health-label">Unlimited</div>
           </div>
+        </div>
+      </div>
+      
+      <!-- Active Agents -->
+      <div class="card span-3">
+        <div class="card-header">
+          <span class="card-title">Active</span>
+          <span class="card-icon">⚡</span>
+        </div>
+        <div class="health-grid" style="grid-template-columns: 1fr;">
           <div class="health-item">
-            <div class="health-value" id="memory">∞</div>
-            <div class="health-label">Capacity</div>
-          </div>
-          <div class="health-item">
-            <div class="health-value" style="color: var(--neon-magenta)">2</div>
-            <div class="health-label">Active</div>
+            <div class="health-value" id="active-count">2</div>
+            <div class="health-label">Agents</div>
           </div>
         </div>
       </div>
       
       <!-- Quick Actions -->
-      <div class="card span-4">
+      <div class="card span-3">
         <div class="card-header">
           <span class="card-title">Quick Actions</span>
           <span class="card-icon">⚡</span>
         </div>
-        <div class="actions">
+        <div class="actions-grid" style="grid-template-columns: repeat(2, 1fr); gap: 8px;">
           <button class="action-btn" onclick="triggerAction('spawn-researcher')">
-            <span>🤡</span> Research
+            <span class="icon">🤡</span> Research
           </button>
           <button class="action-btn" onclick="triggerAction('spawn-coder')">
-            <span>💻</span> Code
+            <span class="icon">💻</span> Code
           </button>
           <button class="action-btn" onclick="triggerAction('spawn-frontend')">
-            <span>🎨</span> Frontend
-          </button>
-          <button class="action-btn" onclick="triggerAction('security-audit')">
-            <span>🛡️</span> Security
+            <span class="icon">🎨</span> Frontend
           </button>
           <button class="action-btn" onclick="triggerAction('health')">
-            <span>💓</span> Health
-          </button>
-          <button class="action-btn" onclick="triggerAction('weather')">
-            <span>🌤️</span> Weather
-          </button>
-          <button class="action-btn" onclick="triggerAction('github')">
-            <span>🐙</span> GitHub
-          </button>
-          <button class="action-btn" onclick="triggerAction('summarize')">
-            <span>📝</span> Summarize
+            <span class="icon">💓</span> Health
           </button>
         </div>
       </div>
       
-      <!-- Agent Team Grid -->
+      <!-- ═══════════════════════════════════════════════════════════════════
+           AGENT SWARM
+      ═══════════════════════════════════════════════════════════════════════ -->
       <div class="card span-8">
         <div class="card-header">
           <span class="card-title">Agent Swarm</span>
@@ -905,11 +1010,14 @@
             <div class="agent-header">
               <div class="agent-icon">🤡</div>
               <div>
-                <div class="agent-name">RESEARCHER</div>
+                <div class="agent-name">Researcher</div>
                 <div class="agent-role">Web search & analysis</div>
               </div>
             </div>
-            <div class="agent-status">ACTIVE</div>
+            <div class="agent-status">
+              <span class="agent-status-dot"></span>
+              Active
+            </div>
             <div class="agent-task">— DeepSeek R1 —</div>
             <div class="agent-stats">
               <span>✓ 2 completed</span>
@@ -921,11 +1029,14 @@
             <div class="agent-header">
               <div class="agent-icon">💻</div>
               <div>
-                <div class="agent-name">CODER</div>
+                <div class="agent-name">Coder</div>
                 <div class="agent-role">Python, SQL & automation</div>
               </div>
             </div>
-            <div class="agent-status">ACTIVE</div>
+            <div class="agent-status">
+              <span class="agent-status-dot"></span>
+              Active
+            </div>
             <div class="agent-task">— Qwen2.5 Coder —</div>
             <div class="agent-stats">
               <span>✓ 1 completed</span>
@@ -937,11 +1048,11 @@
             <div class="agent-header">
               <div class="agent-icon">🎨</div>
               <div>
-                <div class="agent-name">FRONTEND</div>
+                <div class="agent-name">Frontend</div>
                 <div class="agent-role">UI/UX & dashboard</div>
               </div>
             </div>
-            <div class="agent-status">READY</div>
+            <div class="agent-status">Ready</div>
             <div class="agent-task">— Claude Sonnet 4 —</div>
             <div class="agent-stats">
               <span>Ready for overhaul</span>
@@ -952,11 +1063,11 @@
             <div class="agent-header">
               <div class="agent-icon">🛡️</div>
               <div>
-                <div class="agent-name">SECURITY</div>
+                <div class="agent-name">Security</div>
                 <div class="agent-role">Audits & hardening</div>
               </div>
             </div>
-            <div class="agent-status">READY</div>
+            <div class="agent-status">Ready</div>
             <div class="agent-task">— DeepSeek R1 —</div>
             <div class="agent-stats">
               <span>2 warnings found</span>
@@ -967,11 +1078,11 @@
             <div class="agent-header">
               <div class="agent-icon">✍️</div>
               <div>
-                <div class="agent-name">WRITER</div>
+                <div class="agent-name">Writer</div>
                 <div class="agent-role">Copy & documentation</div>
               </div>
             </div>
-            <div class="agent-status">READY</div>
+            <div class="agent-status">Ready</div>
             <div class="agent-task">— MiniMax M2.5 —</div>
             <div class="agent-stats">
               <span>Available</span>
@@ -982,11 +1093,11 @@
             <div class="agent-header">
               <div class="agent-icon">📊</div>
               <div>
-                <div class="agent-name">ANALYST</div>
+                <div class="agent-name">Analyst</div>
                 <div class="agent-role">Data & reporting</div>
               </div>
             </div>
-            <div class="agent-status">READY</div>
+            <div class="agent-status">Ready</div>
             <div class="agent-task">— Qwen Plus —</div>
             <div class="agent-stats">
               <span>Available</span>
@@ -997,11 +1108,11 @@
             <div class="agent-header">
               <div class="agent-icon">⏰</div>
               <div>
-                <div class="agent-name">SCHEDULER</div>
+                <div class="agent-name">Scheduler</div>
                 <div class="agent-role">Calendar & reminders</div>
               </div>
             </div>
-            <div class="agent-status">READY</div>
+            <div class="agent-status">Ready</div>
             <div class="agent-task">— Morning brief active —</div>
             <div class="agent-stats">
               <span>7:30 AM daily</span>
@@ -1010,7 +1121,9 @@
         </div>
       </div>
       
-      <!-- Task Queue -->
+      <!-- ═══════════════════════════════════════════════════════════════════
+           MISSION LOG
+      ═══════════════════════════════════════════════════════════════════════ -->
       <div class="card span-4">
         <div class="card-header">
           <span class="card-title">Mission Log</span>
@@ -1046,12 +1159,15 @@
             </div>
           </div>
         </div>
+      </div>
       
-      <!-- Future Actions -->
+      <!-- ═══════════════════════════════════════════════════════════════════
+           FUTURE ACTIONS
+      ═══════════════════════════════════════════════════════════════════════ -->
       <div class="card span-12">
         <div class="card-header">
-          <span class="card-title">🚀 Future Actions</span>
-          <span class="card-icon">📝</span>
+          <span class="card-title">Future Actions</span>
+          <span class="card-icon">🚀</span>
         </div>
         <div class="future-actions">
           <div class="action-input-wrap">
@@ -1059,7 +1175,6 @@
             <button class="action-add-btn" onclick="addAction()">+</button>
           </div>
           <div class="future-list" id="future-list">
-            <!-- Dynamic actions will appear here -->
           </div>
         </div>
       </div>
@@ -1071,11 +1186,13 @@
   </div>
   
   <script>
-    // Configuration
-    const STATUS_ENDPOINT = '/status.json';
-    const POLL_INTERVAL = 5000; // 5 seconds
+    /* ═══════════════════════════════════════════════════════════════════════
+       JAVIS COMMAND CENTER v2.0 - DYNAMIC STATUS
+    ═══════════════════════════════════════════════════════════════════════ */
     
-    // Status endpoint URL - can be overridden via query param
+    const STATUS_ENDPOINT = '/status.json';
+    const POLL_INTERVAL = 5000;
+    
     const urlParams = new URLSearchParams(window.location.search);
     const statusBaseUrl = urlParams.get('statusUrl') || '';
     const fullStatusUrl = statusBaseUrl + STATUS_ENDPOINT;
@@ -1104,31 +1221,21 @@
     }
     
     function updateDashboard(data) {
-      // Update budget
-      const budgetEl = document.querySelector('.stat-pill .value.budget');
+      const budgetEl = document.getElementById('budget');
       if (budgetEl && data.budget) {
         budgetEl.textContent = `$${data.budget.remaining.toFixed(2)}`;
       }
       
-      // Update model
-      const modelEl = document.querySelector('.stat-pill .value.model');
+      const modelEl = document.getElementById('model');
       if (modelEl && data.model) {
         modelEl.textContent = data.model;
       }
       
-      // Update Jarvis context
-      const contextEl = document.getElementById('jarvis-context');
-      if (contextEl && data.jarvis) {
-        contextEl.innerHTML = `<span style="color: var(--neon-cyan)">▸</span> ${data.jarvis.context}`;
-      }
-      
-      // Update system health - active count
-      const activeEl = document.querySelector('.health-item:last-child .health-value');
+      const activeEl = document.getElementById('active-count');
       if (activeEl && data.active_agent_count !== undefined) {
         activeEl.textContent = data.active_agent_count;
       }
       
-      // Update agent grid
       const agentGrid = document.getElementById('agent-grid');
       if (agentGrid && data.agents) {
         updateAgentCards(agentGrid, data.agents);
@@ -1147,22 +1254,19 @@
         const taskEl = card.querySelector('.agent-task');
         const statsEl = card.querySelector('.agent-stats');
         
-        // Update status
         if (statusEl) {
-          statusEl.textContent = agentData.status.toUpperCase();
+          const dot = statusEl.querySelector('.agent-status-dot');
+          statusEl.innerHTML = `${dot ? '<span class="agent-status-dot"></span>' : ''} ${agentData.status}`;
         }
         
-        // Update task
         if (taskEl) {
           taskEl.textContent = agentData.task || '— Awaiting command —';
         }
         
-        // Update stats
         if (statsEl) {
           statsEl.innerHTML = `<span>✓ ${agentData.completed} completed</span><span>✗ ${agentData.failed} failed</span>`;
         }
         
-        // Update card class
         card.classList.remove('active', 'working', 'error', 'planned');
         if (agentData.status === 'working') {
           card.classList.add('working');
@@ -1177,10 +1281,13 @@
     }
     
     // Start polling
-    fetchStatus(); // Initial fetch
+    fetchStatus();
     setInterval(fetchStatus, POLL_INTERVAL);
     
-    // Future Actions Management
+    /* ═══════════════════════════════════════════════════════════════════════
+       FUTURE ACTIONS MANAGEMENT
+    ═══════════════════════════════════════════════════════════════════════ */
+    
     let futureActions = JSON.parse(localStorage.getItem('futureActions') || '[]');
     
     function renderFutureActions() {
@@ -1221,7 +1328,7 @@
       renderFutureActions();
     }
     
-    // Initialize with default actions if empty
+    // Initialize with default actions
     if (futureActions.length === 0) {
       futureActions = [
         { text: 'Complete web browser setup (Chrome extension relay)', completed: false },
@@ -1232,14 +1339,16 @@
     
     renderFutureActions();
     
-    // Action handler
+    /* ═══════════════════════════════════════════════════════════════════════
+       ACTION HANDLERS
+    ═══════════════════════════════════════════════════════════════════════ */
+    
     function triggerAction(action) {
       console.log('⚡ Action triggered:', action);
-      // Placeholder - will connect to Jarvis
     }
     
     // Touch feedback
-    document.querySelectorAll('.action-btn, .agent-card').forEach(el => {
+    document.querySelectorAll('.action-btn, .agent-card, .hero-stat').forEach(el => {
       el.addEventListener('touchstart', function() {
         this.style.transform = 'scale(0.98)';
       });
@@ -1248,7 +1357,7 @@
       });
     });
     
-    console.log('🤖 Jarvis Command Center v1.0 loaded');
+    console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
     console.log('Polling status from:', fullStatusUrl);
   </script>
