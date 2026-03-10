@@ -3184,6 +3184,44 @@ Example: '0 8 * * *' = 8 AM daily",
     loadCronSchedules();
 
 
+    
+    // Auto track spend from agent runs
+    const modelPricing = {
+      'minimax-m2.5': { input: 0.2, output: 0.2 },  // per 1M
+      'deepseek-r1': { input: 0.07, output: 0.28 },
+      'gpt-4o': { input: 2.5, output: 10.0 },
+      'claude-sonnet-4': { input: 3.0, output: 15.0 },
+      'qwen-coder': { input: 0.2, output: 0.2 },
+      'qwen-plus': { input: 0.4, output: 1.2 }
+    };
+    
+    function calculateSpend() {
+      // Estimate from stored run data
+      let totalSpend = 0;
+      const runData = JSON.parse(localStorage.getItem('agentRuns') || '{}');
+      
+      Object.values(runData).forEach(run => {
+        const model = run.model || 'minimax-m2.5';
+        const pricing = modelPricing[model] || { input: 0.2, output: 0.2 };
+        const tokens = run.tokens || 0;
+        totalSpend += (tokens / 1_000_000) * ((pricing.input + pricing.output) / 2);
+      });
+      
+      return totalSpend;
+    }
+    
+    // Update spend display
+    function updateSpend() {
+      const spend = calculateSpend();
+      const remaining = 20 - spend;
+      document.getElementById('budget').textContent = '$' + remaining.toFixed(2);
+      if (document.getElementById('budget-spent')) {
+        document.getElementById('budget-spent').textContent = '($' + spend.toFixed(2) + ' spent)';
+      }
+    }
+    
+    setInterval(updateSpend, 30000);
+
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
     function changeAgentModel(model){

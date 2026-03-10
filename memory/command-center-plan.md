@@ -173,6 +173,11 @@ Transform Jarvis into an AI operations hub that:
 
 ## Current Future Actions
 
+1. [ ] Enable OpenRouter API for auto spend tracking
+   - Go to openrouter.ai/account to get API key
+   - Then I can query /api/v1/usage endpoint
+2. [ ] Verify all dashboard features working
+
 1. Complete web browser setup (Chrome extension relay)
 2. Set up Cloudflare tunnel for remote dashboard access
 
