@@ -21,9 +21,11 @@ Things like:
 |-------|--------|-------|------------|
 | Researcher (🤡) | Active | DeepSeek R1 | Web search, content fetching |
 | Coder (💻) | Active | Qwen2.5 Coder 32B | Python, SQL, scripting |
-| Writer (✍️) | Planned | MiniMax M2.5 | Copy, docs, proposals |
-| Analyst (📊) | Planned | Qwen Plus | Data processing, reporting |
-| Scheduler (⏰) | Planned | MiniMax M2.5 | Calendar, reminders |
+| Frontend Dev (🎨) | Active | Claude Sonnet 4.6 | UI/UX, dashboard overhauls |
+| Security (🛡️) | Active | DeepSeek R1 | Security audits |
+| Writer (✍️) | Ready | MiniMax M2.5 | Copy, docs, proposals |
+| Analyst (📊) | Ready | Qwen Plus | Data processing, reporting |
+| Scheduler (⏰) | Ready | MiniMax M2.5 | Calendar, reminders |
 
 ### Spawn Command Template
 ```bash
