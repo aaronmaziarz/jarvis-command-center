@@ -890,6 +890,239 @@
     .card:nth-child(3) { animation-delay: 0.2s; }
     .card:nth-child(4) { animation-delay: 0.25s; }
     .card:nth-child(5) { animation-delay: 0.3s; }
+    /* Agent Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 20px;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-container {
+      background: linear-gradient(145deg, rgba(30, 30, 45, 0.95), rgba(15, 15, 25, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow: hidden;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        0 0 100px rgba(41, 151, 255, 0.1);
+    }
+    
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0);
+    }
+    
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(41, 151, 255, 0.05), transparent);
+    }
+    
+    .modal-agent-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .modal-agent-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 8px 24px rgba(41, 151, 255, 0.3);
+    }
+    
+    .modal-agent-title h3 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    
+    .modal-agent-title .model-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(41, 151, 255, 0.15);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--primary-blue);
+    }
+    
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      transform: rotate(90deg);
+    }
+    
+    .modal-body {
+      padding: 24px 28px;
+      max-height: calc(90vh - 140px);
+      overflow-y: auto;
+    }
+    
+    .modal-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .modal-stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .modal-stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 4px;
+    }
+    
+    .modal-stat-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .modal-section {
+      margin-bottom: 24px;
+    }
+    
+    .modal-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    
+    .modal-definition {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    
+    .modal-definition textarea {
+      width: 100%;
+      min-height: 150px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+    
+    .modal-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .modal-suggestion-tag {
+      padding: 8px 16px;
+      background: rgba(48, 209, 88, 0.1);
+      border: 1px solid rgba(48, 209, 88, 0.2);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--primary-green);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      padding: 20px 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-btn {
+      flex: 1;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .modal-btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .modal-btn-primary {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+      border: none;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(41, 151, 255, 0.3);
+    }
+    
+    @media (max-width: 600px) {
+      .modal-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
@@ -1185,6 +1418,55 @@
     </div>
   </div>
   
+  <!-- Agent Detail Modal -->
+  <div class="modal-overlay" id="agent-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-agent-info">
+          <div class="modal-agent-icon" id="modal-icon">🤡</div>
+          <div class="modal-agent-title">
+            <h3 id="modal-name">Researcher</h3>
+            <span class="model-badge" id="modal-model">DeepSeek R1</span>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-stats-grid">
+          <div class="modal-stat-card">
+            <div class="modal-stat-value" id="modal-tasks">0</div>
+            <div class="modal-stat-label">Tasks Done</div>
+          </div>
+          <div class="modal-stat-card">
+            <div class="modal-stat-value" id="modal-spend">$0.00</div>
+            <div class="modal-stat-label">Total Spend</div>
+          </div>
+          <div class="modal-stat-card">
+            <div class="modal-stat-value" id="modal-uptime">0h</div>
+            <div class="modal-stat-label">Uptime</div>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <div class="modal-section-title">Agent Definition (Editable)</div>
+          <div class="modal-definition">
+            <textarea id="modal-definition" placeholder="Edit agent definition..."></textarea>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <div class="modal-section-title">Suggested Tasks</div>
+          <div class="modal-suggestions" id="modal-suggestions">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="modal-btn modal-btn-primary" onclick="saveAgentDefinition()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+  
   <script>
     /* ═══════════════════════════════════════════════════════════════════════
        JAVIS COMMAND CENTER v2.0 - DYNAMIC STATUS
@@ -1357,6 +1639,25 @@
       });
     });
     
+    // Agent Modal Data
+    const agentData = {
+      researcher: { name: "Researcher", icon: "🤡", model: "DeepSeek R1", role: "Web search", tasksCompleted: 2, totalSpend: "$0.14", uptime: "2h 15m", definition: "You are the Researcher agent for Jarvis, powered by DeepSeek R1 for deep reasoning.", suggestions: ["Research AI tools", "Find best APIs", "Competitive analysis"] },
+      coder: { name: "Coder", icon: "💻", model: "Qwen2.5 Coder", role: "Python, SQL", tasksCompleted: 1, totalSpend: "$0.20", uptime: "1h 45m", definition: "You are the Coder agent for Jarvis.", suggestions: ["Write script", "Debug code", "Create query"] },
+      frontend: { name: "Frontend", icon: "🎨", model: "Claude Sonnet 4.6", role: "UI/UX", tasksCompleted: 1, totalSpend: "$3.00", uptime: "45m", definition: "You are the Frontend Dev agent.", suggestions: ["Overhaul UI", "Add components"] },
+      security: { name: "Security", icon: "🛡️", model: "DeepSeek R1", role: "Audits", tasksCompleted: 1, totalSpend: "$0.07", uptime: "30m", definition: "You are the Security Agent.", suggestions: ["Run audit", "Check firewall"] },
+      writer: { name: "Writer", icon: "✍️", model: "MiniMax M2.5", role: "Copy", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Writer agent.", suggestions: ["Write copy", "Draft proposal"] },
+      analyst: { name: "Analyst", icon: "📊", model: "Qwen Plus", role: "Data", tasksCompleted: 0, totalSpend: "$0.00", uptime: "0m", definition: "You are the Analyst agent.", suggestions: ["Analyze data", "Build report"] },
+      scheduler: { name: "Scheduler", icon: "⏰", model: "MiniMax M2.5", role: "Calendar", tasksCompleted: 1, totalSpend: "$0.05", uptime: "6h 20m", definition: "You are the Scheduler agent.", suggestions: ["Set reminder", "Schedule cron"] }
+    };
+    let currentAgent = null;
+    function openAgentModal(a){const ag=agentData[a];if(!ag)return;currentAgent=a;document.getElementById("modal-icon").textContent=ag.icon;document.getElementById("modal-name").textContent=ag.name;document.getElementById("modal-model").textContent=ag.model;document.getElementById("modal-tasks").textContent=ag.tasksCompleted;document.getElementById("modal-spend").textContent=ag.totalSpend;document.getElementById("modal-uptime").textContent=ag.uptime;document.getElementById("modal-definition").value=ag.definition;document.getElementById("modal-suggestions").innerHTML=ag.suggestions.map(s=>`<span class="modal-suggestion-tag">${s}</span>`).join("");document.getElementById("agent-modal").classList.add("active");document.body.style.overflow="hidden"}
+    function closeModal(){document.getElementById("agent-modal").classList.remove("active");document.body.style.overflow="";currentAgent=null}
+    function saveAgentDefinition(){if(!currentAgent)return;const d=document.getElementById("modal-definition").value;agentData[currentAgent].definition=d;localStorage.setItem("agentDefinitions",JSON.stringify(Object.fromEntries(Object.entries(agentData).map(([k,v])=>[k,v.definition]))));const b=document.querySelector(".modal-btn-primary");b.textContent="✓ Saved!";setTimeout(()=>{b.textContent="Save Changes"},2000)}
+    document.getElementById("agent-modal").addEventListener("click",e=>{if(e.target.id==="agent-modal")closeModal()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+    document.querySelectorAll(".agent-card").forEach(c=>{c.style.cursor="pointer";c.addEventListener("click",function(){openAgentModal(this.getAttribute("data-agent"))})});
+    const savedDefs=JSON.parse(localStorage.getItem("agentDefinitions")||"{}");Object.keys(savedDefs).forEach(k=>{if(agentData[k])agentData[k].definition=savedDefs[k]});
+
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
     console.log('Polling status from:', fullStatusUrl);
