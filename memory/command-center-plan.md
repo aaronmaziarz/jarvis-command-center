@@ -1,8 +1,9 @@
 # 🤖 Jarvis Command Center - Master Plan
 
 *Created: 2026-03-09*
+*Updated: 2026-03-10*
 *Owner: Aaron Maziarz*
-*Status: Planning*
+*Status: In Progress*
 
 ---
 
@@ -19,112 +20,84 @@ Transform Jarvis into an AI operations hub that:
 
 ### The Squad (Sub-Agent Roles)
 
-| Agent | Role | Specialty |
-|-------|------|-----------|
-| **Researcher** | Web search, content fetching, competitive analysis | Info gathering at speed |
-| **Coder** | Python, SQL, scripting, automation pipelines | Building & debugging |
-| **Writer** | Copy, docs, proposals, content drafting | Words that sound human |
-| **Analyst** | Data processing, spreadsheets, reporting | Numbers & insights |
-| **Scheduler** | Calendar, reminders, cron jobs | Time & deadlines |
-
-### How It Works
-
-- **Me (Jarvis)** = The manager/brain
-  - I receive your request
-  - I delegate to the right sub-agent(s)
-  - I synthesize results and present to you
-  - I track progress across all agents
-
-- **Sub-agents** = The workers
-  - Spawned on-demand for specific tasks
-  - Each has a clear role and context
-  - Report back to me with results
-
-- **You** = The CEO
-  - Give high-level commands
-  - Approve big moves
-  - Override anytime
+| Agent | Role | Specialty | Model |
+|-------|------|-----------|-------|
+| **Researcher** | Web search, content fetching, competitive analysis | Deep research | DeepSeek R1 ✓ |
+| **Coder** | Python, SQL, scripting, automation pipelines | Code generation | Qwen2.5 Coder ✓ |
+| **Writer** | Copy, docs, proposals, content drafting | Words that sound human | Planned |
+| **Analyst** | Data processing, spreadsheets, reporting | Numbers & insights | Planned |
+| **Scheduler** | Calendar, reminders, cron jobs | Time & deadlines | Planned |
 
 ---
 
-## Part 2: Dashboard Design
+## Part 2: Dashboard Features
 
-### UI/UX Principles
-- **Dark mode** (tech aesthetic, easy on eyes)
-- **Card-based layout** (modular, scannable)
-- **Status colors**: Green = good, Yellow = working, Red = blocked
-- **Real-time updates** (auto-refresh, no manual reload)
-- **Mobile-first** (works on phone, great on desktop)
+### Implemented
+- ✅ Jarvis status with live uptime
+- ✅ Agent grid (Researcher, Coder active)
+- ✅ Task queue / Mission Log
+- ✅ System health indicators
+- ✅ Quick Actions buttons
+- ✅ Future Actions log (add/remove tasks)
+- ✅ Real-time polling from status server
 
-### Dashboard Sections
+### In Progress
+- 🔄 Real-time updates via polling
 
-#### 1. 🧠 Jarvis Status (Brain)
-- Current mood/state
-- Active context (what project/task I'm on)
-- Memory usage indicator
-- Model currently in use
-
-#### 2. 👥 Agent Team Grid
-- Each agent as a card:
-  - Name + role icon
-  - Status: idle / working / waiting / error
-  - Current task (if any)
-  - Tasks completed today
-  - Time spent this session
-
-#### 3. 📋 Task Queue
-- Pending tasks (what you asked for)
-- In-progress tasks
-- Completed tasks (with timestamps)
-- Failed tasks (with error summary)
-
-#### 4. 🎯 Current Project
-- Active project name
-- Goals breakdown
-- Next steps
-- Blockers (if any)
-
-#### 5. 📊 System Stats
-- OpenRouter budget remaining
-- API calls this session
-- Active sub-agents count
-- Uptime
-
-#### 6. ⚡ Quick Actions
-- Buttons for common ops:
-  - Spawn agent
-  - Check memory
-  - Run health check
-  - Pull latest
+### Planned
+- ⏳ Mobile PWA installation
+- ⏳ Cloudflare tunnel for remote access
 
 ---
 
-## Part 3: Implementation Phases
+## Part 3: Browser Control Options
 
-### Phase 1: Foundation (Week 1)
-- [ ] Define sub-agent prompts/roles
-- [ ] Set up memory structure for agent tracking
-- [ ] Create basic status reporting (text-based)
-- [ ] Test sub-agent spawning
+### Option 1: Chrome Extension Relay (RECOMMENDED)
+- **What:** Install OpenClaw browser extension on Chrome
+- **Setup:** Add extension to Chrome → Click toolbar icon to attach tab
+- **Pros:** Easiest setup, works immediately
+- **Cons:** Requires browser to stay open
 
-### Phase 2: Dashboard v1 (Week 2)
-- [ ] Build HTML/CSS dashboard
-- [ ] Add Jarvis status card
-- [ ] Add agent grid with basic status
-- [ ] Add task queue view
-- [ ] Deploy to canvas
+### Option 2: Install Chromium in Docker
+- **What:** Add Chromium to container via Dockerfile
+- **Setup:** Modify Docker config, rebuild container
+- **Pros:** Full browser automation in container
+- **Cons:** Requires Docker changes, more resources
 
-### Phase 3: Real-Time Features (Week 3)
-- [ ] WebSocket or polling for live updates
-- [ ] Agent activity logging
-- [ ] Budget tracking
-- [ ] Task history persistence
+### Option 3: Browser on Host
+- **What:** Connect to browser on Windows host
+- **Setup:** Configure Docker to share browser process
+- **Pros:** Powerful, full access
+- **Cons:** Complex setup
 
-### Phase 4: Polish (Week 4)
-- [ ] UI refinements (animations, hover states)
-- [ ] Mobile optimization
-- [ ] Add quick action buttons
-- [ ] Error handling & edge cases
+**Chosen Path:** Option 1 (Chrome Extension Relay) - Start here
+
+---
+
+## Part 4: Implementation Phases
+
+### Phase 1: Foundation ✅
+- [x] Define sub-agent prompts/roles
+- [x] Set up memory structure for agent tracking
+- [x] Create basic status reporting
+- [x] Test sub-agent spawning
+
+### Phase 2: Dashboard v1 ✅
+- [x] Build HTML/CSS dashboard
+- [x] Add Jarvis status card
+- [x] Add agent grid with status
+- [x] Add task queue view
+- [x] Deploy to GitHub Pages
+
+### Phase 3: Real-Time Features 🔄
+- [x] Status server for polling
+- [x] Dashboard polls every 5 seconds
+- [ ] Add browser control (see options above)
+
+### Phase 4: Polish
+- [ ] UI refinements
+- [ ] Mobile PWA
+- [ ] Cloudflare tunnel
 
 ---
 
@@ -134,7 +107,6 @@ Transform Jarvis into an AI operations hub that:
 - Track per-request cost
 - Alert when below $5 remaining
 - Default to efficient models for simple tasks
-- Ask before using premium models
 
 ---
 
@@ -145,15 +117,14 @@ Transform Jarvis into an AI operations hub that:
 3. ✅ Ask permission before large/critical tasks
 4. ✅ Never spend real money without asking
 5. ✅ Ask before deleting unrecoverable files
+6. ✅ Keep Future Actions updated on dashboard
 
 ---
 
-## Next Steps
+## Current Future Actions
 
-1. **Approve this plan** (or suggest changes)
-2. **Decide which sub-agents to prioritize first**
-3. **Pick dashboard features for v1**
-4. Let's build 🔧
+1. Complete web browser setup (Chrome extension relay)
+2. Set up Cloudflare tunnel for remote dashboard access
 
 ---
 
