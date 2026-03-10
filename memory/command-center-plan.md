@@ -171,12 +171,38 @@ Transform Jarvis into an AI operations hub that:
 
 ---
 
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
+
 ## Current Future Actions
 
 ### Credentials Management
 - [ ] Set up proper credential storage (see credentials-management.md)
 - [ ] Add API keys to environment/docker-compose
 - [ ] Document keys in TOOLS.md
+
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
 
 ## Current Future Actions
 
@@ -196,12 +222,38 @@ Options for monitoring feeds:
 
 **Recommended:** Grok API - it's designed for this
 
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
+
 ## Current Future Actions
 
 ### Credentials Management
 - [ ] Set up proper credential storage (see credentials-management.md)
 - [ ] Add API keys to environment/docker-compose
 - [ ] Document keys in TOOLS.md
+
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
 
 ## Current Future Actions
 
@@ -216,12 +268,38 @@ Options for monitoring feeds:
 
 2. [x] OpenRouter API - works for AI calls, usage endpoint needs different scope (may need new key)
 
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
+
 ## Current Future Actions
 
 ### Credentials Management
 - [ ] Set up proper credential storage (see credentials-management.md)
 - [ ] Add API keys to environment/docker-compose
 - [ ] Document keys in TOOLS.md
+
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
 
 ## Current Future Actions
 
@@ -241,12 +319,38 @@ Options for monitoring feeds:
 
 **Recommended:** Grok API - it's designed for this
 
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
+
 ## Current Future Actions
 
 ### Credentials Management
 - [ ] Set up proper credential storage (see credentials-management.md)
 - [ ] Add API keys to environment/docker-compose
 - [ ] Document keys in TOOLS.md
+
+## 🚀 ACTIVE PROJECT: AI Task Management App
+
+### Research Phase ✅ COMPLETE
+- [ ] Deep research on Motion app
+- [ ] Deep research on Akiflow
+- [ ] Competitive analysis
+- [ ] Feature comparison
+- [ ] Create comprehensive plan
+
+### Models Using:
+- Claude Sonnet 4.6 (research)
+- GPT 5.4 Pro (planning)
 
 ## Current Future Actions
 
