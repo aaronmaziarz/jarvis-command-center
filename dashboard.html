@@ -2043,31 +2043,36 @@ html, body {
           <div class="hero-stat-icon">🧠</div>
           <div>
             <div class="hero-stat-value"><select id="model-select" class="model-select" onchange="changeModel(this.value)">
-            <optgroup label="Fast">
-              <option value="minimax/m2.5" selected>MiniMax M2.5</option>
-              <option value="google/gemini-2.0-flash">Gemini 2.0 Flash</option>
+            <optgroup label="Fast & Efficient">
+              <option value="openrouter/minimax/minimax-m2.5" selected>MiniMax M2.5</option>
+              <option value="openrouter/google/gemini-2.0-flash-exp">Gemini 2.0 Flash</option>
+              <option value="openrouter/qwen/qwen2.5-7b-instruct">Qwen 2.5 7B</option>
             </optgroup>
-            <optgroup label="Reasoning">
-              <option value="deepseek/deepseek-r1">DeepSeek R1</option>
-              <option value="deepseek/deepseek-chat">DeepSeek Chat</option>
+            <optgroup label="Reasoning & Research">
+              <option value="openrouter/deepseek/deepseek-r1">DeepSeek R1</option>
+              <option value="openrouter/deepseek/deepseek-chat">DeepSeek Chat</option>
+              <option value="openrouter/qwen/qwen-plus">Qwen Plus</option>
             </optgroup>
             <optgroup label="Coding">
-              <option value="qwen/qwen2.5-coder-32b">Qwen Coder 32B</option>
-              <option value="anthropic/claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
-              <option value="anthropic/claude-opus-4-20251114">Claude Opus 4.6</option>
+              <option value="openrouter/qwen/qwen2.5-coder-32b-instruct">Qwen Coder 32B</option>
+              <option value="openrouter/anthropic/claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
+              <option value="openrouter/anthropic/claude-opus-4-20251114">Claude Opus 4.6</option>
             </optgroup>
-            <optgroup label="GPT">
-              <option value="openai/gpt-4o">GPT-4o</option>
-              <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
-              <option value="openai/o1">OpenAI o1</option>
+            <optgroup label="GPT Models">
+              <option value="openrouter/openai/gpt-4o">GPT-4o</option>
+              <option value="openrouter/openai/gpt-4o-mini">GPT-4o Mini</option>
+              <option value="openrouter/openai/o1">OpenAI o1</option>
+              <option value="openrouter/openai/o1-mini">OpenAI o1 Mini</option>
             </optgroup>
             <optgroup label="Gemini">
-              <option value="google/gemini-2.0-pro">Gemini 2.0 Pro</option>
-              <option value="google/gemini-1.5-pro">Gemini 1.5 Pro</option>
+              <option value="openrouter/google/gemini-2.0-pro-exp-0520">Gemini 2.0 Pro</option>
+              <option value="openrouter/google/gemini-1.5-pro">Gemini 1.5 Pro</option>
+              <option value="openrouter/google/gemini-1.5-flash-8b">Gemini 1.5 Flash</option>
             </optgroup>
             <optgroup label="Premium">
-              <option value="openai/gpt-4-turbo">GPT-4 Turbo</option>
-              <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+              <option value="openrouter/openai/gpt-4-turbo">GPT-4 Turbo</option>
+              <option value="openrouter/anthropic/claude-3.5-sonnet-20241022">Claude 3.5 Sonnet</option>
+              <option value="openrouter/meta-llama/llama-3.3-70b-instruct">Llama 3.3 70B</option>
             </optgroup>
           </select></div>
             <div class="hero-stat-label">Model</div>
@@ -2395,6 +2400,12 @@ html, body {
         <div class="modal-model-select">
           <label>Switch Model:</label>
           <select id="agent-model-select" class="model-select" onchange="changeAgentModel(this.value)">
+            <option value="openrouter/minimax/minimax-m2.5">MiniMax M2.5</option>
+            <option value="openrouter/deepseek/deepseek-r1">DeepSeek R1</option>
+            <option value="openrouter/qwen/qwen-plus">Qwen Plus</option>
+            <option value="openrouter/anthropic/claude-sonnet-4-20250514">Claude Sonnet 4.6</option>
+            <option value="openrouter/openai/gpt-4o">GPT-4o</option>
+          </select>
             <option value="minimax/m2.5">MiniMax M2.5</option>
             <option value="deepseek/r1" selected>DeepSeek R1</option>
             <option value="qwen/plus">Qwen Plus</option>
