@@ -1461,6 +1461,7 @@
         </div>
       </div>
       <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="exportAgentDefinitions()">Export All</button>
         <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
         <button class="modal-btn modal-btn-primary" onclick="saveAgentDefinition()">Save Changes</button>
       </div>
@@ -1652,7 +1653,7 @@
     let currentAgent = null;
     function openAgentModal(a){const ag=agentData[a];if(!ag)return;currentAgent=a;document.getElementById("modal-icon").textContent=ag.icon;document.getElementById("modal-name").textContent=ag.name;document.getElementById("modal-model").textContent=ag.model;document.getElementById("modal-tasks").textContent=ag.tasksCompleted;document.getElementById("modal-spend").textContent=ag.totalSpend;document.getElementById("modal-uptime").textContent=ag.uptime;document.getElementById("modal-definition").value=ag.definition;document.getElementById("modal-suggestions").innerHTML=ag.suggestions.map(s=>`<span class="modal-suggestion-tag">${s}</span>`).join("");document.getElementById("agent-modal").classList.add("active");document.body.style.overflow="hidden"}
     function closeModal(){document.getElementById("agent-modal").classList.remove("active");document.body.style.overflow="";currentAgent=null}
-    function saveAgentDefinition(){if(!currentAgent)return;const d=document.getElementById("modal-definition").value;agentData[currentAgent].definition=d;localStorage.setItem("agentDefinitions",JSON.stringify(Object.fromEntries(Object.entries(agentData).map(([k,v])=>[k,v.definition]))));const b=document.querySelector(".modal-btn-primary");b.textContent="✓ Saved!";setTimeout(()=>{b.textContent="Save Changes"},2000)}
+    function saveAgentDefinition(){if(!currentAgent)return;const d=document.getElementById("modal-definition").value;agentData[currentAgent].definition=d;localStorage.setItem("agentDefinitions",JSON.stringify(Object.fromEntries(Object.entries(agentData).map(([k,v])=>[k,v.definition]))));const b=document.querySelector(".modal-btn-primary");b.textContent="✓ Saved!";setTimeout(()=>{b.textContent="Save Changes"},2000)}; window.exportAgentDefinitions=function(){const data=JSON.stringify(agentData,null,2);const blob=new Blob([data],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="jarvis-agents-"+new Date().toISOString().split("T")[0]+".json";a.click();URL.revokeObjectURL(url)}
     document.getElementById("agent-modal").addEventListener("click",e=>{if(e.target.id==="agent-modal")closeModal()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
     document.querySelectorAll(".agent-card").forEach(c=>{c.style.cursor="pointer";c.addEventListener("click",function(){openAgentModal(this.getAttribute("data-agent"))})});
