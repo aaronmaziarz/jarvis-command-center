@@ -1,0 +1,478 @@
+# OpenClaw Agent Configuration Manifest
+# Single source of truth for all registered agents
+# 
+# TO ADD/EDIT AN AGENT:
+# 1. Edit this file (YAML format)
+# 2. Run: python3 agents/generate-config.py
+# 3. Restart OpenClaw gateway
+#
+# TO ADD A NEW AGENT:
+# 1. Add entry below with unique id
+# 2. Create agents/<id>/prompt.md for system prompt
+# 3. Run generate-config.py
+# 4. Restart gateway
+
+# ==============================================================================
+# TIER 1: EXECUTIVE / ORCHESTRATION
+# ==============================================================================
+
+brain:
+  id: "brain"
+  display_name: "Jarvis"
+  role: "Executive Orchestrator"
+  tier: 1
+  description: |
+    Top-level orchestrator, user-facing intelligence, routing authority.
+    Supervises all work, decides direct answer vs delegation.
+    Final synthesizer for responses.
+  model: "openrouter/minimax/minimax-m2.5"  # Default, can override
+  model_reasoning: "openrouter/deepseek/deepseek-r1"  # For complex reasoning
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/brain/prompt.md"
+  tools:
+    - read
+    - write
+    - edit
+    - exec
+    - sessions_spawn
+    - memory_search
+    - memory_get
+    - web_search
+    - web_fetch
+    - message
+  channels:
+    - telegram  # Main channel (auto-bound)
+  default_verbosity: "normal"
+  user_facing: true
+  internal_only: false
+  routing:
+    can_delegate: true
+    can_answer_directly: true
+    auto_route_criteria:
+      - type: "task_complexity"
+        threshold: "high"
+        delegate_to: "senior-dev"
+      - type: "task_type"
+        matches: ["research", "find", "analyze"]
+        delegate_to: "researcher"
+      - type: "task_type"
+        matches: ["code", "write", "debug", "build", "script"]
+        delegate_to: "senior-dev"
+      - type: "task_type"
+        matches: ["schedule", "remind", "cron"]
+        delegate_to: "scheduler"
+      - type: "task_type"
+        matches: ["audit", "security", "harden"]
+        delegate_to: "security"
+  metadata:
+    created: "2026-03-11"
+    owner: "Aaron Maziarz"
+    notes: "Main brain agent - all user requests flow through here"
+
+# ==============================================================================
+# TIER 2: DOMAIN LEADS  
+# ==============================================================================
+
+senior-dev:
+  id: "senior-dev"
+  display_name: "Senior Developer"
+  role: "Engineering Lead"
+  tier: 2
+  description: |
+    Receives coding/programming requests from brain.
+    Decomposes work, routes to coding specialists.
+    Reviews specialist output before returning to brain.
+  model: "openrouter/anthropic/claude-sonnet-4-20250514"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/senior-dev/prompt.md"
+  tools:
+    - read
+    - write
+    - edit
+    - exec
+    - sessions_spawn
+  channels:
+    - telegram  # Via brain delegation
+  default_verbosity: "detailed"
+  user_facing: false  # Only via brain
+  internal_only: true
+  routing:
+    can_delegate: true
+    can_answer_directly: false
+    delegates_to:
+      - "frontend-dev"
+      - "backend"
+      - "scripting-automation"
+      - "qa-test"
+  metadata:
+    created: "2026-03-11"
+    notes: "Engineering domain lead - routes to specialists"
+
+researcher:
+  id: "researcher"
+  display_name: "Researcher"
+  role: "Research Lead"
+  tier: 2
+  description: |
+    Deep research, analysis, synthesis.
+    Web search, competitive analysis, information gathering.
+  model: "openrouter/deepseek/deepseek-r1"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/researcher/prompt.md"
+  tools:
+    - web_search
+    - web_fetch
+    - read
+    - write
+  channels:
+    - telegram  # Via brain delegation
+  default_verbosity: "normal"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "Deep research specialist"
+
+project-manager:
+  id: "project-manager"
+  display_name: "Project Manager"
+  role: "Project Tracking"
+  tier: 2
+  description: |
+    Progress tracking, summaries, project update formatting.
+    Manages task states and status reporting.
+  model: "openrouter/minimax/minimax-m2.5"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/project-manager/prompt.md"
+  tools:
+    - read
+    - write
+    - exec
+  channels:
+    - telegram  # Via brain delegation
+  default_verbosity: "concise"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "Project tracking and summaries"
+
+# ==============================================================================
+# TIER 3: SPECIALISTS
+# ==============================================================================
+
+frontend-dev:
+  id: "frontend-dev"
+  display_name: "Frontend Developer"
+  role: "UI/UX Specialist"
+  tier: 3
+  description: |
+    High-end UI/UX development, dashboard design, complex frontend.
+    Creates stunning interfaces with Apple 2080 aesthetic.
+  model: "openrouter/anthropic/claude-sonnet-4-20250514"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/frontend-dev/prompt.md"
+  tools:
+    - read
+    - write
+    - edit
+    - exec
+    - browser
+  channels:
+    - telegram  # Via senior-dev
+  default_verbosity: "detailed"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "Frontend/UI specialist"
+
+backend:
+  id: "backend"
+  display_name: "Backend Developer"
+  role: "Backend/Systems Specialist"
+  tier: 3
+  description: |
+    Backend development, API design, database, infrastructure.
+    Python, Node.js, SQL, system architecture.
+  model: "openrouter/qwen/qwen2.5-coder-32b-instruct"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/backend/prompt.md"
+  tools:
+    - read
+    - write
+    - edit
+    - exec
+  channels:
+    - telegram  # Via senior-dev
+  default_verbosity: "normal"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "Backend/systems specialist"
+
+qa-test:
+  id: "qa-test"
+  display_name: "QA Engineer"
+  role: "Testing/QA Specialist"
+  tier: 3
+  description: |
+    Testing, quality assurance, code review.
+    Validates work from other coding specialists.
+  model: "openrouter/qwen/qwen-plus"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/qa-test/prompt.md"
+  tools:
+    - read
+    - write
+    - exec
+  channels:
+    - telegram  # Via senior-dev
+  default_verbosity: "detailed"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "QA and testing specialist"
+
+scripting-automation:
+  id: "scripting-automation"
+  display_name: "Scripting & Automation"
+  role: "Automation Specialist"
+  tier: 3
+  description: |
+    Script writing, automation pipelines, cron jobs.
+    Python, bash, automation workflows.
+  model: "openrouter/qwen/qwen2.5-coder-32b-instruct"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/scripting-automation/prompt.md"
+  tools:
+    - read
+    - write
+    - edit
+    - exec
+  channels:
+    - telegram  # Via senior-dev
+  default_verbosity: "normal"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "Scripting and automation specialist"
+
+docs-writer:
+  id: "docs-writer"
+  display_name: "Technical Writer"
+  role: "Documentation Specialist"
+  tier: 3
+  description: |
+    Technical documentation, copy, content creation.
+    Creates clear, human-readable documentation.
+  model: "openrouter/minimax/minimax-m2.5"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/docs-writer/prompt.md"
+  tools:
+    - read
+    - write
+    - edit
+  channels:
+    - telegram  # Via brain delegation
+  default_verbosity: "normal"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "Documentation specialist"
+
+# ==============================================================================
+# INTERNAL-ONLY SPECIALISTS
+# ==============================================================================
+
+daily-brief:
+  id: "daily-brief"
+  display_name: "Daily Brief Agent"
+  role: "Daily Summaries"
+  tier: 3
+  description: |
+    Creates daily morning briefings.
+    Weather, calendar, email, project status.
+  model: "openrouter/minimax/minimax-m2.5"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/daily-brief/prompt.md"
+  tools:
+    - web_fetch
+    - read
+    - write
+    - message
+  channels:
+    - telegram  # Cron-triggered
+  default_verbosity: "normal"
+  user_facing: true  # Delivers to user
+  internal_only: false
+  routing:
+    can_delegate: false
+    trigger: "cron"  # Runs on schedule
+  metadata:
+    created: "2026-03-11"
+    notes: "Daily brief - cron triggered"
+
+cron-reporter:
+  id: "cron-reporter"
+  display_name: "Cron Reporter"
+  role: "Automation Logging"
+  tier: 3
+  description: |
+    Reports on cron job executions, automation logs.
+    Summarizes automated task results.
+  model: "openrouter/minimax/minimax-m2.5"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/cron-reporter/prompt.md"
+  tools:
+    - read
+    - exec
+    - message
+  channels:
+    - telegram  # Cron-triggered
+  default_verbosity: "concise"
+  user_facing: true
+  internal_only: false
+  routing:
+    can_delegate: false
+    trigger: "cron"
+  metadata:
+    created: "2026-03-11"
+    notes: "Cron job reporting"
+
+discord-ops:
+  id: "discord-ops"
+  display_name: "Discord Operations"
+  role: "Discord Management"
+  tier: 3
+  description: |
+    Manages Discord channel bindings, bot operations.
+    Handles Discord-specific tasks.
+  model: "openrouter/minimax/minimax-m2.5"
+  workspace: "/home/node/.openclaw/workspace"
+  prompt_file: "agents/discord-ops/prompt.md"
+  tools:
+    - read
+    - write
+    - message
+    - exec
+  channels:
+    - discord
+  default_verbosity: "normal"
+  user_facing: false
+  internal_only: true
+  routing:
+    can_delegate: false
+  metadata:
+    created: "2026-03-11"
+    notes: "Discord operations specialist"
+
+# ==============================================================================
+# ROUTING RULES
+# ==============================================================================
+
+routing_rules:
+  # When brain should answer directly (not delegate)
+  answer_directly:
+    - "greeting"
+    - "status check"
+    - "simple question"
+    - "help request"
+    - "meta question about Jarvis"
+  
+  # When to delegate to domain leads
+  delegate_to_lead:
+    - criteria: "engineering_task"
+      delegate_to: "senior-dev"
+    - criteria: "research_task"
+      delegate_to: "researcher"
+    - criteria: "project_tracking"
+      delegate_to: "project-manager"
+  
+  # When domain leads delegate to specialists
+  delegate_to_specialist:
+    senior-dev:
+      - criteria: "frontend_task"
+        delegate_to: "frontend-dev"
+      - criteria: "backend_task"
+        delegate_to: "backend"
+      - criteria: "testing_task"
+        delegate_to: "qa-test"
+      - criteria: "scripting_task"
+        delegate_to: "scripting-automation"
+  
+  # Failure handling
+  failure_handling:
+    max_retries: 2
+    escalation: "brain"  # Return to brain on failure
+    fallback: "answer_directly"  # Brain answers if specialist fails
+
+# ==============================================================================
+# CHANNEL BINDINGS (for Discord)
+# ==============================================================================
+
+channel_bindings:
+  # Main brain channel - all user interactions
+  brain:
+    channel_id: "TODO_REPLACE_WITH_BRAIN_CHANNEL_ID"
+    description: "Main brain channel - direct interaction with Jarvis"
+  
+  # Observability channels
+  daily-brief:
+    channel_id: "TODO_REPLACE_WITH_DAILY_BRIEF_CHANNEL_ID"
+    description: "Daily morning briefings"
+  
+  project-updates:
+    channel_id: "TODO_REPLACE_WITH_PROJECT_UPDATES_CHANNEL_ID"
+    description: "Project milestones and status updates"
+  
+  cron-runs:
+    channel_id: "TODO_REPLACE_WITH_CRON_RUNS_CHANNEL_ID"
+    description: "Automation and cron job execution logs"
+  
+  # Agent-specific channels (for direct specialist interaction)
+  agent-senior-dev:
+    channel_id: "TODO_REPLACE_WITH_SENIOR_DEV_CHANNEL_ID"
+    description: "Direct interaction with Senior Developer"
+  
+  agent-frontend-dev:
+    channel_id: "TODO_REPLACE_WITH_FRONTEND_DEV_CHANNEL_ID"
+    description: "Direct interaction with Frontend Developer"
+  
+  agent-backend:
+    channel_id: "TODO_REPLACE_WITH_BACKEND_CHANNEL_ID"
+    description: "Direct interaction with Backend Developer"
+  
+  agent-researcher:
+    channel_id: "TODO_REPLACE_WITH_RESEARCHER_CHANNEL_ID"
+    description: "Direct interaction with Researcher"
+  
+  agent-qa-test:
+    channel_id: "TODO_REPLACE_WITH_QA_CHANNEL_ID"
+    description: "Direct interaction with QA Engineer"
+  
+  agent-scripting:
+    channel_id: "TODO_REPLACE_WITH_SCRIPTING_CHANNEL_ID"
+    description: "Direct interaction with Scripting/Automation"
+  
+  agent-docs-writer:
+    channel_id: "TODO_REPLACE_WITH_DOCS_CHANNEL_ID"
+    description: "Direct interaction with Technical Writer"
