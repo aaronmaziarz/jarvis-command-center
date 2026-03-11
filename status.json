@@ -1,5 +1,5 @@
 {
-  "kpi_updated": "2026-03-11T00:07:23Z",
+  "kpi_updated": "2026-03-11T04:08:00Z",
   "total_tasks": 0,
   "tasks_today": 0,
   "active_agents": 0,
@@ -37,5 +37,11 @@
       "tasks_completed": 0,
       "tasks_failed": 0
     }
+  },
+  "kpis": {
+    "total_tasks": 0,
+    "tasks_today": 0,
+    "active_agents": 0,
+    "pending_tasks": 0
   }
 }
