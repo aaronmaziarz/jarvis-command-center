@@ -1244,9 +1244,9 @@ html, body {
     @media (max-width: 768px) {
       .container { padding: 16px; }
       
-      .hero { padding: 20px; margin-bottom: 24px; }
-      .hero-text h1 { font-size: 26px; }
-      .hero-stat { padding: 10px 14px; }
+      .hero { padding: 12px 16px; margin-bottom: 12px; min-height: auto; }
+      .hero-text h1 { font-size: 20px; margin-bottom: 4px; } .tagline { font-size: 12px; }
+      .hero-stat { padding: 8px 10px; min-width: auto; } .hero-stat-value { font-size: 14px; } .hero-stat-label { font-size: 10px; }
       
       .card.span-3, .card.span-4, .card.span-5, .card.span-6, .card.span-7, .card.span-8 { grid-column: span 12; }
       
@@ -2166,8 +2166,8 @@ html, body {
         </div>
         <div class="health-grid" style="grid-template-columns: 1fr;">
           <div class="health-item">
-            <div class="health-value green">98%</div>
-            <div class="health-label">Ready</div>
+            <div class="health-value green">Online</div>
+            <div class="health-label">Status</div>
           </div>
         </div>
       </div>
@@ -2240,7 +2240,7 @@ html, body {
           <span class="card-icon">👥</span>
         </div>
         <div class="agent-grid" id="agent-grid">
-          <div class="agent-card ready" data-agent="researcher">
+          <div class="agent-card ready" data-agent="researcher" onclick="showAgentDetails('researcher')">
             <div class="agent-header">
               <div class="agent-icon">🤡</div>
               <div>
@@ -2510,7 +2510,7 @@ html, body {
       ═══════════════════════════════════════════════════════════════════════ -->
       <div class="card span-12">
         <div class="card-header">
-          <span class="card-title">Future Actions</span>
+          <span class="card-title">📋 Current Tasks</span>
           <span class="card-icon">🚀</span>
         </div>
         <div class="future-actions">
@@ -3294,6 +3294,28 @@ Example: '0 8 * * *' = 8 AM daily`,
       }
       if (oldTrigger) oldTrigger(action);
     };
+
+    // Show agent details modal
+    function showAgentDetails(agentId) {
+      const agents = {
+        researcher: { name: "Researcher", role: "Web research & information gathering", model: "DeepSeek R1", tools: ["web_search", "web_fetch"] },
+        coder: { name: "Coder", role: "Python, SQL, scripting & automation", model: "Qwen Coder 32B", tools: ["exec", "read", "write"] },
+        frontend: { name: "Frontend Dev", role: "UI/UX & dashboard design", model: "Claude Sonnet 4", tools: ["exec", "read", "write"] },
+        security: { name: "Security", role: "Security audits & hardening", model: "DeepSeek R1", tools: ["exec", "healthcheck"] },
+        writer: { name: "Writer", role: "Copy, docs & content creation", model: "MiniMax M2.5", tools: ["read", "write"] },
+        analyst: { name: "Analyst", role: "Data analysis & reporting", model: "Qwen Plus", tools: ["exec", "read"] },
+        scheduler: { name: "Scheduler", role: "Calendar & reminders", model: "MiniMax M2.5", tools: ["cron", "exec"] },
+        organization: { name: "Organization", role: "File & memory management", model: "MiniMax M2.5", tools: ["exec", "git"] }
+      };
+      
+      const agent = agents[agentId];
+      if (agent) {
+        alert('🤖 ' + agent.name + '\n\n' + 
+              'Role: ' + agent.role + '\n' +
+              'Model: ' + agent.model + '\n' +
+              'Tools: ' + agent.tools.join(', '));
+      }
+    }
 
     console.log('🤖 Jarvis Command Center v2.0 loaded');
     console.log('System: Online // Ready for commands');
