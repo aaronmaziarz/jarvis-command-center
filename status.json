@@ -1,42 +1,36 @@
 {
-  "kpi_updated": "2026-03-11T15:10:00Z",
+  "kpi_updated": "2026-03-13T15:33:00Z",
   "total_tasks": 0,
   "tasks_today": 1,
   "active_agents": 0,
   "pending_tasks": 0,
   "agents": {
+    "brain": "idle",
+    "senior-dev": "idle",
     "researcher": "idle",
-    "coder": "idle",
-    "writer": "idle",
-    "analyst": "idle",
-    "scheduler": "idle"
+    "project-manager": "idle",
+    "frontend-dev": "idle",
+    "backend": "idle",
+    "qa-test": "idle",
+    "scripting-automation": "idle",
+    "docs-writer": "idle",
+    "daily-brief": "idle",
+    "cron-reporter": "idle",
+    "discord-ops": "idle"
   },
   "agent_details": {
-    "researcher": {
-      "status": "idle",
-      "tasks_completed": 0,
-      "tasks_failed": 0
-    },
-    "coder": {
-      "status": "idle",
-      "tasks_completed": 0,
-      "tasks_failed": 0
-    },
-    "writer": {
-      "status": "idle",
-      "tasks_completed": 0,
-      "tasks_failed": 0
-    },
-    "analyst": {
-      "status": "idle",
-      "tasks_completed": 0,
-      "tasks_failed": 0
-    },
-    "scheduler": {
-      "status": "idle",
-      "tasks_completed": 0,
-      "tasks_failed": 0
-    }
+    "brain": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Jarvis", "role": "Executive Orchestrator", "tier": 1 },
+    "senior-dev": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Senior Developer", "role": "Engineering Lead", "tier": 2 },
+    "researcher": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Researcher", "role": "Research Lead", "tier": 2 },
+    "project-manager": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Project Manager", "role": "Project Tracking", "tier": 2 },
+    "frontend-dev": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Frontend Developer", "role": "UI/UX Specialist", "tier": 3 },
+    "backend": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Backend Developer", "role": "Backend/Systems", "tier": 3 },
+    "qa-test": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "QA Engineer", "role": "Testing/QA", "tier": 3 },
+    "scripting-automation": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Scripting & Automation", "role": "Automation", "tier": 3 },
+    "docs-writer": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Technical Writer", "role": "Documentation", "tier": 3 },
+    "daily-brief": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Daily Brief Agent", "role": "Daily Summaries", "tier": 3 },
+    "cron-reporter": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Cron Reporter", "role": "Automation Logging", "tier": 3 },
+    "discord-ops": { "status": "idle", "tasks_completed": 0, "tasks_failed": 0, "display_name": "Discord Operations", "role": "Discord Management", "tier": 3 }
   },
   "kpis": {
     "total_tasks": 0,

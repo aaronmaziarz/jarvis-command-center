@@ -2240,133 +2240,61 @@ html, body {
           <span class="card-icon">👥</span>
         </div>
         <div class="agent-grid" id="agent-grid">
-          <div class="agent-card ready" data-agent="researcher" onclick="showAgentDetails('researcher')">
-            <div class="agent-header">
-              <div class="agent-icon">🤡</div>
-              <div>
-                <div class="agent-name">Researcher</div>
-                <div class="agent-role">Web search & analysis</div>
-              </div>
-            </div>
-            <div class="agent-status ready">
-              <span class="agent-status-dot"></span>
-              Ready
-            </div>
-            <div class="agent-task">— DeepSeek R1 —</div>
-            <div class="agent-stats">
-              <span>✓ 2 completed</span>
-            </div>
-          </div>
-          
-          <div class="agent-card ready" data-agent="coder">
-            <div class="agent-header">
-              <div class="agent-icon">💻</div>
-              <div>
-                <div class="agent-name">Coder</div>
-                <div class="agent-role">Python, SQL & automation</div>
-              </div>
-            </div>
-            <div class="agent-status ready">
-              <span class="agent-status-dot"></span>
-              Ready
-            </div>
-            <div class="agent-task">— Qwen2.5 Coder —</div>
-            <div class="agent-stats">
-              <span>✓ 1 completed</span>
-            </div>
-          </div>
-          
-          <div class="agent-card" data-agent="frontend">
-            <div class="agent-header">
-              <div class="agent-icon">🎨</div>
-              <div>
-                <div class="agent-name">Frontend</div>
-                <div class="agent-role">UI/UX & dashboard</div>
-              </div>
-            </div>
-            <div class="agent-status">Ready</div>
-            <div class="agent-task">— Claude Sonnet 4 —</div>
-            <div class="agent-stats">
-              <span>Ready for overhaul</span>
-            </div>
-          </div>
-          
-          <div class="agent-card" data-agent="security">
-            <div class="agent-header">
-              <div class="agent-icon">🛡️</div>
-              <div>
-                <div class="agent-name">Security</div>
-                <div class="agent-role">Audits & hardening</div>
-              </div>
-            </div>
-            <div class="agent-status">Ready</div>
-            <div class="agent-task">— DeepSeek R1 —</div>
-            <div class="agent-stats">
-              <span>2 warnings found</span>
-            </div>
-          </div>
-          
-          <div class="agent-card" data-agent="writer">
-            <div class="agent-header">
-              <div class="agent-icon">✍️</div>
-              <div>
-                <div class="agent-name">Writer</div>
-                <div class="agent-role">Copy & documentation</div>
-              </div>
-            </div>
-            <div class="agent-status">Ready</div>
-            <div class="agent-task">— MiniMax M2.5 —</div>
-            <div class="agent-stats">
-              <span>Available</span>
-            </div>
-          </div>
-          
-          <div class="agent-card" data-agent="analyst">
-            <div class="agent-header">
-              <div class="agent-icon">📊</div>
-              <div>
-                <div class="agent-name">Analyst</div>
-                <div class="agent-role">Data & reporting</div>
-              </div>
-            </div>
-            <div class="agent-status">Ready</div>
-            <div class="agent-task">— Qwen Plus —</div>
-            <div class="agent-stats">
-              <span>Available</span>
-            </div>
-          </div>
-          
-          <div class="agent-card" data-agent="scheduler">
-            <div class="agent-header">
-              <div class="agent-icon">⏰</div>
-              <div>
-                <div class="agent-name">Scheduler</div>
-                <div class="agent-role">Calendar & reminders</div>
-              </div>
-            </div>
-            <div class="agent-status">Ready</div>
-            <div class="agent-task">— Morning brief active —</div>
-            <div class="agent-stats">
-              <span>7:30 AM daily</span>
-            </div>
-          </div>
-          
-          <div class="agent-card" data-agent="organization">
-            <div class="agent-header">
-              <div class="agent-icon">🗂️</div>
-              <div>
-                <div class="agent-name">Organization</div>
-                <div class="agent-role">File & memory management</div>
-              </div>
-            </div>
-            <div class="agent-status">Ready</div>
-            <div class="agent-task">— Daily at 6 AM —</div>
-            <div class="agent-stats">
-              <span>New</span>
-            </div>
-          </div>
+          <!-- Agent cards loaded dynamically from manifest -->
         </div>
       </div>
+      
+      <script>
+        // Dynamically generate agent cards from manifest
+        async function renderAgentCards() {
+          const grid = document.getElementById('agent-grid');
+          if (!grid) return;
+          
+          const manifest = await loadAgentManifest();
+          if (!manifest) {
+            // Fallback: show message if manifest can't load
+            grid.innerHTML = '<div class="agent-card"><div class="agent-status">Loading agents...</div></div>';
+            return;
+          }
+          
+          const icons = {
+            'brain': '🧠', 'senior-dev': '👨‍💼', 'researcher': '🔍', 'project-manager': '📋',
+            'frontend-dev': '🎨', 'backend': '⚙️', 'qa-test': '🧪', 'scripting-automation': '🤖',
+            'docs-writer': '📝', 'daily-brief': '☀️', 'cron-reporter': '📊', 'discord-ops': '💬'
+          };
+          
+          const tierEmoji = { 1: '⭐', 2: '🎯', 3: '🔧' };
+          
+          let html = '';
+          for (const [id, agent] of Object.entries(manifest)) {
+            const icon = icons[id] || '🤖';
+            const tierBadge = tierEmoji[agent.tier] || '';
+            html += `
+              <div class="agent-card ready" data-agent="${id}" onclick="showAgentDetails('${id}')">
+                <div class="agent-header">
+                  <div class="agent-icon">${icon}</div>
+                  <div>
+                    <div class="agent-name">${agent.display_name} ${tierBadge}</div>
+                    <div class="agent-role">${agent.role}</div>
+                  </div>
+                </div>
+                <div class="agent-status ready">
+                  <span class="agent-status-dot"></span>
+                  Ready
+                </div>
+                <div class="agent-task">— ${agent.model.split('/').pop()} —</div>
+                <div class="agent-stats">
+                  <span>Tier ${agent.tier}</span>
+                </div>
+              </div>
+            `;
+          }
+          grid.innerHTML = html;
+        }
+        
+        // Initialize agent cards on load
+        document.addEventListener('DOMContentLoaded', renderAgentCards);
+      </script>
       
             <!-- ═══════════════════════════════════════════════════════════════════
            CRON JOBS
@@ -2705,40 +2633,48 @@ html, body {
     }
     
     function updateAgentCards(grid, agents) {
-      const agentOrder = ['researcher', 'coder', 'writer', 'analyst'];
+      // Dynamically get all agent IDs from the manifest if available
+      let agentIds = ['researcher', 'coder', 'writer', 'analyst', 'scheduler'];
       
-      agentOrder.forEach(agentId => {
-        const card = grid.querySelector(`[data-agent="${agentId}"]`);
-        if (!card || !agents[agentId]) return;
-        
-        const agentData = agents[agentId];
-        const statusEl = card.querySelector('.agent-status');
-        const taskEl = card.querySelector('.agent-task');
-        const statsEl = card.querySelector('.agent-stats');
-        
-        if (statusEl) {
-          const dot = statusEl.querySelector('.agent-status-dot');
-          statusEl.innerHTML = `${dot ? '<span class="agent-status-dot"></span>' : ''} ${agentData.status}`;
+      // Try to load manifest for full agent list
+      loadAgentManifest().then(manifest => {
+        if (manifest) {
+          agentIds = Object.keys(manifest);
         }
         
-        if (taskEl) {
-          taskEl.textContent = agentData.task || '— Awaiting command —';
-        }
-        
-        if (statsEl) {
-          statsEl.innerHTML = `<span>✓ ${agentData.completed} completed</span><span>✗ ${agentData.failed} failed</span>`;
-        }
-        
-        card.classList.remove('active', 'working', 'error', 'planned');
-        if (agentData.status === 'working') {
-          card.classList.add('working');
-        } else if (agentData.status === 'active') {
-          card.classList.add('active');
-        } else if (agentData.status === 'error') {
-          card.classList.add('error');
-        } else if (agentData.status === 'offline') {
-          card.classList.add('planned');
-        }
+        agentIds.forEach(agentId => {
+          const card = grid.querySelector(`[data-agent="${agentId}"]`);
+          if (!card) return;
+          
+          const agentData = agents && agents[agentId] ? agents[agentId] : { status: 'idle', task: null, completed: 0, failed: 0 };
+          const statusEl = card.querySelector('.agent-status');
+          const taskEl = card.querySelector('.agent-task');
+          const statsEl = card.querySelector('.agent-stats');
+          
+          if (statusEl) {
+            const dot = statusEl.querySelector('.agent-status-dot');
+            statusEl.innerHTML = `${dot ? '<span class="agent-status-dot"></span>' : ''} ${agentData.status}`;
+          }
+          
+          if (taskEl) {
+            taskEl.textContent = agentData.task || '— Awaiting command —';
+          }
+          
+          if (statsEl) {
+            statsEl.innerHTML = `<span>✓ ${agentData.completed || 0} completed</span><span>✗ ${agentData.failed || 0} failed</span>`;
+          }
+          
+          card.classList.remove('active', 'working', 'error', 'planned');
+          if (agentData.status === 'working') {
+            card.classList.add('working');
+          } else if (agentData.status === 'active') {
+            card.classList.add('active');
+          } else if (agentData.status === 'error') {
+            card.classList.add('error');
+          } else if (agentData.status === 'offline') {
+            card.classList.add('planned');
+          }
+        });
       });
     }
     
@@ -3295,25 +3231,37 @@ Example: '0 8 * * *' = 8 AM daily`,
       if (oldTrigger) oldTrigger(action);
     };
 
-    // Show agent details modal
-    function showAgentDetails(agentId) {
-      const agents = {
-        researcher: { name: "Researcher", role: "Web research & information gathering", model: "DeepSeek R1", tools: ["web_search", "web_fetch"] },
-        coder: { name: "Coder", role: "Python, SQL, scripting & automation", model: "Qwen Coder 32B", tools: ["exec", "read", "write"] },
-        frontend: { name: "Frontend Dev", role: "UI/UX & dashboard design", model: "Claude Sonnet 4", tools: ["exec", "read", "write"] },
-        security: { name: "Security", role: "Security audits & hardening", model: "DeepSeek R1", tools: ["exec", "healthcheck"] },
-        writer: { name: "Writer", role: "Copy, docs & content creation", model: "MiniMax M2.5", tools: ["read", "write"] },
-        analyst: { name: "Analyst", role: "Data analysis & reporting", model: "Qwen Plus", tools: ["exec", "read"] },
-        scheduler: { name: "Scheduler", role: "Calendar & reminders", model: "MiniMax M2.5", tools: ["cron", "exec"] },
-        organization: { name: "Organization", role: "File & memory management", model: "MiniMax M2.5", tools: ["exec", "git"] }
-      };
+    // Agent manifest - loaded dynamically from agents/manifest.json
+    let agentManifest = null;
+    
+    async function loadAgentManifest() {
+      try {
+        const response = await fetch('agents/manifest.json', { cache: 'no-cache' });
+        if (response.ok) {
+          agentManifest = await response.json();
+          console.log('🤖 Agent manifest loaded:', Object.keys(agentManifest).length, 'agents');
+          return agentManifest;
+        }
+      } catch (e) {
+        console.warn('Could not load agent manifest:', e);
+      }
+      return null;
+    }
+    
+    // Show agent details modal - uses manifest data
+    async function showAgentDetails(agentId) {
+      if (!agentManifest) {
+        await loadAgentManifest();
+      }
       
-      const agent = agents[agentId];
+      const agent = agentManifest ? agentManifest[agentId] : null;
       if (agent) {
-        alert('🤖 ' + agent.name + '\n\n' + 
+        const tierNames = { 1: "Tier 1 - Executive", 2: "Tier 2 - Senior", 3: "Tier 3 - Specialist" };
+        alert('🤖 ' + agent.display_name + '\n\n' + 
               'Role: ' + agent.role + '\n' +
+              'Tier: ' + (tierNames[agent.tier] || agent.tier) + '\n' +
               'Model: ' + agent.model + '\n' +
-              'Tools: ' + agent.tools.join(', '));
+              'Tools: ' + (agent.tools || []).join(', '));
       }
     }
 
