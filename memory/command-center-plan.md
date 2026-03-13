@@ -146,6 +146,7 @@ Transform Jarvis into an AI operations hub that:
 10. Set up Cloudflare tunnel for remote dashboard access
 11. Complete office redesign / command center visualization
 12. Add missing `Frontend Dev` and `Security` entries to runtime agent-state tracking
+13. Set up Discord bot and channels for multi-agent routing
 
 ---
 
