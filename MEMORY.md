@@ -9,5 +9,6 @@
 - Spend telemetry is not yet wired, so the configured $20/month budget cannot be automatically verified.
 
 ## Maintenance Notes
-- Repeated dashboard syncs through 2026-03-15 found no newly completed implementation work, no active/recent sub-agent or ACP sessions beyond cron runs, and no architecture changes.
+- Repeated dashboard syncs through 2026-03-16 found no newly completed implementation work, no active/recent sub-agent or ACP sessions beyond cron runs, and no architecture changes.
 - Cleanup candidates still pending manual review: `BOOTSTRAP.md`, `dashboard.html.backup`, `do_replace.py`, `new_section.txt`, `replace_agent.py`.
+- `BOOTSTRAP.md` is still present even though onboarding appears complete, so it remains the strongest orphaned-file candidate.
